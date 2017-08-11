@@ -1,0 +1,72 @@
+=shortt-text($size)
+    font-family: "Muli", sans-serif
+    font-weight: bold
+    font-size: $size
+
+body
+    margin: 0
+    background: white
+
+.shortt-top
+    &-container
+        position: absolute
+        z-index: 3
+        width: calc(100% - 20vw)
+        height: calc(100% - 10vh)
+        padding: 5vh 10vw
+        display: flex
+
+    &-menu
+        flex: 0.7
+
+    &-view
+        flex: 4
+        border: 3.5px solid black
+        box-shadow: inset 7px 7px 11px 0px rgba(105, 105, 105, 0.93), inset -7px -7px 11px 0px rgba(105, 105, 105, 0.93)
+        background: transparent
+
+    &-link
+        +shortt-text(2em)
+        cursor: pointer
+        &:hover
+            color: #585858
+
+.shortt
+    &-container
+        position: absolute
+        width: calc(100% - 20vw)
+        height: calc(100% - 10vh)
+        margin: 5vh 10vw
+        display: flex
+    &-spacer
+        flex: 0.7
+    &-content
+        flex: 4
+        display: flex
+        overflow: hidden
+    &-content-wrapper
+        margin: auto
+        width: calc(100% * 2)
+        height: 80%
+        transform: translateX(0%)
+    &-content-page
+        width: 80%
+        height: 100%
+        position: absolute
+        padding: 0px 10%
+    &-page
+        box-shadow: 7px 7px 20px 0px rgba(0, 0, 0, 0.7)
+        width: 100%
+        height: 100%
+        
+@for $i from 1 through 3 
+    .shortt-content-page:nth-of-type(#{$i}) 
+        transform: translateX(#{($i - 1) * 10}0%)
+    
+.shortt-page
+    &-1
+        background: red
+    &-2
+        background: blue
+    &-3
+        background: green
