@@ -60,7 +60,7 @@ function initPage() {
     });
     
     $("#link-home").click(function(){
-        window.location.hash = "home";
+        window.location.hash = "";
     });
     
     $("#link-projects").click(function(){
@@ -70,8 +70,4 @@ function initPage() {
     $("#link-about").click(function(){
         window.location.hash = "about";
     });
-}
-
-function scrollTo(page) {
-
 }

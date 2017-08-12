@@ -1,0 +1,26 @@
+@mixin absoluteCenter() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+body {
+    margin: 0;
+}
+
+.rect {
+    &-box {
+        border: 5px solid black;
+        width: 300px;
+        height: 450px;
+        @include absoluteCenter();
+    }
+    &-hand {
+        @include absoluteCenter();
+    }
+}
+
+.hand-path {
+    stroke-width: 5px;
+}

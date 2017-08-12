@@ -1,0 +1,21 @@
+body {
+  margin: 0; }
+
+.rect-box {
+  border: 5px solid black;
+  width: 300px;
+  height: 450px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%); }
+.rect-hand {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%); }
+
+.hand-path {
+  stroke-width: 5px; }
+
+/*# sourceMappingURL=rectangle.css.map */
