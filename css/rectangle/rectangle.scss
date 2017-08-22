@@ -5,6 +5,12 @@
     transform: translateX(-50%) translateY(-50%);
 }
 
+@mixin centeredFlex() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @mixin shorttText() {
     font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
 }
@@ -23,13 +29,12 @@ body {
         width: 345px; //300
         height: 517.5px; //450
         @include absoluteCenter();
-        //background: url(./../../assets/jungle.jpg);
         background: white;
-        background-size: cover;
     }
     &-border {
+        z-index: 4;
         opacity: 0;
-        transition: opacity 2s ease-in-out;
+        transition: opacity 2s ease-in-out, box-shadow 1.45s ease-in-out;
         position: absolute;
         margin: 20px;
         width: marginAdjust(100%, 20px);
@@ -38,14 +43,15 @@ body {
         pointer-events: none;
     }
     &-menu {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        width: marginAdjust(100%, 28px);
+        height: marginAdjust(100%, 28px);
+        @include centeredFlex();
         flex-direction: column;
-        opacity: 0;
-        transition: opacity 2s ease-in-out;
+        padding: 28px;
+        &-container {
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
     }
 }
 
@@ -53,6 +59,7 @@ body {
     position: absolute;
     opacity: 0;
     transition: opacity 1.6s ease-in-out;
+    z-index: 5;
     &-despair {
         top: 75%;
         left: -60%;
@@ -89,9 +96,29 @@ body {
         &-option {
             @include shorttText();
             cursor: pointer;
+            transition: color 0.15s linear;
+            &:hover {
+                color: rgba(0, 0, 0, 0.6);
+            }
         }
     }
     &-contact {
-        
+        background: url(./../../assets/jungle.jpg);
+        background-size: cover;
+        &-option {
+            flex: 1;
+            @include centeredFlex();
+            &-text {
+                @include shorttText();
+                color: white;
+                font-size: 2em;
+                cursor: pointer;
+                margin: 0;
+                transition: color 0.15s linear;
+                &:hover {
+                    color: rgba(255, 255, 255, 0.6);
+                }
+            }
+        }
     }
 }

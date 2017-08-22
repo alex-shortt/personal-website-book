@@ -5,6 +5,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/rectangle/rectangle.css">
 
+    <script src="https://use.fontawesome.com/27cf0ad925.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="scripts/hashchange.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js" type="text/javascript"></script>
@@ -16,30 +17,50 @@
 <body>
     <div id="parallax-wrapper" class="rect-box">
         <div id="rect-border" class="rect-border"></div>
-        <div id="hand-despair" class="fade-in parallax hand hand-despair" data-speed="3">
+        <div id="hand-despair" class="fade-in parallax hand hand-despair" data-speed="3.2">
             <img class="hand-image-despair" src="./assets/hand-despair.png">
         </div>
-        <div id="hand-help" class="parallax hand hand-help" data-revert="true" data-speed="0.9">
+        <div id="hand-help" class="parallax hand hand-help" data-revert="true" data-speed="1.6">
             <img class="hand-image-help" src="./assets/hand-help.png">
         </div>
-        <div id="menu-main" class="rect-menu menu-main">
-            <h1 id="menu-main-title" class="menu-main-title">Alex Shortt</h1>
-        </div>
-        <div id="menu-nav" class="rect-menu menu-nav">
-            <h1 class="menu-nav-option">Projects</h1>
-            <h1 class="menu-nav-option">About</h1>
-            <h1 class="menu-nav-option">Contact</h1>
-        </div>
-        <div id="menu-contact" class="rect-menu menu-contact">
-            <h1 class="menu-contact-option">Projects</h1>
-            <h1 class="menu-contact-option">About</h1>
-            <h1 class="menu-contact-option">Contact</h1>
+        <div id="rect-menu-container" class="rect-menu-container">
+            <div id="menu-main" class="rect-menu menu-main">
+                <h1 id="menu-main-title" class="menu-main-title">Alex Shortt</h1>
+            </div>
+            <div id="menu-nav" class="rect-menu menu-nav">
+                <h1 class="menu-nav-option">Projects</h1>
+                <h1 class="menu-nav-option">About</h1>
+                <h1 id="menu-nav-contact" class="menu-nav-option">Contact</h1>
+                <h1 id="menu-nav-back" class="menu-nav-option fa fa-2x fa-arrow-left"></h1>
+            </div>
+            <div id="menu-contact" class="rect-menu menu-contact">
+                <div class="menu-contact-option">
+                    <h1 id="contact-facebook" class="menu-contact-option-text fa fa-3x fa-facebook" aria-hidden="true"></h1>
+                </div>
+                <div class="menu-contact-option">
+                    <h1 id="contact-soundcloud" class="menu-contact-option-text fa fa-3x fa-soundcloud" aria-hidden="true"></h1>
+                </div>
+                <div class="menu-contact-option">
+                    <h1 id="contact-twitter" class="menu-contact-option-text fa fa-3x fa-twitter" aria-hidden="true"></h1>
+                </div>
+                <div class="menu-contact-option">
+                    <h1 id="contact-instagram" class="menu-contact-option-text fa fa-3x fa-instagram" aria-hidden="true"></h1>
+                </div>
+                <div class="menu-contact-option">
+                    <h1 id="contact-linkedin" class="menu-contact-option-text fa fa-3x fa-linkedin" aria-hidden="true"></h1>
+                </div>
+                <div class="menu-contact-option">
+                    <h1 id="contact-back" class="menu-contact-option-text fa fa-2x fa-arrow-left" aria-hidden="true"></h1>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         $(document).ready(function() {
             initPage();
+            initHash();
+            initParallax();
         });
 
     </script>

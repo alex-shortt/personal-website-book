@@ -9,11 +9,11 @@ body {
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  background: white;
-  background-size: cover; }
+  background: white; }
 .rect-border {
+  z-index: 4;
   opacity: 0;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 2s ease-in-out, box-shadow 1.45s ease-in-out;
   position: absolute;
   margin: 20px;
   width: calc(100% - (20px * 2));
@@ -21,19 +21,22 @@ body {
   box-shadow: inset 0 0 0 7px black;
   pointer-events: none; }
 .rect-menu {
-  width: 100%;
-  height: 100%;
+  width: calc(100% - (28px * 2));
+  height: calc(100% - (28px * 2));
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  opacity: 0;
-  transition: opacity 2s ease-in-out; }
+  padding: 28px; }
+  .rect-menu-container {
+    opacity: 0;
+    transition: opacity 2s ease-in-out; }
 
 .hand {
   position: absolute;
   opacity: 0;
-  transition: opacity 1.6s ease-in-out; }
+  transition: opacity 1.6s ease-in-out;
+  z-index: 5; }
   .hand-despair {
     top: 75%;
     left: -60%; }
@@ -58,6 +61,26 @@ body {
   opacity: 0; }
   .menu-nav-option {
     font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-    cursor: pointer; }
+    cursor: pointer;
+    transition: color 0.15s linear; }
+    .menu-nav-option:hover {
+      color: rgba(0, 0, 0, 0.6); }
+.menu-contact {
+  background: url(./../../assets/jungle.jpg);
+  background-size: cover; }
+  .menu-contact-option {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .menu-contact-option-text {
+      font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+      color: white;
+      font-size: 2em;
+      cursor: pointer;
+      margin: 0;
+      transition: color 0.15s linear; }
+      .menu-contact-option-text:hover {
+        color: rgba(255, 255, 255, 0.6); }
 
 /*# sourceMappingURL=rectangle.css.map */

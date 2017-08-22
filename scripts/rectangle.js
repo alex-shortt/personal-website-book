@@ -24,11 +24,12 @@ jQuery.fn.rectangle = function (opts) {
         }, 1400);
 
         setTimeout(function () {
-            $("#menu-main").css("opacity", 1);
+            $("#rect-menu-container").css("opacity", 1);
         }, 2000);
     }
 
     this.changeMenu = function (menu) {
+        //add active class to select whole page at once (for fading in/out)
         $(".rect-menu").each(function () {
             $(this).css("transition", "opacity 0.7s ease-in-out");
         });
@@ -36,6 +37,15 @@ jQuery.fn.rectangle = function (opts) {
         $(".rect-menu").each(function () {
             $(this).css("opacity", 0);
         });
+
+        switch (menu) {
+            case 'menu-contact':
+                $("#rect-border").css("box-shadow", "inset 0 0 0 7px white");
+                break;
+            default:
+                $("#rect-border").css("box-shadow", "inset 0 0 0 7px black");
+                break;
+        }
 
         setTimeout(function (menu) {
             $(".rect-menu").each(function () {
@@ -53,33 +63,88 @@ jQuery.fn.rectangle = function (opts) {
     return this.initialize();
 }
 
-$('html').mousemove(function (e) {
-    var wx = $(window).width();
-    var wy = $(window).height();
+function initHash() {
+    $(window).hashchange(function () {
+        var hash = location.hash;
+        var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
-    var x = e.pageX - this.offsetLeft;
-    var y = e.pageY - this.offsetTop;
+        switch (cleanHash) {
+            case 'blank':
+                rect.changeMenu("menu-main");
+                break;
+            case 'nav':
+                rect.changeMenu("menu-nav");
+                break;
+            case 'contact':
+                rect.changeMenu("menu-contact");
+                break;
+            default:
+                rect.changeMenu("menu-main");
+                break;
+        }
+    });
 
-    var newx = x - wx / 2;
-    var newy = y - wy / 2;
+    $(window).hashchange();
+}
 
-    $('span').text(newx + ", " + newy);
+function initParallax() {
+    $('html').mousemove(function (e) {
+        var wx = $(window).width();
+        var wy = $(window).height();
 
-    $('#parallax-wrapper .parallax').each(function () {
-        var speed = $(this).attr('data-speed');
-        if ($(this).attr('data-revert')) speed *= -1;
-        TweenMax.to($(this), 1, {
-            x: (1 - newx * speed / 200),
-            y: (1 - newy * speed / 200)
+        var x = e.pageX - this.offsetLeft;
+        var y = e.pageY - this.offsetTop;
+
+        var newx = x - wx / 2;
+        var newy = y - wy / 2;
+
+        $('span').text(newx + ", " + newy);
+
+        $('#parallax-wrapper .parallax').each(function () {
+            var speed = $(this).attr('data-speed');
+            if ($(this).attr('data-revert')) speed *= -1;
+            TweenMax.to($(this), 1, {
+                x: (1 - newx * speed / 200),
+                y: (1 - newy * speed / 200)
+            });
         });
     });
-});
+}
 
 function initPage() {
     rect = $("#parallax-wrapper").rectangle({});
     rect.fadeElementsIn();
 
+    //main menu
     $("#menu-main-title").click(function () {
-        rect.changeMenu("menu-nav");
+        window.location.hash = "nav";
+    });
+
+    //nav menu
+    $("#menu-nav-contact").click(function () {
+        window.location.hash = "contact";
+    });
+    $("#menu-nav-back").click(function () {
+        window.location.hash = "";
+    });
+
+    //contact menu
+    $("#contact-facebook").click(function () {
+        window.open("https://www.facebook.com/alex.shortt.98");
+    });
+    $("#contact-soundcloud").click(function () {
+        window.open("https://soundcloud.com/alex_shortt");
+    });
+    $("#contact-twitter").click(function () {
+        window.open("https://twitter.com/_alexshortt");
+    });
+    $("#contact-instagram").click(function () {
+        window.open("https://www.instagram.com/alexander.shortt/");
+    });
+    $("#contact-linkedin").click(function () {
+        window.open("https://www.linkedin.com/in/alexshortt/");
+    });
+    $("#contact-back").click(function () {
+        window.location.hash = "nav";
     });
 }
