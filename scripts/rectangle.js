@@ -42,6 +42,9 @@ jQuery.fn.rectangle = function (opts) {
             case 'menu-contact':
                 $("#rect-border").css("box-shadow", "inset 0 0 0 7px white");
                 break;
+            case 'menu-about':
+                $("#rect-border").css("box-shadow", "inset 0 0 0 7px white");
+                break;
             default:
                 $("#rect-border").css("box-shadow", "inset 0 0 0 7px black");
                 break;
@@ -77,6 +80,9 @@ function initHash() {
                 break;
             case 'contact':
                 rect.changeMenu("menu-contact");
+                break;
+            case 'about':
+                rect.changeMenu("menu-about");
                 break;
             default:
                 rect.changeMenu("menu-main");
@@ -121,6 +127,9 @@ function initPage() {
     });
 
     //nav menu
+    $("#menu-nav-about").click(function () {
+        window.location.hash = "about";
+    });
     $("#menu-nav-contact").click(function () {
         window.location.hash = "contact";
     });

@@ -2,6 +2,13 @@ body {
   margin: 0;
   overflow: hidden; }
 
+@keyframes textColor {
+  0% {
+    color: #7e0fff; }
+  50% {
+    color: #0fffc1; }
+  100% {
+    color: #7e0fff; } }
 .rect-box {
   width: 345px;
   height: 517.5px;
@@ -31,6 +38,16 @@ body {
   .rect-menu-container {
     opacity: 0;
     transition: opacity 2s ease-in-out; }
+.rect-background {
+  width: 0;
+  height: 0;
+  position: absolute;
+  display: block;
+  top: 50%;
+  transform: translateY(-50%);
+  content: "";
+  transition: 0.25s height cubic-bezier(0.4, 0, 1, 1), 0.25s width cubic-bezier(0.4, 0, 1, 1);
+  z-index: -1; }
 
 .hand {
   position: absolute;
@@ -62,12 +79,14 @@ body {
   .menu-nav-option {
     font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
     cursor: pointer;
-    transition: color 0.15s linear; }
+    transition: color 0.25s linear; }
     .menu-nav-option:hover {
       color: rgba(0, 0, 0, 0.6); }
-.menu-contact {
+.menu-about {
   background: url(./../../assets/jungle.jpg);
   background-size: cover; }
+.menu-contact {
+  background: white; }
   .menu-contact-option {
     flex: 1;
     display: flex;
@@ -75,11 +94,11 @@ body {
     align-items: center; }
     .menu-contact-option-text {
       font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-      color: white;
       font-size: 2em;
       cursor: pointer;
       margin: 0;
-      transition: color 0.15s linear; }
+      transition: color 0.15s linear;
+      color: black; }
       .menu-contact-option-text:hover {
         color: rgba(255, 255, 255, 0.6); }
 

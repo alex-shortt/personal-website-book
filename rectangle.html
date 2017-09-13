@@ -10,8 +10,6 @@
     <script src="scripts/hashchange.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js" type="text/javascript"></script>
     <script src="scripts/rectangle.js" type="text/javascript"></script>
-
-
 </head>
 
 <body>
@@ -29,9 +27,12 @@
             </div>
             <div id="menu-nav" class="rect-menu menu-nav">
                 <h1 class="menu-nav-option">Projects</h1>
-                <h1 class="menu-nav-option">About</h1>
+                <h1 id="menu-nav-about" class="menu-nav-option">About</h1>
                 <h1 id="menu-nav-contact" class="menu-nav-option">Contact</h1>
                 <!--<h1 id="menu-nav-back" class="menu-nav-option fa fa-2x fa-arrow-left"></h1>-->
+            </div>
+            <div id="menu-about" class="rect-menu menu-about">
+                <h1 class="menu-about-option">Projects</h1>
             </div>
             <div id="menu-contact" class="rect-menu menu-contact">
                 <div class="menu-contact-option">
@@ -54,6 +55,7 @@
                 </div>
             </div>
         </div>
+        <div id="rect-background" class="rect-background"></div>
     </div>
 
     <script>
@@ -72,4 +74,22 @@
 Idea::
 
 Lucas V type design, plans are laid out in plans.ai
+
+//linear-gradient(#00dcff,#e5fbff 80%, white)
+
+background: linear-gradient(#00ff08,#eaffe5 35%, white 50%);
+    background-size: 100% 200%;
+    background-position: 0% 100%;
+
+GRADIENT BACKGROUND, FIND A SMOOTH WAY TO FADE THEM OUT AND BACK IN, LIKE THE GRADIENT MOVES UP AND THE NEW ONE SLIDES BACK DOWN
+
+
+    position: absolute;
+    top: 0;
+    transform-origin: left;
+    transform: rotate(-90deg) translateX(-100%);
+    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+    margin: 0;
+
+---- > Add to an h1 for previous button
 -->

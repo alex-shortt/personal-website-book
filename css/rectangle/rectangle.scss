@@ -24,6 +24,49 @@ body {
     overflow: hidden;
 }
 
+@mixin backlight($x, $y, $spread, $size, $colorA, $colorB, $duration) {
+    position: absolute;
+    content: "";
+    top: $y;
+    left: $x;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    transform: scale($size);
+    -webkit-filter: blur($spread);
+    -moz-filter: blur($spread);
+    -ms-filter: blur($spread);
+    filter: blur($spread);
+    background: linear-gradient(270deg, $colorA, $colorB);
+    background-size: 200% 200%;
+    animation: animateGlow $duration ease infinite;
+    @keyframes animateGlow {
+        0% {
+            background-position: 0% 50%
+        }
+        50% {
+            background-position: 100% 50%
+        }
+        100% {
+            background-position: 0% 50%
+        }
+    }
+}
+
+@keyframes textColor {
+    0% {
+        color: #7e0fff;
+    }
+    50% {
+        color: #0fffc1;
+    }
+    100% {
+        color: #7e0fff;
+    }
+}
+
 .rect {
     &-box {
         width: 345px; //300
@@ -52,6 +95,17 @@ body {
             opacity: 0;
             transition: opacity 2s ease-in-out;
         }
+    }
+    &-background {
+        width: 0;
+        height: 0;
+        position: absolute;
+        display: block;
+        top: 50%;
+        transform: translateY(-50%);
+        content: "";
+        transition: 0.25s height cubic-bezier(0.4, 0, 1, 1), 0.25s width cubic-bezier(0.4, 0, 1, 1);
+        z-index: -1;
     }
 }
 
@@ -96,28 +150,32 @@ body {
         &-option {
             @include shorttText();
             cursor: pointer;
-            transition: color 0.15s linear;
+            transition: color 0.25s linear;
             &:hover {
                 color: rgba(0, 0, 0, 0.6);
             }
         }
     }
-    &-contact {
+    &-about {
         background: url(./../../assets/jungle.jpg);
         background-size: cover;
+    }
+    &-contact {
+        background: white;
         &-option {
             flex: 1;
             @include centeredFlex();
             &-text {
                 @include shorttText();
-                color: white;
                 font-size: 2em;
                 cursor: pointer;
                 margin: 0;
                 transition: color 0.15s linear;
+                color: black;
                 &:hover {
                     color: rgba(255, 255, 255, 0.6);
                 }
+                //linear-gradient(#00dcff,#e5fbff 80%, white) with white background
             }
         }
     }
