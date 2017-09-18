@@ -39,15 +39,12 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-        case 'menu-contact':
-            $("#rect-border").css("box-shadow", "inset 0 0 0 7px white");
-            break;
-        case 'menu-about':
-            $("#rect-border").css("box-shadow", "inset 0 0 0 7px white");
-            break;
-        default:
-            $("#rect-border").css("box-shadow", "inset 0 0 0 7px black");
-            break;
+            case 'menu-contact':
+                $("#rect-border").css("box-shadow", "inset 0 0 0 7px white");
+                break;
+            default:
+                $("#rect-border").css("box-shadow", "inset 0 0 0 7px black");
+                break;
         }
 
         setTimeout(function (menu) {
@@ -63,6 +60,46 @@ jQuery.fn.rectangle = function (opts) {
         }, 700, menu);
     }
 
+    this.openModal = function (project) {
+        $("#rect-border").css("width", 14);
+        $("#rect-menu-container").css("width", 0);
+
+        setTimeout(function () {
+            $("#rect-border").css("height", 14);
+            $("#rect-menu-container").css("height", 0);
+
+            setTimeout(function () {
+                $("#splash-svg").addClass("animate-svg");
+                $("#" + project).css("display", "initial");
+                setTimeout(function () {
+                    $("#" + project).css({
+                        opacity: 1,
+                        transform: "translateY(0)"
+                    });
+                }, 500);
+            }, 750);
+        }, 750);
+    }
+
+    this.closeModal = function (project) {
+        $("#" + project).css({
+            opacity: 0,
+            transform: "translateY(-7.5vh)"
+        });
+        setTimeout(function () {
+            $("#splash-svg").removeClass("animate-svg");
+            $("#" + project).css("display", "none");
+            setTimeout(function () {
+                $("#rect-border").css("height", "calc(100% - (20px * 2))");
+                $("#rect-menu-container").css("height", "auto");
+                setTimeout(function () {
+                    $("#rect-border").css("width", "calc(100% - (20px * 2))");
+                    $("#rect-menu-container").css("width", "auto");
+                }, 750);
+            }, 100);
+        }, 500);
+    }
+
     return this.initialize();
 }
 
@@ -71,22 +108,22 @@ function initHash() {
         var hash = location.hash;
         var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
-        switch (cleanHash) {
-        case 'blank':
-            rect.changeMenu("menu-main");
-            break;
-        case 'nav':
-            rect.changeMenu("menu-nav");
-            break;
-        case 'contact':
-            rect.changeMenu("menu-contact");
-            break;
-        case 'about':
-            rect.changeMenu("menu-about");
-            break;
-        default:
-            rect.changeMenu("menu-main");
-            break;
+        switch (cleanHash.split("-")[0]) {
+            case 'blank':
+                rect.changeMenu("menu-main");
+                break;
+            case 'nav':
+                rect.changeMenu("menu-nav");
+                break;
+            case 'contact':
+                rect.changeMenu("menu-contact");
+                break;
+            case 'about':
+                rect.changeMenu("menu-about");
+                break;
+            default:
+                rect.changeMenu("menu-main");
+                break;
         }
     });
 
@@ -121,6 +158,13 @@ function initPage() {
     rect = $("#parallax-wrapper").rectangle({});
     rect.fadeElementsIn();
 
+    //universal modal
+    $(".modal-close").click(function () {
+        rect.closeModal($(this).data("modal"));
+    });
+
+    //project-1 modal
+
     //main menu
     $("#menu-main-title").click(function () {
         window.location.hash = "nav";
@@ -135,6 +179,11 @@ function initPage() {
     });
     $("#menu-nav-back").click(function () {
         window.location.hash = "";
+    });
+
+    //about menu
+    $("#about-project-1").click(function () {
+        rect.openModal("project-1");
     });
 
     //contact menu
@@ -158,7 +207,7 @@ function initPage() {
     });
 }
 
-jQuery.fn.wibbly() = function (opts) {
+jQuery.fn.wibbly = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.wibbly.defs, opts);
     this.initialize = function () {
         return this;
@@ -167,7 +216,7 @@ jQuery.fn.wibbly() = function (opts) {
 
     var instance = this;
     var element = jQuery(this);
-    
+
     var canvas = document.querySelector('#wibbly-canvas');
     var context = canvas.getContext('2d');
     var ratio = window.devicePixelRatio || 1;
@@ -250,6 +299,6 @@ jQuery.fn.wibbly() = function (opts) {
              parseInt(rgb_beginning[2] * w1 + rgb_end[2] * w2)];
         return rgb;
     }
-    
+
     return this.initialize();
 }

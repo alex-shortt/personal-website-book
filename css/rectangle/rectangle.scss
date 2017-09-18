@@ -20,13 +20,18 @@
 }
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:700');
-
 body {
     margin: 0;
     overflow: hidden;
 }
 
-@mixin backlight($x, $y, $spread, $size, $colorA, $colorB, $duration) {
+@mixin backlight($x,
+$y,
+$spread,
+$size,
+$colorA,
+$colorB,
+$duration) {
     position: absolute;
     content: "";
     top: $y;
@@ -99,6 +104,7 @@ body {
         &-container {
             opacity: 0;
             transition: opacity 2s ease-in-out;
+            overflow: hidden;
         }
     }
     &-background {
@@ -162,9 +168,15 @@ body {
         }
     }
     &-about {
-        background: url(./../../assets/jungle.jpg);
-        background-size: cover;
-        overflow: hidden;
+        background: white;
+        &-option {
+            @include shorttText();
+            cursor: pointer;
+            transition: color 0.25s linear;
+            &:hover {
+                color: rgba(0, 0, 0, 0.6);
+            }
+        }
     }
     &-contact {
         background: white;
@@ -179,53 +191,84 @@ body {
                 transition: color 0.15s linear;
                 color: black;
                 &:hover {
-                    color: rgba(255, 255, 255, 0.6);
+                    color: rgba(255, 255, 255, 0.85);
                 }
-                //linear-gradient(#00dcff,#e5fbff 80%, white) with white background
             }
         }
     }
 }
 
-@mixin animation($animate...) {
-  $max: length($animate);
-  $animations: '';
-  @for $i from 1 through $max {
-    $animations: #{$animations + nth($animate, $i)};
-    @if $i < $max {
-      $animations: #{$animations + ", "};
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    transform: translateY(-7.5vh);
+    opacity: 0;
+    transition: transform 0.75s ease-out, opacity 0.75s ease-out;
+    color: white;
+    width: 100%;
+    display: none;
+    &-close {
+        color: white;
+        text-align: right;
+        width: calc(100% - 40px);
+        margin: 20px;
+        cursor: pointer;
+        transition: color 0.15s linear;
+        &:hover {
+            color: rgba(255, 255, 255, 0.6);
+        }
     }
-  }
-  -webkit-animation: $animations;
-  -moz-animation: $animations;
-  -o-animation: $animations;
-  animation: $animations;
+}
+
+.proj1 {}
+
+@mixin animation($animate...) {
+    $max: length($animate);
+    $animations: '';
+    @for $i from 1 through $max {
+        $animations: #{$animations + nth($animate, $i)};
+        @if $i < $max {
+            $animations: #{$animations + ", "};
+        }
+    }
+    -webkit-animation: $animations;
+    -moz-animation: $animations;
+    -o-animation: $animations;
+    animation: $animations;
 }
 
 @mixin transition($args...) {
-  -webkit-transition: $args;
-  -moz-transition: $args;
-  -ms-transition: $args;
-  -o-transition: $args;
-  transition: $args;
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -ms-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
+
+@function corner($boxSize,
+$xDir,
+$yDir) {
+    @return calc(50vw+(#{$boxSize} / 2 * #{$xDir})) calc(50vh+(#{$boxSize} / 2 * #{$yDir}))
 }
 
 @mixin keyframes($animationName) {
-  @-webkit-keyframes #{$animationName} {
-    @content;
-  }
-  @-moz-keyframes #{$animationName} {
-    @content;
-  }
-  @-o-keyframes #{$animationName} {
-    @content;
-  }
-  @keyframes #{$animationName} {
-    @content;
-  }
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+    @-moz-keyframes #{$animationName} {
+        @content;
+    }
+    @-o-keyframes #{$animationName} {
+        @content;
+    }
+    @keyframes #{$animationName} {
+        @content;
+    }
 }
 
-.splash_svg {
+.splash-svg {
     position: absolute;
     margin: auto;
     top: 0;
@@ -234,45 +277,53 @@ body {
     height: 100%;
     bottom: 0;
     right: 0;
-    z-index: 5;
+    z-index: 1;
     display: none;
     svg {
-      width: 100%;
-      height: 100%;
-      -webkit-backface-visibility: visible;
-      backface-visibility: visible;
-      rect {
         width: 100%;
         height: 100%;
-        fill: black;
-        stroke: 0;
-        -webkit-clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
-        clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
-        @include animation('expand 0.7s ease-in forwards 2.7s');
-      }
-  }
+        -webkit-backface-visibility: visible;
+        backface-visibility: visible;
+        rect {
+            width: 100%;
+            height: 100%;
+            fill: black;
+            stroke: 0;
+            -webkit-clip-path: polygon(corner(14px, -1, 1), corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
+            clip-path: polygon(corner(14px, -1, 1), corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
+        }
+    }
 }
 
 @include keyframes(expand) {
-  0% {}
-  25% {
-    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
-    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
-    fill: white;
-  }
-  50% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
-    fill: black;
-  }
-  75% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
-    fill: white;
-  }
-  100% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
-    fill: black;
-  }
+    0% {}
+    25% {
+        -webkit-clip-path: polygon(0px 0px, corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
+        clip-path: polygon(0px 0px, corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
+        fill: white;
+    }
+    50% {
+        -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, corner(14px, 1, -1), corner(14px, -1, -1));
+        clip-path: polygon(0vw 0vh, 100vw 0vh, corner(14px, 1, -1), corner(14px, -1, -1));
+        fill: black;
+    }
+    75% {
+        -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, corner(14px, 1, -1), 0vw 100vh);
+        clip-path: polygon(0vw 0vh, 100vw 0vh, corner(14px, 1, -1), 0vw 100vh);
+        fill: white;
+    }
+    100% {
+        -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+        clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+        fill: black;
+    }
+}
+
+.animate-svg {
+    display: initial;
+    svg {
+        rect {
+            @include animation('expand 0.7s ease-in forwards');
+        }
+    }
 }

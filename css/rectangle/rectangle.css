@@ -41,7 +41,8 @@ body {
   padding: 28px; }
   .rect-menu-container {
     opacity: 0;
-    transition: opacity 2s ease-in-out; }
+    transition: opacity 2s ease-in-out;
+    overflow: hidden; }
 .rect-background {
   width: 0;
   height: 0;
@@ -87,9 +88,13 @@ body {
     .menu-nav-option:hover {
       color: rgba(0, 0, 0, 0.6); }
 .menu-about {
-  background: url(./../../assets/jungle.jpg);
-  background-size: cover;
-  overflow: hidden; }
+  background: white; }
+  .menu-about-option {
+    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+    cursor: pointer;
+    transition: color 0.25s linear; }
+    .menu-about-option:hover {
+      color: rgba(0, 0, 0, 0.6); }
 .menu-contact {
   background: white; }
   .menu-contact-option {
@@ -105,9 +110,30 @@ body {
       transition: color 0.15s linear;
       color: black; }
       .menu-contact-option-text:hover {
-        color: rgba(255, 255, 255, 0.6); }
+        color: rgba(255, 255, 255, 0.85); }
 
-.splash_svg {
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  transform: translateY(-7.5vh);
+  opacity: 0;
+  transition: transform 0.75s ease-out, opacity 0.75s ease-out;
+  color: white;
+  width: 100%;
+  display: none; }
+  .modal-close {
+    color: white;
+    text-align: right;
+    width: calc(100% - 40px);
+    margin: 20px;
+    cursor: pointer;
+    transition: color 0.15s linear; }
+    .modal-close:hover {
+      color: rgba(255, 255, 255, 0.6); }
+
+.splash-svg {
   position: absolute;
   margin: auto;
   top: 0;
@@ -116,37 +142,33 @@ body {
   height: 100%;
   bottom: 0;
   right: 0;
-  z-index: 5;
+  z-index: 1;
   display: none; }
-  .splash_svg svg {
+  .splash-svg svg {
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: visible;
     backface-visibility: visible; }
-    .splash_svg svg rect {
+    .splash-svg svg rect {
       width: 100%;
       height: 100%;
       fill: black;
       stroke: 0;
-      -webkit-clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
-      clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
-      -webkit-animation: expand 0.7s ease-in forwards 2.7s;
-      -moz-animation: expand 0.7s ease-in forwards 2.7s;
-      -o-animation: expand 0.7s ease-in forwards 2.7s;
-      animation: expand 0.7s ease-in forwards 2.7s; }
+      -webkit-clip-path: polygon(calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
+      clip-path: polygon(calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1))); }
 
 @-webkit-keyframes expand {
   25% {
-    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
-    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+    -webkit-clip-path: polygon(0px 0px, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
+    clip-path: polygon(0px 0px, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
     fill: white; }
   50% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
+    clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
     fill: black; }
   75% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), 0vw 100vh);
     fill: white; }
   100% {
     -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
@@ -154,16 +176,16 @@ body {
     fill: black; } }
 @-moz-keyframes expand {
   25% {
-    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
-    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+    -webkit-clip-path: polygon(0px 0px, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
+    clip-path: polygon(0px 0px, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
     fill: white; }
   50% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
+    clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
     fill: black; }
   75% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), 0vw 100vh);
     fill: white; }
   100% {
     -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
@@ -171,16 +193,16 @@ body {
     fill: black; } }
 @-o-keyframes expand {
   25% {
-    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
-    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+    -webkit-clip-path: polygon(0px 0px, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
+    clip-path: polygon(0px 0px, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
     fill: white; }
   50% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
+    clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
     fill: black; }
   75% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), 0vw 100vh);
     fill: white; }
   100% {
     -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
@@ -188,20 +210,27 @@ body {
     fill: black; } }
 @keyframes expand {
   25% {
-    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
-    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+    -webkit-clip-path: polygon(0px 0px, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
+    clip-path: polygon(0px 0px, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * 1)), calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
     fill: white; }
   50% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
+    clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), calc(50vw+(14px / 2 * -1)) calc(50vh+(14px / 2 * -1)));
     fill: black; }
   75% {
-    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
-    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, calc(50vw+(14px / 2 * 1)) calc(50vh+(14px / 2 * -1)), 0vw 100vh);
     fill: white; }
   100% {
     -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
     clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
     fill: black; } }
+.animate-svg {
+  display: initial; }
+  .animate-svg svg rect {
+    -webkit-animation: expand 0.7s ease-in forwards;
+    -moz-animation: expand 0.7s ease-in forwards;
+    -o-animation: expand 0.7s ease-in forwards;
+    animation: expand 0.7s ease-in forwards; }
 
 /*# sourceMappingURL=rectangle.css.map */
