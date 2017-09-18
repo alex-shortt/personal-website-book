@@ -19,6 +19,8 @@
     @return calc(#{$width} - (#{$margin} * 2));
 }
 
+@import url('https://fonts.googleapis.com/css?family=Montserrat:700');
+
 body {
     margin: 0;
     overflow: hidden;
@@ -77,13 +79,16 @@ body {
     &-border {
         z-index: 4;
         opacity: 0;
-        transition: opacity 2s ease-in-out, box-shadow 1.45s ease-in-out;
         position: absolute;
         margin: 20px;
         width: marginAdjust(100%, 20px);
         height: marginAdjust(100%, 20px);
         box-shadow: inset 0 0 0 7px black;
         pointer-events: none;
+        transition: width 0.75s ease-out, height 0.75s ease-out, opacity 2s ease-in-out, box-shadow 1.45s ease-in-out;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateX(-20px) translateY(-50%) translateY(-20px);
     }
     &-menu {
         width: marginAdjust(100%, 28px);
@@ -159,6 +164,7 @@ body {
     &-about {
         background: url(./../../assets/jungle.jpg);
         background-size: cover;
+        overflow: hidden;
     }
     &-contact {
         background: white;
@@ -179,4 +185,94 @@ body {
             }
         }
     }
+}
+
+@mixin animation($animate...) {
+  $max: length($animate);
+  $animations: '';
+  @for $i from 1 through $max {
+    $animations: #{$animations + nth($animate, $i)};
+    @if $i < $max {
+      $animations: #{$animations + ", "};
+    }
+  }
+  -webkit-animation: $animations;
+  -moz-animation: $animations;
+  -o-animation: $animations;
+  animation: $animations;
+}
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+.splash_svg {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    right: 0;
+    z-index: 5;
+    display: none;
+    svg {
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: visible;
+      backface-visibility: visible;
+      rect {
+        width: 100%;
+        height: 100%;
+        fill: black;
+        stroke: 0;
+        -webkit-clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+        clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+        @include animation('expand 0.7s ease-in forwards 2.7s');
+      }
+  }
+}
+
+@include keyframes(expand) {
+  0% {}
+  25% {
+    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
+    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+    fill: white;
+  }
+  50% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    fill: black;
+  }
+  75% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    fill: white;
+  }
+  100% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    fill: black;
+  }
 }

@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:700");
 body {
   margin: 0;
   overflow: hidden; }
@@ -20,13 +21,16 @@ body {
 .rect-border {
   z-index: 4;
   opacity: 0;
-  transition: opacity 2s ease-in-out, box-shadow 1.45s ease-in-out;
   position: absolute;
   margin: 20px;
   width: calc(100% - (20px * 2));
   height: calc(100% - (20px * 2));
   box-shadow: inset 0 0 0 7px black;
-  pointer-events: none; }
+  pointer-events: none;
+  transition: width 0.75s ease-out, height 0.75s ease-out, opacity 2s ease-in-out, box-shadow 1.45s ease-in-out;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateX(-20px) translateY(-50%) translateY(-20px); }
 .rect-menu {
   width: calc(100% - (28px * 2));
   height: calc(100% - (28px * 2));
@@ -84,7 +88,8 @@ body {
       color: rgba(0, 0, 0, 0.6); }
 .menu-about {
   background: url(./../../assets/jungle.jpg);
-  background-size: cover; }
+  background-size: cover;
+  overflow: hidden; }
 .menu-contact {
   background: white; }
   .menu-contact-option {
@@ -101,5 +106,102 @@ body {
       color: black; }
       .menu-contact-option-text:hover {
         color: rgba(255, 255, 255, 0.6); }
+
+.splash_svg {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  bottom: 0;
+  right: 0;
+  z-index: 5;
+  display: none; }
+  .splash_svg svg {
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible; }
+    .splash_svg svg rect {
+      width: 100%;
+      height: 100%;
+      fill: black;
+      stroke: 0;
+      -webkit-clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+      clip-path: polygon(45vw 40vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+      -webkit-animation: expand 0.7s ease-in forwards 2.7s;
+      -moz-animation: expand 0.7s ease-in forwards 2.7s;
+      -o-animation: expand 0.7s ease-in forwards 2.7s;
+      animation: expand 0.7s ease-in forwards 2.7s; }
+
+@-webkit-keyframes expand {
+  25% {
+    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
+    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+    fill: white; }
+  50% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    fill: black; }
+  75% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    fill: white; }
+  100% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    fill: black; } }
+@-moz-keyframes expand {
+  25% {
+    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
+    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+    fill: white; }
+  50% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    fill: black; }
+  75% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    fill: white; }
+  100% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    fill: black; } }
+@-o-keyframes expand {
+  25% {
+    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
+    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+    fill: white; }
+  50% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    fill: black; }
+  75% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    fill: white; }
+  100% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    fill: black; } }
+@keyframes expand {
+  25% {
+    -webkit-clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 58vh, 45vw 58vh);
+    clip-path: polygon(0vw 0vh, 55vw 40vh, 55vw 60vh, 45vw 60vh);
+    fill: white; }
+  50% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 45vw 60vh);
+    fill: black; }
+  75% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 55vw 60vh, 0vw 100vh);
+    fill: white; }
+  100% {
+    -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+    fill: black; } }
 
 /*# sourceMappingURL=rectangle.css.map */
