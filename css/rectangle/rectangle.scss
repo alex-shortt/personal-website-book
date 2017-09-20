@@ -250,7 +250,7 @@ $duration) {
 @function corner($boxSize,
 $xDir,
 $yDir) {
-    @return calc(50vw+(#{$boxSize} / 2 * #{$xDir})) calc(50vh+(#{$boxSize} / 2 * #{$yDir}))
+    @return calc(50% + (#{$boxSize} / 2 * #{$xDir})) calc(50% - (#{$boxSize} / 2 * #{$yDir}))
 }
 
 @mixin keyframes($animationName) {
@@ -289,6 +289,8 @@ $yDir) {
             height: 100%;
             fill: black;
             stroke: 0;
+            //-webkit-clip-path: polygon(49vw 49vh, 51vw 49vh, 51vw 51vh, 49vw 51vh);
+            //clip-path: polygon(49vw 49vh, 51vw 49vh, 51vw 51vh, 49vw 51vh);
             -webkit-clip-path: polygon(corner(14px, -1, 1), corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
             clip-path: polygon(corner(14px, -1, 1), corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
         }
@@ -298,23 +300,23 @@ $yDir) {
 @include keyframes(expand) {
     0% {}
     25% {
-        -webkit-clip-path: polygon(0px 0px, corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
-        clip-path: polygon(0px 0px, corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
+        -webkit-clip-path: polygon(0% 0%, corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
+        clip-path: polygon(0% 0%, corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
         fill: white;
     }
     50% {
-        -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, corner(14px, 1, -1), corner(14px, -1, -1));
-        clip-path: polygon(0vw 0vh, 100vw 0vh, corner(14px, 1, -1), corner(14px, -1, -1));
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(14px, 1, -1), corner(14px, -1, -1));
+        clip-path: polygon(0% 0%, 100% 0%, corner(14px, 1, -1), corner(14px, -1, -1));
         fill: black;
     }
     75% {
-        -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, corner(14px, 1, -1), 0vw 100vh);
-        clip-path: polygon(0vw 0vh, 100vw 0vh, corner(14px, 1, -1), 0vw 100vh);
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(14px, 1, -1), 0% 100%);
+        clip-path: polygon(0% 0%, 100% 0%, corner(14px, 1, -1), 0% 100%);
         fill: white;
     }
     100% {
-        -webkit-clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
-        clip-path: polygon(0vw 0vh, 100vw 0vh, 100vw 100vh, 0vw 100vh);
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         fill: black;
     }
 }
@@ -324,6 +326,14 @@ $yDir) {
     svg {
         rect {
             @include animation('expand 0.7s ease-in forwards');
+        }
+    }
+}
+
+.animate-svg-off {
+    svg {
+        rect {
+            @include animation('expand 0.7s ease-in backwards');
         }
     }
 }
