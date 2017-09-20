@@ -4,11 +4,13 @@
     <title>alex shortt</title>
 
     <link rel="stylesheet" type="text/css" href="css/rectangle/rectangle.css">
+    <link rel="stylesheet" type="text/css" href="css/external/perfect-scrollbar.min.css">
 
     <script src="https://use.fontawesome.com/27cf0ad925.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="scripts/hashchange.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js" type="text/javascript"></script>
+    <script src="scripts/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
     <script src="scripts/rectangle.js" type="text/javascript"></script>
 </head>
 
@@ -39,7 +41,28 @@
                 <!--<h1 id="menu-nav-back" class="menu-nav-option fa fa-2x fa-arrow-left"></h1>-->
             </div>
             <div id="menu-projects" class="rect-menu menu-projects">
-                <h1 id="projects-project-1" class="menu-projects-option">Project 1</h1>
+                <div class="menu-projects-wrapper">
+                    <h1 id="projects-project-1" class="menu-projects-option">Project 1</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 2</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 3</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 4</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 5</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 6</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 7</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 8</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 9</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 10</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 11</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 12</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 13</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 14</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 15</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 16</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 17</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 18</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 19</h1>
+                    <h1 id="projects-project-2" class="menu-projects-option">Project 20</h1>
+                </div>
             </div>
             <div id="menu-about" class="rect-menu menu-about">
                 <div class="stars"></div>
@@ -70,12 +93,11 @@
     </div>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             initPage();
             initHash();
             initParallax();
         });
-
     </script>
 </body>
 

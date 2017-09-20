@@ -35,15 +35,15 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-            case 'menu-contact':
-                $("#rect-menu-container").css("border", "7px solid white");
-                break;
-            case 'menu-about':
-                $("#rect-menu-container").css("border", "7px solid white");
-                break;
-            default:
-                $("#rect-menu-container").css("border", "7px solid black");
-                break;
+        case 'menu-contact':
+            $("#rect-menu-container").css("border", "7px solid white");
+            break;
+        case 'menu-about':
+            $("#rect-menu-container").css("border", "7px solid white");
+            break;
+        default:
+            $("#rect-menu-container").css("border", "7px solid black");
+            break;
         }
 
         setTimeout(function (menu) {
@@ -52,6 +52,9 @@ jQuery.fn.rectangle = function (opts) {
             });
 
             $("#" + menu).css("display", "flex");
+            if (menu == "menu-projects") {
+                $("#" + menu).css("display", "initial");
+            }
 
             setTimeout(function (menu) {
                 $("#" + menu).css("opacity", 1);
@@ -106,24 +109,24 @@ function initHash() {
         var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
         switch (cleanHash.split("-")[0]) {
-            case 'blank':
-                rect.changeMenu("menu-main");
-                break;
-            case 'nav':
-                rect.changeMenu("menu-nav");
-                break;
-            case 'contact':
-                rect.changeMenu("menu-contact");
-                break;
-            case 'about':
-                rect.changeMenu("menu-about");
-                break;
-            case 'projects':
-                rect.changeMenu("menu-projects");
-                break;
-            default:
-                rect.changeMenu("menu-main");
-                break;
+        case 'blank':
+            rect.changeMenu("menu-main");
+            break;
+        case 'nav':
+            rect.changeMenu("menu-nav");
+            break;
+        case 'contact':
+            rect.changeMenu("menu-contact");
+            break;
+        case 'about':
+            rect.changeMenu("menu-about");
+            break;
+        case 'projects':
+            rect.changeMenu("menu-projects");
+            break;
+        default:
+            rect.changeMenu("menu-main");
+            break;
         }
     });
 
@@ -185,6 +188,9 @@ function initPage() {
     });
 
     //projects menu
+    $('#menu-projects').perfectScrollbar({
+        wheelSpeed: 0.5
+    });
     $("#projects-project-1").click(function () {
         rect.openModal("project-1");
     });

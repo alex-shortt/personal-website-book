@@ -178,7 +178,11 @@ $duration) {
     }
     &-projects {
         background: white;
+        &-wrapper{
+            
+        }
         &-option {
+            text-align: center;
             @include shorttText();
             cursor: pointer;
             transition: color 0.25s linear;
@@ -377,7 +381,7 @@ $yDir) {
     }
 }
 
-$shadows-big: multiple-box-shadow(150);
+$shadows-big: multiple-box-shadow(151);
 
 .stars {
     width: 3px;
