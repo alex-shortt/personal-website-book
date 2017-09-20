@@ -76,35 +76,32 @@ $duration) {
 
 .rect {
     &-box {
-        width: 345px; //300
-        height: 517.5px; //450
+        width: 305px; //300
+        height: 477.5px; //450
         @include absoluteCenter();
         background: white;
     }
-    &-border {
-        z-index: 4;
-        opacity: 0;
-        position: absolute;
-        margin: 20px;
-        width: marginAdjust(100%, 20px);
-        height: marginAdjust(100%, 20px);
-        box-shadow: inset 0 0 0 7px black;
-        pointer-events: none;
-        transition: width 0.75s ease-out, height 0.75s ease-out, opacity 2s ease-in-out, box-shadow 1.45s ease-in-out;
-        top: 50%;
-        left: 50%;
-        transform: translateX(-50%) translateX(-20px) translateY(-50%) translateY(-20px);
-    }
     &-menu {
-        width: marginAdjust(100%, 28px);
-        height: marginAdjust(100%, 28px);
+        width: 249px; //marginAdjust(100%, 28px);
+        height: 421.500px; //marginAdjust(100%, 28px);
         @include centeredFlex();
         flex-direction: column;
         padding: 28px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
         &-container {
             opacity: 0;
-            transition: opacity 2s ease-in-out;
+            transition: width 0.75s ease-out, height 0.75s ease-out, opacity 2s ease-in-out, border 1.45s ease-in-out;
             overflow: hidden;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            border: 7px solid black;
         }
     }
     &-background {
@@ -126,12 +123,12 @@ $duration) {
     transition: opacity 1.6s ease-in-out;
     z-index: 5;
     &-despair {
-        top: 75%;
-        left: -60%;
+        top: 79%;
+        left: -70%;
     }
     &-help {
-        top: -15%;
-        left: 72%;
+        top: -24%;
+        left: 74%;
     }
     &-image {
         &-despair {
@@ -168,6 +165,18 @@ $duration) {
         }
     }
     &-about {
+        background: black;
+        &-option {
+            color: white;
+            @include shorttText();
+            cursor: pointer;
+            transition: color 0.25s linear;
+            &:hover {
+                color: rgba(0, 0, 0, 0.6);
+            }
+        }
+    }
+    &-projects {
         background: white;
         &-option {
             @include shorttText();
@@ -222,8 +231,6 @@ $duration) {
     }
 }
 
-.proj1 {}
-
 @mixin animation($animate...) {
     $max: length($animate);
     $animations: '';
@@ -250,7 +257,7 @@ $duration) {
 @function corner($boxSize,
 $xDir,
 $yDir) {
-    @return calc(50% + (#{$boxSize} / 2 * #{$xDir})) calc(50% - (#{$boxSize} / 2 * #{$yDir}))
+    @return calc(50% - (#{$boxSize} / -2 * #{$xDir})) calc(50% - (#{$boxSize} / 2 * #{$yDir}))
 }
 
 @mixin keyframes($animationName) {
@@ -291,27 +298,35 @@ $yDir) {
             stroke: 0;
             //-webkit-clip-path: polygon(49vw 49vh, 51vw 49vh, 51vw 51vh, 49vw 51vh);
             //clip-path: polygon(49vw 49vh, 51vw 49vh, 51vw 51vh, 49vw 51vh);
-            -webkit-clip-path: polygon(corner(14px, -1, 1), corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
-            clip-path: polygon(corner(14px, -1, 1), corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
+            -webkit-clip-path: polygon(corner(16px, -1, 1), corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
+            clip-path: polygon(corner(16px, -1, 1), corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
+            animation: modal-minify 0.7s linear forwards;
+        }
+    }
+    &-open {
+        svg {
+            rect {
+                animation: modal-expand 0.7s linear forwards;
+            }
         }
     }
 }
 
-@include keyframes(expand) {
+@include keyframes(modal-expand) {
     0% {}
     25% {
-        -webkit-clip-path: polygon(0% 0%, corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
-        clip-path: polygon(0% 0%, corner(14px, 1, 1), corner(14px, 1, -1), corner(14px, -1, -1));
+        -webkit-clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
+        clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
         fill: white;
     }
     50% {
-        -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(14px, 1, -1), corner(14px, -1, -1));
-        clip-path: polygon(0% 0%, 100% 0%, corner(14px, 1, -1), corner(14px, -1, -1));
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
+        clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
         fill: black;
     }
     75% {
-        -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(14px, 1, -1), 0% 100%);
-        clip-path: polygon(0% 0%, 100% 0%, corner(14px, 1, -1), 0% 100%);
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
+        clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
         fill: white;
     }
     100% {
@@ -321,19 +336,65 @@ $yDir) {
     }
 }
 
-.animate-svg {
-    display: initial;
-    svg {
-        rect {
-            @include animation('expand 0.7s ease-in forwards');
-        }
+@include keyframes(modal-minify) {
+    0% {
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+        fill: black;
+    }
+    25% {
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
+        clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
+        fill: white;
+    }
+    50% {
+        -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
+        clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
+        fill: black;
+    }
+    75% {
+        -webkit-clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
+        clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
+        fill: white;
+    }
+    100% {}
+}
+
+@function multiple-box-shadow ($n) {
+    $value: '#{random(2000)}px #{random(2000)}px #FFF';
+    @for $i from 2 through $n {
+        $value: '#{$value} , #{random(2000)}px #{random(2000)}px #FFF';
+    }
+    @return unquote($value);
+}
+
+@keyframes animStar {
+    from {
+        transform: translateY(0px);
+    }
+    to {
+        transform: translateY(-2000px);
     }
 }
 
-.animate-svg-off {
-    svg {
-        rect {
-            @include animation('expand 0.7s ease-in backwards');
-        }
+$shadows-big: multiple-box-shadow(150);
+
+.stars {
+    width: 3px;
+    height: 3px;
+    background: transparent;
+    box-shadow: $shadows-big;
+    animation: animStar 150s linear infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    &:after {
+        content: " ";
+        position: absolute;
+        top: 2000px;
+        width: 3px;
+        height: 3px;
+        background: transparent;
+        box-shadow: $shadows-big;
     }
 }

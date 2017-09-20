@@ -12,7 +12,7 @@ jQuery.fn.rectangle = function (opts) {
 
     this.fadeElementsIn = function () {
         setTimeout(function () {
-            $("#rect-border").css("opacity", 1);
+            $("#rect-menu-container").css("opacity", 1);
         }, 500);
 
         setTimeout(function () {
@@ -22,10 +22,6 @@ jQuery.fn.rectangle = function (opts) {
         setTimeout(function () {
             $("#hand-help").css("opacity", 1);
         }, 1400);
-
-        setTimeout(function () {
-            $("#rect-menu-container").css("opacity", 1);
-        }, 2000);
     }
 
     this.changeMenu = function (menu) {
@@ -40,10 +36,13 @@ jQuery.fn.rectangle = function (opts) {
 
         switch (menu) {
             case 'menu-contact':
-                $("#rect-border").css("box-shadow", "inset 0 0 0 7px white");
+                $("#rect-menu-container").css("border", "7px solid white");
+                break;
+            case 'menu-about':
+                $("#rect-menu-container").css("border", "7px solid white");
                 break;
             default:
-                $("#rect-border").css("box-shadow", "inset 0 0 0 7px black");
+                $("#rect-menu-container").css("border", "7px solid black");
                 break;
         }
 
@@ -61,15 +60,14 @@ jQuery.fn.rectangle = function (opts) {
     }
 
     this.openModal = function (project) {
-        $("#rect-border").css("width", 14);
-        $("#rect-menu-container").css("width", 0);
+        $("#rect-menu-container").css("width", "0%");
 
         setTimeout(function () {
-            $("#rect-border").css("height", 14);
-            $("#rect-menu-container").css("height", 0);
+            $("#rect-menu-container").css("height", "0%");
 
             setTimeout(function () {
-                $("#splash-svg").addClass("animate-svg");
+                $("#splash-svg").show();
+                $(".splash-svg").addClass("splash-svg-open");
                 $("#" + project).css("display", "initial");
                 setTimeout(function () {
                     $("#" + project).css({
@@ -87,16 +85,15 @@ jQuery.fn.rectangle = function (opts) {
             transform: "translateY(-7.5vh)"
         });
         setTimeout(function () {
-            $("#splash-svg").removeClass("animate-svg");
+            $("#splash-svg").removeClass("splash-svg-open");
             $("#" + project).css("display", "none");
             setTimeout(function () {
-                $("#rect-border").css("height", "calc(100% - (20px * 2))");
-                $("#rect-menu-container").css("height", "auto");
+                $("#splash-svg").hide();
+                $("#rect-menu-container").css("height", "100%");
                 setTimeout(function () {
-                    $("#rect-border").css("width", "calc(100% - (20px * 2))");
-                    $("#rect-menu-container").css("width", "auto");
+                    $("#rect-menu-container").css("width", "100%");
                 }, 750);
-            }, 100);
+            }, 790);
         }, 500);
     }
 
@@ -120,6 +117,9 @@ function initHash() {
                 break;
             case 'about':
                 rect.changeMenu("menu-about");
+                break;
+            case 'projects':
+                rect.changeMenu("menu-projects");
                 break;
             default:
                 rect.changeMenu("menu-main");
@@ -171,6 +171,9 @@ function initPage() {
     });
 
     //nav menu
+    $("#menu-nav-projects").click(function () {
+        window.location.hash = "projects";
+    });
     $("#menu-nav-about").click(function () {
         window.location.hash = "about";
     });
@@ -181,10 +184,13 @@ function initPage() {
         window.location.hash = "";
     });
 
-    //about menu
-    $("#about-project-1").click(function () {
+    //projects menu
+    $("#projects-project-1").click(function () {
         rect.openModal("project-1");
     });
+
+    //about menu
+
 
     //contact menu
     $("#contact-facebook").click(function () {
