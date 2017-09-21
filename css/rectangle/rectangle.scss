@@ -166,6 +166,7 @@ $duration) {
     }
     &-about {
         background: black;
+        padding: 28px;
         &-option {
             color: white;
             @include shorttText();
@@ -175,12 +176,41 @@ $duration) {
                 color: rgba(0, 0, 0, 0.6);
             }
         }
+        &-arrow {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            &-button {
+                font-size: 1.75em !important;
+                color: white;
+                margin: 3px;
+                flex: 1;
+                cursor: pointer;
+                transition: color 0.15s linear;
+                &:hover {
+                    color: rgba(255, 255, 255, 0.85);
+                }
+            }
+        }
+        &-carousel {
+            height: calc(100% * 3);
+            width: 100%;
+            transition: 0.6s all;
+            transform: translateY(calc(100% / 3 * 1));
+            &-page {
+                height: calc(100% / 3 - 56px);
+                padding: 28px 0px;
+                width: 100%;
+                color: white;
+            }
+        }
     }
     &-projects {
         background: white;
-        &-wrapper{
-            
-        }
+        &-wrapper {}
         &-option {
             text-align: center;
             @include shorttText();
@@ -209,6 +239,11 @@ $duration) {
             }
         }
     }
+}
+
+#about-page-up{
+    color: gray;
+    cursor: auto;
 }
 
 .modal {
@@ -382,7 +417,6 @@ $yDir) {
 }
 
 $shadows-big: multiple-box-shadow(151);
-
 .stars {
     width: 3px;
     height: 3px;

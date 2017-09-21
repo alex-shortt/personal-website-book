@@ -1,4 +1,5 @@
 var rect;
+var carousel;
 
 jQuery.fn.rectangle = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.rectangle.defs, opts);
@@ -103,6 +104,59 @@ jQuery.fn.rectangle = function (opts) {
     return this.initialize();
 }
 
+jQuery.fn.carousel = function (opts) {
+    opts = jQuery.extend({}, jQuery.fn.carousel.defs, opts);
+    this.initialize = function () {
+        return this;
+    }
+    jQuery.fn.carousel.defs = {};
+
+    var instance = this;
+    var element = jQuery(this);
+    var totalPages = $("#about-carousel").children().length;
+    var currentPage = 1;
+
+    this.changePage = function (step) {
+        $("#about-page-down").css({
+            color: "white",
+            cursor: "pointer"
+        });
+
+        $("#about-page-up").css({
+            color: "white",
+            cursor: "pointer"
+        });
+
+
+        currentPage += step;
+
+        if (currentPage > 1) {
+            currentPage = 1;
+        }
+        if (currentPage < 1 - totalPages + 1) {
+            currentPage = 1 - totalPages + 1;
+        }
+
+        if (currentPage == 1) {
+            $("#about-page-up").css({
+                color: "gray",
+                cursor: "pointer"
+            });
+        }
+        
+        if (currentPage == 1 - totalPages + 1) {
+            $("#about-page-down").css({
+                color: "gray",
+                cursor: "pointer"
+            });
+        }
+        
+        $("#about-carousel").css("transform", "translateY(calc(100% / 3 * " + currentPage + "))");
+    }
+
+    return this.initialize();
+}
+
 function initHash() {
     $(window).hashchange(function () {
         var hash = location.hash;
@@ -161,6 +215,8 @@ function initPage() {
     rect = $("#parallax-wrapper").rectangle({});
     rect.fadeElementsIn();
 
+    carousel = $("#about-carousel").carousel({});
+
     //universal modal
     $(".modal-close").click(function () {
         rect.closeModal($(this).data("modal"));
@@ -196,7 +252,12 @@ function initPage() {
     });
 
     //about menu
-
+    $("#about-page-up").click(function () {
+        carousel.changePage(1);
+    });
+    $("#about-page-down").click(function () {
+        carousel.changePage(-1);
+    });
 
     //contact menu
     $("#contact-facebook").click(function () {
