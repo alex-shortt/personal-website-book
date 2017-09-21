@@ -212,12 +212,15 @@ $duration) {
         background: white;
         &-wrapper {}
         &-option {
+            height: 25%;
             text-align: center;
-            @include shorttText();
             cursor: pointer;
-            transition: color 0.25s linear;
-            &:hover {
-                color: rgba(0, 0, 0, 0.6);
+            @include centeredFlex();
+            transition: all 0.25s linear;
+            background-position: center;
+            background-size: cover;
+            &-text {
+                @include shorttText();
             }
         }
     }
@@ -241,9 +244,42 @@ $duration) {
     }
 }
 
-#about-page-up{
+#about-page-up {
     color: gray;
     cursor: auto;
+}
+
+#projects {
+    &-awge {
+        &:hover {
+            color: white;
+            background-image: url("../../assets/project-awge.png");
+        }
+    }
+    &-portal {
+        &:hover {
+            color: white;
+            background-image: url("../../assets/project-portal.png");
+        }
+    }
+    &-sounddown {
+        &:hover {
+            color: #949494;
+            background-image: url("../../assets/project-sounddown.png");
+        }
+    }
+    &-nessly {
+        &:hover {
+            color: white;
+            background-image: url("../../assets/project-nessly.png");
+        }
+    }
+    &-revenge {
+        &:hover {
+            color: white;
+            background-image: url("../../assets/project-revenge.png");
+        }
+    }
 }
 
 .modal {
