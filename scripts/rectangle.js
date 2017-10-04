@@ -1,5 +1,5 @@
 var rect;
-var carousel;
+var _gravity;
 
 jQuery.fn.rectangle = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.rectangle.defs, opts);
@@ -104,54 +104,141 @@ jQuery.fn.rectangle = function (opts) {
     return this.initialize();
 }
 
-jQuery.fn.carousel = function (opts) {
-    opts = jQuery.extend({}, jQuery.fn.carousel.defs, opts);
+jQuery.fn.gravity = function (opts) {
+    opts = jQuery.extend({}, jQuery.fn.gravity.defs, opts);
     this.initialize = function () {
         return this;
     }
-    jQuery.fn.carousel.defs = {};
+    jQuery.fn.gravity.defs = {};
 
     var instance = this;
     var element = jQuery(this);
-    var totalPages = $("#about-carousel").children().length;
-    var currentPage = 1;
+    var world;
+    var viewWidth = $(element).width();
+    var viewHeight = $(element).height();
 
-    this.changePage = function (step) {
-        $("#about-page-down").css({
-            color: "white",
-            cursor: "pointer"
+    var bodies = [{
+        radius: 30,
+        labels: ['intro']
+    }, {
+        radius: 30,
+        labels: ['intro']
+    }, {
+        radius: 10,
+        labels: ['skills']
+    }, {
+        radius: 10,
+        labels: ['skills']
+    }];
+
+    var gravity;
+    var bounds;
+
+    this.initGravity = function () {
+        world = Physics({
+            timestep: 1000.0 / 160,
+            maxIPF: 16,
+            integrator: 'verlet'
+        }, function (thisWorld) {
+            world = thisWorld;
+
+            var renderer = Physics.renderer('canvas', {
+                el: (element).attr('id'),
+                width: viewWidth,
+                height: viewHeight,
+                meta: false, // don't display meta data
+                styles: {
+                    'circle': {
+                        strokeStyle: '#351024',
+                        lineWidth: 1,
+                        fillStyle: '#ffffff',
+                        angleIndicator: '#351024'
+                    },
+                    'rectangle': {
+                        strokeStyle: '#351024',
+                        lineWidth: 1,
+                        fillStyle: '#ffffff',
+                        angleIndicator: '#351024'
+                    }
+                }
+            });
+
+            world.add(renderer);
+            world.on('step', function () {
+                world.render();
+            });
+            var viewportBounds = Physics.aabb(0, 0, viewWidth, viewHeight);
+            bounds = Physics.behavior('edge-collision-detection', {
+                aabb: viewportBounds,
+                restitution: 0.99,
+                cof: 0.99
+            });
+            world.add(bounds);
+
+            instance.addBodySet('intro', 0, viewWidth);
+
+            gravity = Physics.behavior('constant-acceleration');
+            world.add(gravity);
+            gravity.setAcceleration({
+                x: 0,
+                y: 0
+            });
+
+            world.add(Physics.behavior('body-impulse-response'));
+            world.add(Physics.behavior('body-collision-detection'));
+            world.add(Physics.behavior('sweep-prune'));
+
+            Physics.util.ticker.on(function (time, dt) {
+                world.step(time);
+            });
+            Physics.util.ticker.start();
+        });
+    }
+
+    this.addBodySet = function (type, minY, maxY) {
+        bodies.forEach(function (body) {
+            if (body.labels.indexOf(type) > -1) {
+                world.add(new Physics.body('circle', {
+                    x: getRandomRange(body.radius, viewWidth),
+                    y: getRandomRange(minY, maxY),
+                    vx: getRandomRange(-0.15, 0.15),
+                    vy: getRandomRange(-0.15, 0.15),
+                    radius: body.radius,
+                    labels: body.labels
+                }));
+            }
+        });
+    }
+
+    this.hideElements = function (type) {
+        bounds.setAABB(Physics.aabb(0, 0, viewWidth, viewHeight * 10));
+        gravity.setAcceleration({
+            x: 0,
+            y: 0.004
         });
 
-        $("#about-page-up").css({
-            color: "white",
-            cursor: "pointer"
+        while (world._bodies.length > 0) {
+            world._bodies.forEach(function (body) {
+                if (body.state.pos.y > viewHeight * 2) {
+                    world.removeBody(body);
+                }
+            });
+        }
+
+        console.log("done");
+    }
+
+    this.resetWorldState = function () {
+        bounds.setAABB(Physics.aabb(0, 0, viewWidth, viewHeight));
+
+        gravity.setAcceleration({
+            x: 0,
+            y: 0
         });
+    }
 
-
-        currentPage += step;
-
-        if (currentPage > 1) {
-            currentPage = 1;
-        }
-        if (currentPage < 1 - totalPages + 1) {
-            currentPage = 1 - totalPages + 1;
-        }
-
-        if (currentPage == 1) {
-            $("#about-page-up").css({
-                color: "gray",
-                cursor: "pointer"
-            });
-        }
-        
-        if (currentPage == 1 - totalPages + 1) {
-            $("#about-page-down").css({
-                color: "gray",
-                cursor: "pointer"
-            });
-        }
-        
-        $("#about-carousel").css("transform", "translateY(calc(100% / 3 * " + currentPage + "))");
+    this.getWorld = function () {
+        return world;
     }
 
     return this.initialize();
@@ -215,7 +302,8 @@ function initPage() {
     rect = $("#parallax-wrapper").rectangle({});
     rect.fadeElementsIn();
 
-    carousel = $("#about-carousel").carousel({});
+    _gravity = $("#about-physics").gravity({});
+    _gravity.initGravity();
 
     //universal modal
     $(".modal-close").click(function () {
@@ -253,10 +341,10 @@ function initPage() {
 
     //about menu
     $("#about-page-up").click(function () {
-        carousel.changePage(1);
+
     });
     $("#about-page-down").click(function () {
-        carousel.changePage(-1);
+
     });
 
     //contact menu
@@ -374,4 +462,8 @@ jQuery.fn.wibbly = function (opts) {
     }
 
     return this.initialize();
+}
+
+function getRandomRange(min, max) {
+    return Math.random() * (max - min) + min;
 }

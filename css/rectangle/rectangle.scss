@@ -11,6 +11,10 @@
     align-items: center;
 }
 
+.content-centered {
+    @include centeredFlex();
+}
+
 @mixin shorttText() {
     font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
 }
@@ -166,7 +170,9 @@ $duration) {
     }
     &-about {
         background: black;
-        padding: 28px;
+        padding: 0;
+        width: 305px;
+        height: 477px;
         &-option {
             color: white;
             @include shorttText();
@@ -195,17 +201,13 @@ $duration) {
                 }
             }
         }
-        &-carousel {
-            height: calc(100% * 3);
+        &-physics {
+            height: 100%;
             width: 100%;
-            transition: 0.6s all;
-            transform: translateY(calc(100% / 3 * 1));
-            &-page {
-                height: calc(100% / 3 - 56px);
-                padding: 28px 0px;
-                width: 100%;
-                color: white;
-            }
+        }
+        &-text {
+            @include shorttText();
+            text-align: center;
         }
     }
     &-projects {

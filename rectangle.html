@@ -11,6 +11,8 @@
     <script src="scripts/hashchange.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js" type="text/javascript"></script>
     <script src="scripts/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+    <script src="scripts/physicsjs-full.min.js"></script>
+    
     <script src="scripts/rectangle.js" type="text/javascript"></script>
 </head>
 
@@ -61,14 +63,12 @@
             </div>
             <div id="menu-about" class="rect-menu menu-about">
                 <div class="stars"></div>
-                <div id="about-carousel" class="menu-about-carousel">
-                    <div id="about-page-1" class="menu-about-carousel-page">Hi</div>
-                    <div id="about-page-2" class="menu-about-carousel-page">asdf</div>
-                    <div id="about-page-2" class="menu-about-carousel-page">asdf</div>
-                </div>
                 <div class="menu-about-arrow">
                     <i id="about-page-up" class="menu-about-arrow-button fa fa-arrow-circle-up" aria-hidden="true"></i>
                     <i id="about-page-down" class="menu-about-arrow-button fa fa-arrow-circle-down" aria-hidden="true"></i>
+                </div>
+                <div id="about-physics" class="menu-about-physics">
+            
                 </div>
             </div>
             <div id="menu-contact" class="rect-menu menu-contact">
@@ -111,14 +111,7 @@ Idea::
 
 Lucas V type design, plans are laid out in plans.ai
 
-//linear-gradient(#00dcff,#e5fbff 80%, white)
-
-background: linear-gradient(#00ff08,#eaffe5 35%, white 50%);
-    background-size: 100% 200%;
-    background-position: 0% 100%;
-
-GRADIENT BACKGROUND, FIND A SMOOTH WAY TO FADE THEM OUT AND BACK IN, LIKE THE GRADIENT MOVES UP AND THE NEW ONE SLIDES BACK DOWN
-
+Projects page is text in the middle explaining the projects then media floating around the sides, bouncing off each other (think of way to use three.js)
 
     position: absolute;
     top: 0;
