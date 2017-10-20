@@ -36,15 +36,15 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-        case 'menu-contact':
-            $("#rect-menu-container").css("border", "7px solid white");
-            break;
-        case 'menu-about':
-            $("#rect-menu-container").css("border", "7px solid white");
-            break;
-        default:
-            $("#rect-menu-container").css("border", "7px solid black");
-            break;
+            case 'menu-contact':
+                $("#rect-menu-container").css("border", "7px solid white");
+                break;
+            case 'menu-about':
+                $("#rect-menu-container").css("border", "7px solid white");
+                break;
+            default:
+                $("#rect-menu-container").css("border", "7px solid black");
+                break;
         }
 
         setTimeout(function (menu) {
@@ -104,253 +104,6 @@ jQuery.fn.rectangle = function (opts) {
     return this.initialize();
 }
 
-jQuery.fn.gravity = function (opts) {
-    opts = jQuery.extend({}, jQuery.fn.gravity.defs, opts);
-    this.initialize = function () {
-        return this;
-    }
-    jQuery.fn.gravity.defs = {};
-
-    var instance = this;
-    var element = jQuery(this);
-    var world;
-    var viewWidth = $(element).width();
-    var viewHeight = $(element).height();
-
-    var bodies = [{
-        radius: 30,
-        labels: ['intro']
-    }, {
-        radius: 30,
-        labels: ['intro']
-    }, {
-        radius: 10,
-        labels: ['skills']
-    }, {
-        radius: 10,
-        labels: ['skills']
-    }];
-
-    var gravity;
-    var bounds;
-
-    this.initGravity = function () {
-        world = Physics({
-            timestep: 1000.0 / 160,
-            maxIPF: 16,
-            integrator: 'verlet'
-        }, function (thisWorld) {
-            world = thisWorld;
-
-            var renderer = Physics.renderer('canvas', {
-                el: (element).attr('id'),
-                width: viewWidth,
-                height: viewHeight,
-                meta: true, // don't display meta data
-                styles: {
-                    'circle': {
-                        strokeStyle: '#351024',
-                        lineWidth: 1,
-                        fillStyle: '#ffffff',
-                        angleIndicator: '#351024'
-                    },
-                    'rectangle': {
-                        strokeStyle: '#351024',
-                        lineWidth: 1,
-                        fillStyle: '#ffffff',
-                        angleIndicator: '#351024'
-                    }
-                }
-            });
-
-            world.add(renderer);
-            world.on('step', function () {
-                world.render();
-            });
-            var viewportBounds = Physics.aabb(0, 0, viewWidth, viewHeight);
-            bounds = Physics.behavior('edge-collision-detection', {
-                aabb: viewportBounds,
-                restitution: 0.99,
-                cof: 0.99
-            });
-            world.add(bounds);
-
-            instance.addBodySet('intro', 0, viewWidth);
-
-            gravity = Physics.behavior('constant-acceleration');
-            world.add(gravity);
-            gravity.setAcceleration({
-                x: 0,
-                y: 0
-            });
-
-            world.add(Physics.behavior('body-impulse-response'));
-            world.add(Physics.behavior('body-collision-detection'));
-            world.add(Physics.behavior('sweep-prune'));
-
-            Physics.util.ticker.on(function (time, dt) {
-                world.step(time);
-            });
-            Physics.util.ticker.start();
-        });
-    }
-
-    this.addBodySet = function (type, minY, maxY) {
-        bodies.forEach(function (body) {
-            if (body.labels.indexOf(type) > -1) {
-                world.add(new Physics.body('circle', {
-                    x: getRandomRange(body.radius, viewWidth),
-                    y: getRandomRange(minY, maxY),
-                    vx: getRandomRange(-0.15, 0.15),
-                    vy: getRandomRange(-0.15, 0.15),
-                    radius: body.radius,
-                    labels: body.labels
-                }));
-            }
-        });
-    }
-
-    this.hasBodyType = function (type) {
-        var has = false;
-        world._bodies.forEach(function (body) {
-            if (body.labels.indexOf(type) > -1) {
-                has = true;
-            }
-        });
-
-        return has;
-    }
-
-    this.addText = function (text) {
-        Physics.body('text', 'rectangle', function (parent) {
-
-            var defaults = {
-                text: 'Enter Text Here...',
-                font: 'Arial',
-                fontSize: '10px'
-            };
-
-            return {
-                init: function (options) {
-
-                    // call parent init method
-                    parent.init.call(this, options);
-
-                    options = Physics.util.extend({}, defaults, options);
-
-                    this.geometry = Physics.geometry('circle', {
-                        radius: options.radius
-                    });
-
-                    this.recalc();
-                },
-
-                recalc: function () {
-                    parent.recalc.call(this);
-                    this.moi = this.mass * this.geometry.radius * this.geometry.radius / 2;
-                }
-            };
-        });
-    }
-
-    this.swapElements = function (type) {
-        bounds.setAABB(Physics.aabb(0, 0, viewWidth, viewHeight * 2));
-        gravity.setAcceleration({
-            x: 0,
-            y: 0.004
-        });
-
-        function catchBodyRise() {
-            console.log("riseRun");
-            var hasAll = true;
-            world._bodies.forEach(function (body) {
-                if (body.state.pos.y > viewHeight) {
-                    hasAll = false;
-                }
-            });
-            if (hasAll) {
-                console.log("good");
-                instance.resetWorldState();
-                Physics.util.ticker.off(catchBodyRise);
-            }
-        }
-
-        function catchBodyFall() {
-            console.log(world._bodies.length);
-
-            world._bodies.forEach(function (body) {
-                if (body.state.pos.y > viewHeight) {
-                    world.removeBody(body);
-                    console.log("Removed!");
-                }
-            });
-            if (world._bodies.length == 0) {
-                Physics.util.ticker.off(catchBodyFall);
-                gravity.setAcceleration({
-                    x: 0,
-                    y: -0.0006
-                });
-                bodies.forEach(function (body) {
-                    var circle;
-                    if (body.labels.indexOf(type) > -1) {
-                        circle = new Physics.body('circle', {
-                            x: getRandomRange(0, viewWidth),
-                            y: (viewHeight * 1.25),
-                            vx: getRandomRange(-0.15, 0.15),
-                            vy: 0,
-                            radius: body.radius,
-                            labels: body.labels
-                        })
-                        world.add(circle);
-                        var domRenderer = Physics.renderer('dom', {
-                            el: (element).attr('id'),
-                            width: viewWidth,
-                            height: viewHeight,
-                            meta: true, // don't display meta data
-                            styles: {
-                                'circle': {
-                                    strokeStyle: '#351024',
-                                    lineWidth: 1,
-                                    fillStyle: '#ffffff',
-                                    angleIndicator: '#351024'
-                                },
-                                'rectangle': {
-                                    strokeStyle: '#351024',
-                                    lineWidth: 1,
-                                    fillStyle: '#ffffff',
-                                    angleIndicator: '#351024'
-                                }
-                            }
-                        });
-                        var text = document.createElement("p");
-                        var node = document.createTextNode("This is a new paragraph.");
-                        text.appendChild(node);
-
-                        domRenderer.attach(text);
-                    }
-                });
-                Physics.util.ticker.on(catchBodyRise);
-            }
-        }
-
-        Physics.util.ticker.on(catchBodyFall);
-    }
-
-    this.resetWorldState = function () {
-        bounds.setAABB(Physics.aabb(0, 0, viewWidth, viewHeight));
-
-        gravity.setAcceleration({
-            x: 0,
-            y: 0
-        });
-    }
-
-    this.getWorld = function () {
-        return world;
-    }
-
-    return this.initialize();
-}
 
 function initHash() {
     $(window).hashchange(function () {
@@ -358,24 +111,24 @@ function initHash() {
         var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
         switch (cleanHash.split("-")[0]) {
-        case 'blank':
-            rect.changeMenu("menu-main");
-            break;
-        case 'nav':
-            rect.changeMenu("menu-nav");
-            break;
-        case 'contact':
-            rect.changeMenu("menu-contact");
-            break;
-        case 'about':
-            rect.changeMenu("menu-about");
-            break;
-        case 'projects':
-            rect.changeMenu("menu-projects");
-            break;
-        default:
-            rect.changeMenu("menu-main");
-            break;
+            case 'blank':
+                rect.changeMenu("menu-main");
+                break;
+            case 'nav':
+                rect.changeMenu("menu-nav");
+                break;
+            case 'contact':
+                rect.changeMenu("menu-contact");
+                break;
+            case 'about':
+                rect.changeMenu("menu-about");
+                break;
+            case 'projects':
+                rect.changeMenu("menu-projects");
+                break;
+            default:
+                rect.changeMenu("menu-main");
+                break;
         }
     });
 
@@ -409,9 +162,6 @@ function initParallax() {
 function initPage() {
     rect = $("#parallax-wrapper").rectangle({});
     rect.fadeElementsIn();
-
-    _gravity = $("#about-physics").gravity({});
-    _gravity.initGravity();
 
     //universal modal
     $(".modal-close").click(function () {
@@ -570,8 +320,4 @@ jQuery.fn.wibbly = function (opts) {
     }
 
     return this.initialize();
-}
-
-function getRandomRange(min, max) {
-    return Math.random() * (max - min) + min;
 }

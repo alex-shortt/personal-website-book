@@ -126,6 +126,9 @@ $duration) {
     opacity: 0;
     transition: opacity 1.6s ease-in-out;
     z-index: 5;
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
     &-despair {
         top: 79%;
         left: -70%;
@@ -294,16 +297,45 @@ $duration) {
     transition: transform 0.75s ease-out, opacity 0.75s ease-out;
     color: white;
     width: 100%;
+    min-height: 100%;
+    height: 100%;
     display: none;
     &-close {
-        color: white;
+        color: black;
         text-align: right;
         width: calc(100% - 40px);
         margin: 20px;
         cursor: pointer;
         transition: color 0.15s linear;
+        position: absolute;
         &:hover {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(0, 0, 0, 0.6);
+        }
+    }
+    &-content {
+        width: 100%;
+        min-height: 100%;
+        height: 100%;
+    }
+    &-svg {
+        position: absolute;
+        width: 100%;
+        min-height: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        &-line {
+            stroke: black;
+            stroke-width: 3px;
+        }
+    }
+    &-girl {
+        &-image {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            margin: 3vh 3vw;
+            height: 38vh;
         }
     }
 }
@@ -394,22 +426,19 @@ $yDir) {
     25% {
         -webkit-clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
         clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
-        fill: white;
     }
     50% {
         -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
         clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
-        fill: black;
     }
     75% {
         -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
         clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
-        fill: white;
     }
     100% {
         -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-        fill: black;
+        fill: white;
     }
 }
 
@@ -417,24 +446,23 @@ $yDir) {
     0% {
         -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-        fill: black;
+        fill: white;
     }
     25% {
         -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
         clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
-        fill: white;
     }
     50% {
         -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
         clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
-        fill: black;
     }
     75% {
         -webkit-clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
         clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
-        fill: white;
     }
-    100% {}
+    100% {
+        fill: black;
+    }
 }
 
 @function multiple-box-shadow ($n) {
