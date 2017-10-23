@@ -1,5 +1,5 @@
-var rect;
-var _gravity;
+var _rect;
+var _light;
 
 jQuery.fn.rectangle = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.rectangle.defs, opts);
@@ -78,6 +78,14 @@ jQuery.fn.rectangle = function (opts) {
                         opacity: 1,
                         transform: "translateY(0)"
                     });
+                    
+                    var x = setInterval(function () {
+                        _light.responsive();
+                    }, 10);
+                    setTimeout(function(){
+                        clearInterval(x);
+                    }, 1500);
+                    
                 }, 500);
             }, 750);
         }, 750);
@@ -104,6 +112,112 @@ jQuery.fn.rectangle = function (opts) {
     return this.initialize();
 }
 
+jQuery.fn.flashlight = function (opts) {
+    opts = jQuery.extend({}, jQuery.fn.flashlight.defs, opts);
+    jQuery.fn.rectangle.defs = {};
+
+    var instance = this;
+    var element = jQuery(this);
+    var draw;
+    var path;
+
+    var angle = 0; //mother angle (both shaft and handle)
+    var posX = 0; //position of light shaft origin X
+    var posY = 0; //position of light shaft origin Y
+    var scale = 1; //scale if i can get responsiveness fucking working....
+    var scaleWidth = 388.609; //match to imgElement width to get scale
+
+    var imgPosX = 0.2683; //percentage distance in the X that the svg origin is in imgElement
+    var imgPosY = 0.255; //percentage distance in the Y that the svg origin is in imgElement
+    var imgElement = $("#modal-girl-image");
+
+    var handle = $("#modal-handle");
+    var handlePosX = 0.2616; //percentage distance in the X that the handle is in imgElement
+    var handlePosY = 0.2024; //percentage distance in the Y that the handle is in imgElement
+
+    var transPosX = 0.295; //percentage distance in the X that the transform origin is in imgElement
+    var transPosY = 0.4519; //percentage distance in the Y that the transform origin is in imgElement
+
+    this.initialize = function () {
+        draw = SVG('light');
+        path = draw.path("M431.901,263.82c57.33,0,103.804,46.475,103.804,103.805 c0,17.398-4.279,33.796-11.844,48.199l0.002-0.009l-68.74,279.721l-23.222-0.001l0,0c0,0,0,0,0,0l-23.223,0.001l-68.74-279.721 l0.002,0.009c-7.564-14.403-11.844-30.801-11.844-48.199C328.097,310.295,374.572,263.82,431.901,263.82z");
+        //path = draw.path("M0,0v5272.492h5938.288V0H0z M1483.912,3865.3l-271.854,247.191L1170,4092.845l71.672-330.013 c6.326-70.161,65.177-123.925,136.985-123.925c76.027,0,137.66,61.633,137.66,137.661 C1516.318,3810.604,1504.378,3841.273,1483.912,3865.3z");
+        var clip = draw.clip().add(path);
+        path.move(0, 0);
+
+        var clipID = $(".light clipPath").attr('id');
+        $('.modal-content').css('clip-path', 'url(#' + clipID + ')');
+
+        window.addEventListener('resize', function () {
+            _light.responsive();
+        });
+
+        return this;
+    }
+
+    this.responsive = function () {
+        var moveX = $(imgElement).offset().left + ($(imgElement).width() * imgPosX);
+        var moveY = $(imgElement).offset().top + ($(imgElement).height() * imgPosY);
+        //this.setScale($(imgElement).width() / scaleWidth);
+        this.moveOrigin(moveX, moveY);
+        this.updateHandle();
+    }
+
+    this.setScale = function (newScale) {
+        return;
+        path.scale(1);
+        scale = newScale;
+        path.scale(scale, posX + path.width() / 2, posY + path.height());
+    }
+
+    this.resetState = function () {
+        this.setAngle(0);
+        path.move(0, 0);
+    }
+
+    this.setAngle = function (newAngle, animate) {
+        console.log("__________");
+        angle = newAngle;
+        console.log("angle: " + angle);
+
+        var transX = $(imgElement).offset().left + (transPosX * $(imgElement).width());
+        var transY = $(imgElement).offset().top + (transPosY * $(imgElement).height());
+        
+        console.log("transX: " + transX);
+        console.log("transY: " + transY);
+        
+        //literally no idea why but this works
+        if (animate) {
+            path.animate().rotate(angle, transX, transY);
+        } else {
+            path.rotate(angle);
+        }
+
+        this.updateHandle();
+    }
+
+    this.moveOrigin = function (x, y) {
+        var tempAngle = angle;
+        this.resetState();
+        
+        posX = x - (path.width() / 2);
+        posY = y - path.height();
+        path.move(posX, posY);
+        this.setAngle(tempAngle);
+    }
+    
+    this.updateHandle = function () {
+        $(handle).css("left", ($(imgElement).offset().left + ($(imgElement).width() * handlePosX)) + "px");
+        $(handle).css("top", ($(imgElement).offset().top + ($(imgElement).height() * handlePosY)) + "px");
+        $(handle).css("transform", "rotate(" + (angle - 25.5) + "deg)");
+    }
+
+    this.getPath = function () {
+        return path;
+    }
+
+    return this.initialize();
+}
 
 function initHash() {
     $(window).hashchange(function () {
@@ -112,22 +226,22 @@ function initHash() {
 
         switch (cleanHash.split("-")[0]) {
             case 'blank':
-                rect.changeMenu("menu-main");
+                _rect.changeMenu("menu-main");
                 break;
             case 'nav':
-                rect.changeMenu("menu-nav");
+                _rect.changeMenu("menu-nav");
                 break;
             case 'contact':
-                rect.changeMenu("menu-contact");
+                _rect.changeMenu("menu-contact");
                 break;
             case 'about':
-                rect.changeMenu("menu-about");
+                _rect.changeMenu("menu-about");
                 break;
             case 'projects':
-                rect.changeMenu("menu-projects");
+                _rect.changeMenu("menu-projects");
                 break;
             default:
-                rect.changeMenu("menu-main");
+                _rect.changeMenu("menu-main");
                 break;
         }
     });
@@ -160,13 +274,17 @@ function initParallax() {
 }
 
 function initPage() {
-    rect = $("#parallax-wrapper").rectangle({});
-    rect.fadeElementsIn();
+    _rect = $("#parallax-wrapper").rectangle({});
+    _rect.fadeElementsIn();
 
     //universal modal
     $(".modal-close").click(function () {
-        rect.closeModal($(this).data("modal"));
+        _rect.closeModal($(this).data("modal"));
     });
+
+    _light = $(".modal-content").flashlight({});
+    _light.setAngle(0);
+
 
     //project-1 modal
 
@@ -194,7 +312,7 @@ function initPage() {
         wheelSpeed: 0.5
     });
     $("#projects-project-1").click(function () {
-        rect.openModal("project-1");
+        _rect.openModal("project-1");
     });
 
     //about menu
