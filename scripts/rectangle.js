@@ -151,6 +151,16 @@ jQuery.fn.flashlight = function (opts) {
         window.addEventListener('resize', function () {
             _light.responsive();
         });
+        
+        $(document).click(function(e){
+            //console.log(e.pageX, e.pageY);
+            var trans = _light.getTransPoint();
+            
+            var width = e.pageX - trans.x;
+            var height = trans.y - e.pageY;
+            var angle = 90 - (Math.atan(height / width) * 180 / Math.PI);
+            _light.setAngle(angle, true);
+        });
 
         return this;
     }
@@ -176,15 +186,10 @@ jQuery.fn.flashlight = function (opts) {
     }
 
     this.setAngle = function (newAngle, animate) {
-        console.log("__________");
         angle = newAngle;
-        console.log("angle: " + angle);
 
         var transX = $(imgElement).offset().left + (transPosX * $(imgElement).width());
         var transY = $(imgElement).offset().top + (transPosY * $(imgElement).height());
-        
-        console.log("transX: " + transX);
-        console.log("transY: " + transY);
         
         //literally no idea why but this works
         if (animate) {
@@ -194,6 +199,18 @@ jQuery.fn.flashlight = function (opts) {
         }
 
         this.updateHandle();
+    }
+    
+    this.getTransPoint = function (){
+        var transX = $(imgElement).offset().left + (transPosX * $(imgElement).width());
+        var transY = $(imgElement).offset().top + (transPosY * $(imgElement).height());
+        
+        var send = {
+            x: transX,
+            y: transY
+        }
+        
+        return send;
     }
 
     this.moveOrigin = function (x, y) {

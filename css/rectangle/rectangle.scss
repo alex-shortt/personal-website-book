@@ -318,7 +318,8 @@ $duration) {
         height: 100%;
         color: black;
         clip-path: url(#lightClip);
-        background: red;
+        //background: red;
+        background-image: url(http://i.imgur.com/HjiMMyO.jpg);
     }
     &-svg {
         position: absolute;
@@ -327,6 +328,7 @@ $duration) {
         height: 100%;
         top: 0;
         left: 0;
+        pointer-events: none;
         &-line {
             stroke: black;
             stroke-width: 3px;
