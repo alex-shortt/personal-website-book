@@ -1,5 +1,6 @@
 var _rect;
 var _light;
+var _gallery;
 
 jQuery.fn.rectangle = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.rectangle.defs, opts);
@@ -78,14 +79,8 @@ jQuery.fn.rectangle = function (opts) {
                         opacity: 1,
                         transform: "translateY(0)"
                     });
-                    
-                    var x = setInterval(function () {
-                        _light.responsive();
-                    }, 10);
-                    setTimeout(function(){
-                        clearInterval(x);
-                    }, 1500);
-                    
+
+                    _light.responsive();
                 }, 500);
             }, 750);
         }, 750);
@@ -140,7 +135,11 @@ jQuery.fn.flashlight = function (opts) {
 
     this.initialize = function () {
         draw = SVG('light');
-        path = draw.path("M431.901,263.82c57.33,0,103.804,46.475,103.804,103.805 c0,17.398-4.279,33.796-11.844,48.199l0.002-0.009l-68.74,279.721l-23.222-0.001l0,0c0,0,0,0,0,0l-23.223,0.001l-68.74-279.721 l0.002,0.009c-7.564-14.403-11.844-30.801-11.844-48.199C328.097,310.295,374.572,263.82,431.901,263.82z");
+        //big symmetrical
+        path = draw.path("M782.529,3.328c109.238,0,197.791,88.555,197.791,197.791 c0,33.15-8.153,64.396-22.567,91.839l0.004-0.017L805.751,825.925l-23.223-0.002l0,0h0.002l-23.223,0.001L607.305,292.941 l0.004,0.017c-14.413-27.443-22.569-58.688-22.569-91.839C584.74,91.882,673.294,3.328,782.529,3.328z");
+        //small symmetrical
+        //path = draw.path("M431.901,263.82c57.33,0,103.804,46.475,103.804,103.805 c0,17.398-4.279,33.796-11.844,48.199l0.002-0.009l-68.74,279.721l-23.222-0.001l0,0c0,0,0,0,0,0l-23.223,0.001l-68.74-279.721 l0.002,0.009c-7.564-14.403-11.844-30.801-11.844-48.199C328.097,310.295,374.572,263.82,431.901,263.82z");
+        //hand drawn
         //path = draw.path("M0,0v5272.492h5938.288V0H0z M1483.912,3865.3l-271.854,247.191L1170,4092.845l71.672-330.013 c6.326-70.161,65.177-123.925,136.985-123.925c76.027,0,137.66,61.633,137.66,137.661 C1516.318,3810.604,1504.378,3841.273,1483.912,3865.3z");
         var clip = draw.clip().add(path);
         path.move(0, 0);
@@ -151,11 +150,11 @@ jQuery.fn.flashlight = function (opts) {
         window.addEventListener('resize', function () {
             _light.responsive();
         });
-        
-        $(document).click(function(e){
+
+        $(document).click(function (e) {
             //console.log(e.pageX, e.pageY);
             var trans = _light.getTransPoint();
-            
+
             var width = e.pageX - trans.x;
             var height = trans.y - e.pageY;
             var angle = 90 - (Math.atan(height / width) * 180 / Math.PI);
@@ -190,8 +189,9 @@ jQuery.fn.flashlight = function (opts) {
 
         var transX = $(imgElement).offset().left + (transPosX * $(imgElement).width());
         var transY = $(imgElement).offset().top + (transPosY * $(imgElement).height());
-        
+
         //literally no idea why but this works
+        path.stop();
         if (animate) {
             path.animate().rotate(angle, transX, transY);
         } else {
@@ -200,29 +200,29 @@ jQuery.fn.flashlight = function (opts) {
 
         this.updateHandle();
     }
-    
-    this.getTransPoint = function (){
+
+    this.getTransPoint = function () {
         var transX = $(imgElement).offset().left + (transPosX * $(imgElement).width());
         var transY = $(imgElement).offset().top + (transPosY * $(imgElement).height());
-        
+
         var send = {
             x: transX,
             y: transY
         }
-        
+
         return send;
     }
 
     this.moveOrigin = function (x, y) {
         var tempAngle = angle;
         this.resetState();
-        
+
         posX = x - (path.width() / 2);
         posY = y - path.height();
         path.move(posX, posY);
         this.setAngle(tempAngle);
     }
-    
+
     this.updateHandle = function () {
         $(handle).css("left", ($(imgElement).offset().left + ($(imgElement).width() * handlePosX)) + "px");
         $(handle).css("top", ($(imgElement).offset().top + ($(imgElement).height() * handlePosY)) + "px");
@@ -231,6 +231,68 @@ jQuery.fn.flashlight = function (opts) {
 
     this.getPath = function () {
         return path;
+    }
+
+    return this.initialize();
+}
+
+jQuery.fn.gallery = function (opts) {
+    opts = jQuery.extend({}, jQuery.fn.gallery.defs, opts);
+    jQuery.fn.gallery.defs = {};
+
+    var instance = this;
+    var element = jQuery(this);
+    var categories = ["awge", "revengexstorm", "sounddown", "nessly", "portalgun"];
+    var gallery = ["assets/css3-drawn.png",
+                  "assets/girl.png",
+                  "assets/girl.png",
+                  "assets/jungle.jpg",
+                  "assets/moon.png",
+                  "assets/jupiter.png",
+                  "assets/girl-hand.png"];
+    var catInd = 0;
+    var index = 0;
+    var images = [];
+
+    this.initialize = function () {
+        this.updateImage();
+        return this;
+    }
+
+    this.updateImage = function () {
+        $(element).css("background-image", "url(" + this.currentGallery()[index] + ")");
+    }
+
+    this.next = function () {
+        index++;
+        if (index > this.currentGallery().length - 1) {
+            index = 0;
+        }
+        $(element).css("opacity", 0);
+        setTimeout(function (obj) {
+            obj.updateImage();
+        }, 250, this);
+        setTimeout(function () {
+            $(element).css("opacity", 1);
+        }, 500);
+    }
+
+    this.previous = function () {
+        index--;
+        if (index < 0) {
+            index = this.currentGallery().length - 1;
+        }
+        $(element).css("opacity", 0);
+        setTimeout(function (obj) {
+            obj.updateImage();
+        }, 250, this);
+        setTimeout(function () {
+            $(element).css("opacity", 1);
+        }, 500);
+    }
+
+    this.currentGallery = function () {
+        return gallery;
     }
 
     return this.initialize();
@@ -303,7 +365,14 @@ function initPage() {
     _light.setAngle(0);
 
 
-    //project-1 modal
+    //gallery modal 
+    _gallery = $("#modal-unit-gallery").gallery({});
+    $("#modal-gallery-left").click(function () {
+        _gallery.previous();
+    });
+    $("#modal-gallery-right").click(function () {
+        _gallery.next();
+    });
 
     //main menu
     $("#menu-main-title").click(function () {

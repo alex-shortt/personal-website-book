@@ -292,7 +292,6 @@ $duration) {
     top: 0;
     left: 0;
     z-index: 2;
-    transform: translateY(-7.5vh);
     opacity: 0;
     transition: transform 0.75s ease-out, opacity 0.75s ease-out;
     color: white;
@@ -319,7 +318,7 @@ $duration) {
         color: black;
         clip-path: url(#lightClip);
         //background: red;
-        background-image: url(http://i.imgur.com/HjiMMyO.jpg);
+        background-image: url("../../assets/space.png");
     }
     &-svg {
         position: absolute;
@@ -349,6 +348,29 @@ $duration) {
         height: 97.59px;
         transition: 1s linear transform;
         transform: rotate(calc(0deg - 25.5deg));
+    }
+    &-unit {
+        &-gallery {
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            transform: translateX(-50%) translateY(-50%);
+            width: 200px;
+            height: 200px;
+            display: flex;
+            background-size: contain;
+            background-position: center center;
+            background-repeat: no-repeat;
+            transition: opacity .25s linear;
+            &-left{
+                cursor: url(../../assets/precedent.cur), auto;
+                flex: 1;
+            }
+            &-right{
+                cursor: url(../../assets/suivant.cur), auto;
+                flex: 1;
+            }
+        }
     }
 }
 
