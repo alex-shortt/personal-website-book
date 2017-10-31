@@ -152,6 +152,7 @@ jQuery.fn.flashlight = function (opts) {
         });
 
         $(document).click(function (e) {
+            return;
             //console.log(e.pageX, e.pageY);
             var trans = _light.getTransPoint();
 
@@ -160,6 +161,15 @@ jQuery.fn.flashlight = function (opts) {
             var angle = 90 - (Math.atan(height / width) * 180 / Math.PI);
             _light.setAngle(angle, true);
         });
+
+        window.onmousemove = function (e) {
+            var trans = _light.getTransPoint();
+
+            var width = e.pageX - trans.x;
+            var height = trans.y - e.pageY;
+            var angle = 90 - (Math.atan(height / width) * 180 / Math.PI);
+            _light.setAngle(angle);
+        };
 
         return this;
     }
@@ -195,7 +205,7 @@ jQuery.fn.flashlight = function (opts) {
         if (animate) {
             path.animate().rotate(angle, transX, transY);
         } else {
-            path.rotate(angle);
+            path.rotate(angle, transX, transY);
         }
 
         this.updateHandle();
