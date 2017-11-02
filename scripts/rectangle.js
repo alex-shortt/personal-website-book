@@ -1,6 +1,7 @@
 var _rect;
 var _light;
 var _gallery;
+var _wibbly; 
 
 jQuery.fn.rectangle = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.rectangle.defs, opts);
@@ -371,9 +372,8 @@ function initPage() {
         _rect.closeModal($(this).data("modal"));
     });
 
-    _light = $(".modal-content").flashlight({});
-    _light.setAngle(0);
-
+    //_light = $(".modal-content").flashlight({});
+    //_light.setAngle(0);
 
     //gallery modal 
     _gallery = $("#modal-unit-gallery").gallery({});
@@ -383,6 +383,10 @@ function initPage() {
     $("#modal-gallery-right").click(function () {
         _gallery.next();
     });
+    
+    //wibble modal
+    _wibbly = $("#modal-unit-wibbly").wibbly({}); 
+    _wibbly.initWibbly();
 
     //main menu
     $("#menu-main-title").click(function () {
@@ -450,20 +454,20 @@ jQuery.fn.wibbly = function (opts) {
     var instance = this;
     var element = jQuery(this);
 
-    var canvas = document.querySelector('#wibbly-canvas');
+    var canvas = $(element).get(0);
     var context = canvas.getContext('2d');
     var ratio = window.devicePixelRatio || 1;
 
-    var totalLineHeight = 140;
-    var totalLines = 2;
+    var totalLineHeight = 680;
+    var totalLines = 4;
     var totalDiff = totalLineHeight / totalLines;
-    var fontHeight = 30 * ratio - 50; // Small centering
+    var fontHeight = 60 * ratio - 50; // Small centering
 
     var smallestWidth = 280; // width of smallest line;
-    var offsetX = 5;
-    var offsetY = 2;
+    var offsetX = 20;
+    var offsetY = 8;
     var iterations;
-    var verticalAlign, line1Diff, line2Diff, iterations, iteration, animationFrame;
+    var verticalAlign, line1Diff, line2Diff, line3Diff, line4Diff, iterations, iteration, animationFrame;
 
     var startRGB = [255, 255, 255];
     var endRGB = [255, 255, 255];
@@ -473,7 +477,7 @@ jQuery.fn.wibbly = function (opts) {
         cancelAnimationFrame(animationFrame);
         canvas.width = window.innerWidth * ratio;
         canvas.height = window.innerHeight * ratio;
-        context.font = '60px Montserrat';
+        context.font = '180px Montserrat';
         context.textAlign = 'center';
         context.fillStyle = '#fff';
         context.strokeStyle = "#000000";
@@ -482,14 +486,18 @@ jQuery.fn.wibbly = function (opts) {
         verticalAlign = (window.innerHeight / 2 * ratio) - totalLineHeight / 2;
         line1Diff = totalLineHeight + fontHeight - totalDiff;
         line2Diff = totalLineHeight + fontHeight - totalDiff * 2;
+        line3Diff = totalLineHeight + fontHeight - totalDiff * 3;
+        line4Diff = totalLineHeight + fontHeight - totalDiff * 4;
         iterations = Math.floor(((window.innerWidth * ratio / 2) - (smallestWidth * ratio / 2)) / offsetX + 5);
         iterations = Math.round(iterations / 10);
-        alert(iterations);
-        prepareColorSets(iterations);
+        this.prepareColorSets(iterations);
         iteration = 0;
-        animationFrame = requestAnimationFrame(draw);
-        window.onresize = initWibbly;
+        animationFrame = requestAnimationFrame(function(){
+            _wibbly.draw();
+        });
+        //window.onresize = this.initWibbly();
         $(window).mousemove(function (event) {
+            return;
             offsetX = 20 * ((event.pageX / screen.width) - 0.5);
             offsetY = 20 * ((event.pageY / screen.height) - 0.5);
         });
@@ -501,25 +509,33 @@ jQuery.fn.wibbly = function (opts) {
             context.fillStyle = 'rgb(' + fullColorSet[i][0] + ',' + fullColorSet[i][1] + ',' + fullColorSet[i][2] + ')';
             var x = window.innerWidth / 2 * ratio - i * offsetX;
             var y = verticalAlign + i * offsetY + (Math.sin(i + iteration) * 2);
-            drawText(x, y);
+            this.drawText(x, y);
         }
 
         iteration += 0.09;
-        animationFrame = requestAnimationFrame(draw);
+        animationFrame = requestAnimationFrame(function(){
+            _wibbly.draw();
+        });
     }
 
-    this.draw = function (x, y) {
-        context.fillText("Alex", x, y + line2Diff);
-        context.strokeText("Alex", x, y + line2Diff);
+    this.drawText = function (x, y) {
+        context.fillText("AWGE", x, y + line4Diff);
+        context.strokeText("AWGE", x, y + line4Diff);
+        
+        context.fillText("A website for A$AP Rocky", x, y + line3Diff);
+        context.strokeText("A website for A$AP Rocky", x, y + line3Diff);
+        
+        context.fillText("Full E-Commerce and media distribution", x, y + line2Diff);
+        context.strokeText("Full E-Commerce and media distribution", x, y + line2Diff);
 
-        context.fillText("Shortt", x, y + line1Diff);
-        context.strokeText("Shortt", x, y + line1Diff);
+        context.fillText("3/4 of a million users", x, y + line1Diff);
+        context.strokeText("3/4 of a million users", x, y + line1Diff);
     }
 
     this.prepareColorSets = function (iterations) {
         fullColorSet = [];
         for (var i = 0; i < iterations; i++) {
-            fullColorSet.push(colourGradientor(1 - i / iterations, startRGB, endRGB));
+            fullColorSet.push(this.colourGradientor(1 - i / iterations, startRGB, endRGB));
         }
     }
 
