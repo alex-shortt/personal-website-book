@@ -35,8 +35,11 @@
                 <div id="modal-gallery-right" class="modal-unit-gallery-right"></div>
             </div>
             <canvas id="modal-unit-wibbly" class="modal-unit-wibbly">
-            
+
             </canvas>
+            <div id="blackhole" class="modal-unit-blackhole">
+                <div class="modal-unit-blackhole-centerHover"><span>ENTER</span></div>
+            </div>
         </div>
         <img id="modal-handle" class="modal-handle" src="./assets/girl-hand.png" />
     </div>
@@ -130,13 +133,12 @@
     </div>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             initPage();
             initHash();
             initParallax();
             _rect.openModal('project-1');
         });
-
     </script>
 </body>
 
