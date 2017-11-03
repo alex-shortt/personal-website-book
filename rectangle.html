@@ -30,6 +30,9 @@
             <div class="modal-comet modal-comet-2"></div>
             <div class="modal-comet modal-comet-3"></div>
             <div class="modal-comet modal-comet-4"></div>
+            <div id="blackhole" class="modal-unit-blackhole">
+                <div class="modal-unit-blackhole-centerHover"><span>VISIT</span></div>
+            </div>
             <div id="modal-unit-gallery" class="modal-unit-gallery">
                 <div id="modal-gallery-left" class="modal-unit-gallery-left"></div>
                 <div id="modal-gallery-right" class="modal-unit-gallery-right"></div>
@@ -37,9 +40,13 @@
             <canvas id="modal-unit-wibbly" class="modal-unit-wibbly">
 
             </canvas>
-            <div id="blackhole" class="modal-unit-blackhole">
-                <div class="modal-unit-blackhole-centerHover"><span>ENTER</span></div>
-            </div>
+        </div>
+        <div class="modal-nav">
+            <h1 class="modal-nav-title">AWGE</h1>
+            <hr />
+            <h2 class="modal-nav-button" id="modal-gallery">Gallery</h2>
+            <h2 class="modal-nav-button" id="modal-link">Link</h2>
+            <h2 class="modal-nav-button" id="modal-about">About</h2>
         </div>
         <img id="modal-handle" class="modal-handle" src="./assets/girl-hand.png" />
     </div>
@@ -133,12 +140,13 @@
     </div>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             initPage();
             initHash();
             initParallax();
             _rect.openModal('project-1');
         });
+
     </script>
 </body>
 
