@@ -40,15 +40,15 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-            case 'menu-contact':
-                $("#rect-menu-container").css("border", "7px solid white");
-                break;
-            case 'menu-about':
-                $("#rect-menu-container").css("border", "7px solid white");
-                break;
-            default:
-                $("#rect-menu-container").css("border", "7px solid black");
-                break;
+        case 'menu-contact':
+            $("#rect-menu-container").css("border", "7px solid white");
+            break;
+        case 'menu-about':
+            $("#rect-menu-container").css("border", "7px solid white");
+            break;
+        default:
+            $("#rect-menu-container").css("border", "7px solid black");
+            break;
         }
 
         setTimeout(function (menu) {
@@ -338,18 +338,18 @@ jQuery.fn.modalUnits = function (opts) {
     var gallery = {
         elem: "#modal-unit-gallery",
         angle: 17,
-        distPerc: 0.7
+        distPerc: 0.85
     };
     var blackhole = {
         elem: "#blackhole > canvas",
         elem2: ".modal-unit-blackhole-centerHover",
         angle: 54,
-        distPerc: 0.7
+        distPerc: 0.85
     };
     var about = {
         elem: "#modal-unit-wibbly",
         angle: 85,
-        distPerc: 0.7
+        distPerc: 0.85
     };
 
     this.getScaledXY = function (angle, perc) {
@@ -370,9 +370,9 @@ jQuery.fn.modalUnits = function (opts) {
             triHeight = heightY;
         }
         var dist = Math.hypot(triWidth, triHeight) * perc;
-        
+
         dist = Math.min(dist * perc, _light.getPath().height() * 0.8);
-        
+
         var x = transPoint.x + (ratioX * dist);
         var y = transPoint.y - (ratioY * dist);
         return {
@@ -394,13 +394,20 @@ jQuery.fn.modalUnits = function (opts) {
         $(blackhole.elem2).css("left", newCoords.x + "px");
     }
 
+    this.updateAbout = function () {
+        var newCoords = this.getScaledXY(about.angle, about.distPerc);
+        $(about.elem).css("top", newCoords.y + "px");
+        $(about.elem).css("left", newCoords.x + "px");
+    }
+
     this.initialize = function () {
-        this.updateGallery();
+        //this.updateGallery();
         //this.updateBlackHole();
 
         window.addEventListener('resize', function () {
             _modalUnits.updateGallery();
             _modalUnits.updateBlackHole();
+            _modalUnits.updateAbout();
         });
         return this;
     }
@@ -600,7 +607,7 @@ function blackhole(element) {
     function init(time) {
         //context.fillStyle = 'rgba(25,25,25,1)'; // Initial clear of the canvas, to avoid an issue where it all gets too dark
         //context.fillRect(0, 0, cw, ch);
-        for (var i = 0; i < 1000; i++) { // create 2500 stars
+        for (var i = 0; i < 500; i++) { // create 2500 stars
             new star();
         }
         loop();
@@ -615,24 +622,24 @@ function initHash() {
         var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
         switch (cleanHash.split("-")[0]) {
-            case 'blank':
-                _rect.changeMenu("menu-main");
-                break;
-            case 'nav':
-                _rect.changeMenu("menu-nav");
-                break;
-            case 'contact':
-                _rect.changeMenu("menu-contact");
-                break;
-            case 'about':
-                _rect.changeMenu("menu-about");
-                break;
-            case 'projects':
-                _rect.changeMenu("menu-projects");
-                break;
-            default:
-                _rect.changeMenu("menu-main");
-                break;
+        case 'blank':
+            _rect.changeMenu("menu-main");
+            break;
+        case 'nav':
+            _rect.changeMenu("menu-nav");
+            break;
+        case 'contact':
+            _rect.changeMenu("menu-contact");
+            break;
+        case 'about':
+            _rect.changeMenu("menu-about");
+            break;
+        case 'projects':
+            _rect.changeMenu("menu-projects");
+            break;
+        default:
+            _rect.changeMenu("menu-main");
+            break;
         }
     });
 

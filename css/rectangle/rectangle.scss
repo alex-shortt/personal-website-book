@@ -452,6 +452,7 @@ $duration) {
             position: absolute;
             width: 300px;
             height: 300px;
+            transform: translateX(-50%) translateY(-50%);
             top: 60%;
             left: 35%;
         }
