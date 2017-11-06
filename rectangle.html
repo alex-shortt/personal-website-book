@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <div id="project-1" class="modal">
+    <div id="modal" class="modal">
         <svg class="modal-svg">
             <line class="modal-svg-line" x1="0" y1="80%" x2="100%" y2="80%"></line>
         </svg>
@@ -30,19 +30,24 @@
             <div class="modal-comet modal-comet-2"></div>
             <div class="modal-comet modal-comet-3"></div>
             <div class="modal-comet modal-comet-4"></div>
-            <div id="blackhole" class="modal-unit-blackhole">
-                <div class="modal-unit-blackhole-centerHover"><span>VISIT</span></div>
+            <div id="modal-unit-portal" class="modal-unit-portal">
+                <div class="modal-unit-portal-layer"></div>
+                <div class="modal-unit-portal-layer"></div>
+                <div class="modal-unit-portal-layer"></div>
+                <div class="modal-unit-portal-layer"></div>
+                <div class="modal-unit-portal-layer"></div>
+                <h1 id="modal-unit-portal-text" class="modal-unit-portal-text">VISIT</h1>
             </div>
             <div id="modal-unit-gallery" class="modal-unit-gallery">
                 <div id="modal-gallery-left" class="modal-unit-gallery-left"></div>
                 <div id="modal-gallery-right" class="modal-unit-gallery-right"></div>
             </div>
-            <canvas id="modal-unit-wibbly" class="modal-unit-wibbly">
-
-            </canvas>
+            <div id="modal-unit-about" class="modal-unit-about">
+                <h3 id="modal-unit-about-text" class="modal-unit-about-text">Hello</h3>
+            </div>
         </div>
         <div class="modal-nav">
-            <h1 class="modal-nav-title">AWGE</h1>
+            <h1 id="modal-nav-title" class="modal-nav-title">AWGE</h1>
             <hr />
             <h2 class="modal-nav-button" id="modal-gallery">Gallery</h2>
             <h2 class="modal-nav-button" id="modal-link">Link</h2>
@@ -50,16 +55,6 @@
         </div>
         <img id="modal-handle" class="modal-handle" src="./assets/girl-hand.png" />
     </div>
-    <!--
-    <svg>
-        <defs>
-            <clipPath id="lightClip">
-            <polygon points="100 0, 650 100, 100,200" fill="#c99" />  
-            <circle cx="100" cy="100" r="100" fill="#9c6" />  
-            </clipPath>
-        </defs>
-    </svg>
-    -->
 
     <div class="light" id="light"></div>
 
@@ -117,7 +112,7 @@
             </div>
             <div id="menu-contact" class="rect-menu menu-contact">
                 <div class="menu-contact-option">
-                    <h1 id="contact-facebook" class="menu-contact-option-text fa fa-3x fa-facebook" aria-hidden="true"></h1>
+                    <h1 id="contact-github" class="menu-contact-option-text fa fa-3x fa-github" aria-hidden="true"></h1>
                 </div>
                 <div class="menu-contact-option">
                     <h1 id="contact-soundcloud" class="menu-contact-option-text fa fa-3x fa-soundcloud" aria-hidden="true"></h1>
@@ -144,7 +139,6 @@
             initPage();
             initHash();
             initParallax();
-            _rect.openModal('project-1');
         });
 
     </script>

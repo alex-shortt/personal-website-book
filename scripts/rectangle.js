@@ -1,8 +1,6 @@
 var _rect;
 var _light;
 var _gallery;
-var _wibbly;
-var _blackhole;
 var _modalUnits;
 
 jQuery.fn.rectangle = function (opts) {
@@ -40,15 +38,15 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-        case 'menu-contact':
-            $("#rect-menu-container").css("border", "7px solid white");
-            break;
-        case 'menu-about':
-            $("#rect-menu-container").css("border", "7px solid white");
-            break;
-        default:
-            $("#rect-menu-container").css("border", "7px solid black");
-            break;
+            case 'menu-contact':
+                $("#rect-menu-container").css("border", "7px solid white");
+                break;
+            case 'menu-about':
+                $("#rect-menu-container").css("border", "7px solid white");
+                break;
+            default:
+                $("#rect-menu-container").css("border", "7px solid black");
+                break;
         }
 
         setTimeout(function (menu) {
@@ -76,27 +74,54 @@ jQuery.fn.rectangle = function (opts) {
             setTimeout(function () {
                 $("#splash-svg").show();
                 $(".splash-svg").addClass("splash-svg-open");
-                $("#" + project).css("display", "initial");
+                $("#modal").css("display", "initial");
                 setTimeout(function () {
-                    $("#" + project).css({
+                    $("#modal").css({
                         opacity: 1,
                         transform: "translateY(0)"
                     });
+                    _modalUnits.updateModal(project);
+                    
+                    setTimeout(function () {
+                        _light.responsive();
+                        _modalUnits.updateGallery();
+                        _modalUnits.updatePortal();
+                        _modalUnits.updateAbout();
+                    }, (750 / 4));
+                    
+                    setTimeout(function () {
+                        _light.responsive();
+                        _modalUnits.updateGallery();
+                        _modalUnits.updatePortal();
+                        _modalUnits.updateAbout();
+                    }, (750 / 2));
+                    
+                    setTimeout(function () {
+                        _light.responsive();
+                        _modalUnits.updateGallery();
+                        _modalUnits.updatePortal();
+                        _modalUnits.updateAbout();
+                    }, (750 * 3 / 4));
 
-                    _light.responsive();
+                    setTimeout(function () {
+                        _light.responsive();
+                        _modalUnits.updateGallery();
+                        _modalUnits.updatePortal();
+                        _modalUnits.updateAbout();
+                    }, 750);
                 }, 500);
             }, 750);
         }, 750);
     }
 
-    this.closeModal = function (project) {
-        $("#" + project).css({
+    this.closeModal = function () {
+        $("#modal").css({
             opacity: 0,
             transform: "translateY(-7.5vh)"
         });
         setTimeout(function () {
             $("#splash-svg").removeClass("splash-svg-open");
-            $("#" + project).css("display", "none");
+            $("#modal").css("display", "none");
             setTimeout(function () {
                 $("#splash-svg").hide();
                 $("#rect-menu-container").css("height", "100%");
@@ -121,6 +146,11 @@ jQuery.fn.flashlight = function (opts) {
     var clip;
     var isMoving = false;
 
+    var svg_biggest = "M1369.275,15.326c150.669,0,272.807,122.141,272.807,272.807 c0,45.723-11.245,88.819-31.126,126.67l0.005-0.023l-218.463,735.127l-23.223-0.002l0,0h0.003l-23.224,0.001l-218.46-735.126 l0.006,0.023c-19.88-37.852-31.129-80.947-31.129-126.67C1096.471,137.467,1218.612,15.326,1369.275,15.326z";
+    var svg_big = "M782.529,3.328c109.238,0,197.791,88.555,197.791,197.791 c0,33.15-8.153,64.396-22.567,91.839l0.004-0.017L805.751,825.925l-23.223-0.002l0,0h0.002l-23.223,0.001L607.305,292.941 l0.004,0.017c-14.413-27.443-22.569-58.688-22.569-91.839C584.74,91.882,673.294,3.328,782.529,3.328z";
+    var svg_small = "M431.901,263.82c57.33,0,103.804,46.475,103.804,103.805 c0,17.398-4.279,33.796-11.844,48.199l0.002-0.009l-68.74,279.721l-23.222-0.001l0,0c0,0,0,0,0,0l-23.223,0.001l-68.74-279.721 l0.002,0.009c-7.564-14.403-11.844-30.801-11.844-48.199C328.097,310.295,374.572,263.82,431.901,263.82z";
+    var svg_handDrawn = "M0,0v5272.492h5938.288V0H0z M1483.912,3865.3l-271.854,247.191L1170,4092.845l71.672-330.013 c6.326-70.161,65.177-123.925,136.985-123.925c76.027,0,137.66,61.633,137.66,137.661 C1516.318,3810.604,1504.378,3841.273,1483.912,3865.3z";
+
     var angle = 0; //mother angle (both shaft and handle)
     var posX = 0; //position of light shaft origin X
     var posY = 0; //position of light shaft origin Y
@@ -140,12 +170,9 @@ jQuery.fn.flashlight = function (opts) {
 
     this.initialize = function () {
         draw = SVG('light');
-        //big symmetrical
-        path = draw.path("M782.529,3.328c109.238,0,197.791,88.555,197.791,197.791 c0,33.15-8.153,64.396-22.567,91.839l0.004-0.017L805.751,825.925l-23.223-0.002l0,0h0.002l-23.223,0.001L607.305,292.941 l0.004,0.017c-14.413-27.443-22.569-58.688-22.569-91.839C584.74,91.882,673.294,3.328,782.529,3.328z");
-        //small symmetrical
-        //path = draw.path("M431.901,263.82c57.33,0,103.804,46.475,103.804,103.805 c0,17.398-4.279,33.796-11.844,48.199l0.002-0.009l-68.74,279.721l-23.222-0.001l0,0c0,0,0,0,0,0l-23.223,0.001l-68.74-279.721 l0.002,0.009c-7.564-14.403-11.844-30.801-11.844-48.199C328.097,310.295,374.572,263.82,431.901,263.82z");
-        //hand drawn
-        //path = draw.path("M0,0v5272.492h5938.288V0H0z M1483.912,3865.3l-271.854,247.191L1170,4092.845l71.672-330.013 c6.326-70.161,65.177-123.925,136.985-123.925c76.027,0,137.66,61.633,137.66,137.661 C1516.318,3810.604,1504.378,3841.273,1483.912,3865.3z");
+        //biggest symmetrical
+        path = draw.path(svg_biggest);
+
         clip = draw.clip().add(path);
         path.move(0, 0);
 
@@ -154,6 +181,7 @@ jQuery.fn.flashlight = function (opts) {
 
         window.addEventListener('resize', function () {
             _light.responsive();
+
         });
 
         $(document).click(function (e) {
@@ -202,7 +230,7 @@ jQuery.fn.flashlight = function (opts) {
         path.remove();
         clip.remove();
 
-        path = draw.path("M782.529,3.328c109.238,0,197.791,88.555,197.791,197.791 c0,33.15-8.153,64.396-22.567,91.839l0.004-0.017L805.751,825.925l-23.223-0.002l0,0h0.002l-23.223,0.001L607.305,292.941 l0.004,0.017c-14.413-27.443-22.569-58.688-22.569-91.839C584.74,91.882,673.294,3.328,782.529,3.328z");
+        path = draw.path(svg_biggest);
         clip = draw.clip().add(path);
         path.move(0, 0);
 
@@ -273,7 +301,7 @@ jQuery.fn.gallery = function (opts) {
 
     var instance = this;
     var element = jQuery(this);
-    var categories = ["awge", "revengexstorm", "sounddown", "nessly", "portalgun"];
+    var category = "";
     var gallery = ["assets/css3-drawn.png",
                   "assets/girl.png",
                   "assets/jungle.jpg",
@@ -293,11 +321,7 @@ jQuery.fn.gallery = function (opts) {
         $(element).css("background-image", "url(" + this.currentGallery()[index] + ")");
     }
 
-    this.next = function () {
-        index++;
-        if (index > this.currentGallery().length - 1) {
-            index = 0;
-        }
+    this.transitionImage = function () {
         $(element).css("opacity", 0);
         setTimeout(function (obj) {
             obj.updateImage();
@@ -305,6 +329,14 @@ jQuery.fn.gallery = function (opts) {
         setTimeout(function () {
             $(element).css("opacity", 1);
         }, 500);
+    }
+
+    this.next = function () {
+        index++;
+        if (index > this.currentGallery().length - 1) {
+            index = 0;
+        }
+        this.transitionImage();
     }
 
     this.previous = function () {
@@ -312,16 +344,62 @@ jQuery.fn.gallery = function (opts) {
         if (index < 0) {
             index = this.currentGallery().length - 1;
         }
-        $(element).css("opacity", 0);
-        setTimeout(function (obj) {
-            obj.updateImage();
-        }, 250, this);
-        setTimeout(function () {
-            $(element).css("opacity", 1);
-        }, 500);
+        this.transitionImage();
+    }
+
+    this.setGallery = function (cat) {
+        category = cat;
+        index = 0;
+        this.updateImage();
     }
 
     this.currentGallery = function () {
+        switch (category) {
+            case "awge":
+                return [
+                    "assets/awge/awge-landing.png",
+                    "assets/awge/awge-home.png",
+                    "assets/awge/awge-shop.png",
+                    "assets/awge/awge-videos.png",
+                    "assets/awge/awge-contact.png"];
+                break;
+            case "revenge":
+                return [
+                    "assets/revenge/revenge-landing.png",
+                    "assets/revenge/revenge-shop.png",
+                    "assets/revenge/revenge-shoe.png",
+                    "assets/revenge/revenge-kylie.png"];
+                break;
+            case "sounddown":
+                return [
+                    "assets/sounddown/sounddown-listing.png",
+                    "assets/sounddown/sounddown-download.png",
+                    "assets/sounddown/sounddown-modal.png",
+                    "assets/sounddown/sounddown-popup.png"];
+                break;
+            case "nessly":
+                return [
+                    "assets/nessly/nessly-home.png",
+                    "assets/nessly/nessly-model.png",
+                    "assets/nessly/nessly-store.png"];
+                break;
+            case "portal":
+                return [
+                    "assets/portal/portal-poster.png",
+                    "assets/portal/portal-listing.png",
+                    "assets/portal/portal-game.png",
+                    "assets/portal/portal-youtube.png",
+                    "assets/portal/portal-kwebbelkop.png"];
+                break;
+            default:
+                return [
+                    "assets/awge/awge-landing.png",
+                    "assets/awge/awge-home.png",
+                    "assets/awge/awge-shop.png",
+                    "assets/awge/awge-videos.png",
+                    "assets/awge/awge-contact.png"];
+                break;
+        }
         return gallery;
     }
 
@@ -337,18 +415,19 @@ jQuery.fn.modalUnits = function (opts) {
 
     var gallery = {
         elem: "#modal-unit-gallery",
-        angle: 17,
-        distPerc: 0.85
+        angle: 85,
+        distPerc: 0.75
     };
-    var blackhole = {
-        elem: "#blackhole > canvas",
-        elem2: ".modal-unit-blackhole-centerHover",
+    var portal = {
+        elem: "#modal-unit-portal",
+        elem2: "#modal-unit-portal-text",
         angle: 54,
         distPerc: 0.85
     };
     var about = {
-        elem: "#modal-unit-wibbly",
-        angle: 85,
+        elem: "#modal-unit-about",
+        elem2: "#modal-unit-about-text",
+        angle: 17,
         distPerc: 0.85
     };
 
@@ -381,17 +460,40 @@ jQuery.fn.modalUnits = function (opts) {
         };
     }
 
+    this.updateModal = function (project) {
+        //project.aboutText, project.link, project.linkText, project.galleryName
+
+        //update gallery images
+        _gallery.setGallery(project.galleryName);
+
+        //set new link for project
+        $(portal.elem).unbind();
+        if (project.link != null) {
+            $(portal.elem).click(function () {
+                window.open(project.link);
+            });
+        }
+
+        //set link text
+        $(portal.elem2).text(project.linkText);
+
+        //set about text
+        $(about.elem2).text(project.aboutText);
+
+        //set title of modal
+        $("#modal-nav-title").text(project.title);
+    }
+
     this.updateGallery = function () {
         var newCoords = this.getScaledXY(gallery.angle, gallery.distPerc);
         $(gallery.elem).css("top", newCoords.y + "px");
         $(gallery.elem).css("left", newCoords.x + "px");
     }
 
-    this.updateBlackHole = function () {
-        var newCoords = this.getScaledXY(blackhole.angle, blackhole.distPerc);
-        $(blackhole.elem).css("transform", "translateX(-50%) translateY(-50%) translateX(" + newCoords.x + "px) translateY(" + newCoords.y + "px)");
-        $(blackhole.elem2).css("top", newCoords.y + "px");
-        $(blackhole.elem2).css("left", newCoords.x + "px");
+    this.updatePortal = function () {
+        var newCoords = this.getScaledXY(portal.angle, portal.distPerc);
+        $(portal.elem).css("top", newCoords.y + "px");
+        $(portal.elem).css("left", newCoords.x + "px");
     }
 
     this.updateAbout = function () {
@@ -406,7 +508,7 @@ jQuery.fn.modalUnits = function (opts) {
 
         window.addEventListener('resize', function () {
             _modalUnits.updateGallery();
-            _modalUnits.updateBlackHole();
+            _modalUnits.updatePortal();
             _modalUnits.updateAbout();
         });
         return this;
@@ -415,231 +517,30 @@ jQuery.fn.modalUnits = function (opts) {
     return this.initialize();
 }
 
-function blackhole(element) {
-    var h = $(element).height(),
-        w = $(element).width(),
-        cw = w,
-        ch = h,
-        maxorbit = 255, // distance from center
-        centery = ch / 2,
-        centerx = cw / 2;
-
-    var startTime = new Date().getTime();
-    var currentTime = 0;
-
-    var stars = [],
-        collapse = false, // if hovered
-        expanse = false; // if clicked
-
-    var canvas = $('<canvas/>').attr({
-            width: cw,
-            height: ch
-        }).appendTo(element),
-        context = canvas.get(0).getContext("2d");
-
-    context.globalCompositeOperation = "multiply";
-
-    function setDPI(canvas, dpi) {
-        // Set up CSS size if it's not set up already
-        if (!canvas.get(0).style.width)
-            canvas.get(0).style.width = canvas.get(0).width + 'px';
-        if (!canvas.get(0).style.height)
-            canvas.get(0).style.height = canvas.get(0).height + 'px';
-
-        var scaleFactor = dpi / 96;
-        canvas.get(0).width = Math.ceil(canvas.get(0).width * scaleFactor);
-        canvas.get(0).height = Math.ceil(canvas.get(0).height * scaleFactor);
-        var ctx = canvas.get(0).getContext('2d');
-        ctx.scale(scaleFactor, scaleFactor);
-    }
-
-    function rotate(cx, cy, x, y, angle) {
-        var radians = angle,
-            cos = Math.cos(radians),
-            sin = Math.sin(radians),
-            nx = (cos * (x - cx)) + (sin * (y - cy)) + cx,
-            ny = (cos * (y - cy)) - (sin * (x - cx)) + cy;
-        return [nx, ny];
-    }
-
-    setDPI(canvas, 192);
-
-    var star = function () {
-        // Get a weighted random number, so that the majority of stars will form in the center of the orbit
-        var rands = [];
-        rands.push(Math.random() * (maxorbit / 2) + 1);
-        rands.push(Math.random() * (maxorbit / 2) + maxorbit);
-
-        this.orbital = (rands.reduce(function (p, c) {
-            return p + c;
-        }, 0) / rands.length);
-        // Done getting that random number, it's stored in this.orbital
-
-        this.x = centerx; // All of these stars are at the center x position at all times
-        this.y = centery + this.orbital; // Set Y position starting at the center y + the position in the orbit
-
-        this.yOrigin = centery + this.orbital; // this is used to track the particles origin
-
-        this.speed = (Math.floor(Math.random() * 2.5) + 1.5) * Math.PI / 180; // The rate at which this star will orbit
-        this.rotation = 0; // current Rotation
-        this.startRotation = (Math.floor(Math.random() * 360) + 1) * Math.PI / 180; // Starting rotation.  If not random, all stars will be generated in a single line.  
-
-        this.id = stars.length; // This will be used when expansion takes place.
-
-        this.collapseBonus = this.orbital - (maxorbit * 0.7); // This "bonus" is used to randomly place some stars outside of the blackhole on hover
-        if (this.collapseBonus < 0) { // if the collapse "bonus" is negative
-            this.collapseBonus = 0; // set it to 0, this way no stars will go inside the blackhole
-        }
-
-        stars.push(this);
-        this.color = 'rgba(255,255,255,' + (1 - ((this.orbital) / 255)) + ')'; // Color the star white, but make it more transparent the further out it is generated
-
-        this.hoverPos = centery + (maxorbit / 2) + this.collapseBonus; // Where the star will go on hover of the blackhole
-        this.expansePos = centery + (this.id % 100) * -10 + (Math.floor(Math.random() * 20) + 1); // Where the star will go when expansion takes place
-
-
-        this.prevR = this.startRotation;
-        this.prevX = this.x;
-        this.prevY = this.y;
-
-        // The reason why I have yOrigin, hoverPos and expansePos is so that I don't have to do math on each animation frame.  Trying to reduce lag.
-    }
-
-    var setCenter = function (x, y) {
-        centerx = x;
-        centery = y;
-    }
-
-    star.prototype.draw = function () {
-        // the stars are not actually moving on the X axis in my code.  I'm simply rotating the canvas context for each star individually so that they all get rotated with the use of less complex math in each frame.
-
-
-        if (!expanse) {
-            this.rotation = this.startRotation + (currentTime * this.speed);
-            if (!collapse) { // not hovered
-                if (this.y > this.yOrigin) {
-                    this.y -= 2.5;
-                }
-                if (this.y < this.yOrigin - 4) {
-                    this.y += (this.yOrigin - this.y) / 10;
-                }
-            } else { // on hover
-                this.trail = 1;
-                if (this.y > this.hoverPos) {
-                    this.y -= (this.hoverPos - this.y) / -5;
-                }
-                if (this.y < this.hoverPos - 4) {
-                    this.y += 2.5;
-                }
-            }
-        } else {
-            this.rotation = this.startRotation + (currentTime * (this.speed / 2));
-            if (this.y > this.expansePos) {
-                this.y -= Math.floor(this.expansePos - this.y) / -140;
-            }
-        }
-
-        context.save();
-        context.fillStyle = this.color;
-        context.strokeStyle = this.color;
-        context.beginPath();
-        var oldPos = rotate(centerx, centery, this.prevX, this.prevY, -this.prevR);
-        context.moveTo(oldPos[0], oldPos[1]);
-        context.translate(centerx, centery);
-        context.rotate(this.rotation);
-        context.translate(-centerx, -centery);
-        context.lineTo(this.x, this.y);
-        context.stroke();
-        context.restore();
-
-        this.prevR = this.rotation;
-        this.prevX = this.x;
-        this.prevY = this.y;
-    }
-
-    $('.modal-unit-blackhole-centerHover').on('click', function () {
-        collapse = false;
-        expanse = true;
-
-        $(this).addClass('open');
-        $('.fullpage').addClass('open');
-        setTimeout(function () {
-            $('.header .welcome').removeClass('gone');
-        }, 500);
-    });
-    $('.modal-unit-blackhole-centerHover').on('mouseover', function () {
-        if (expanse == false) {
-            collapse = true;
-        }
-    });
-    $('.modal-unit-blackhole-centerHover').on('mouseout', function () {
-        if (expanse == false) {
-            collapse = false;
-        }
-    });
-
-    window.requestFrame = (function () {
-        return window.requestAnimationFrame ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame ||
-            function (callback) {
-                window.setTimeout(callback, 1000 / 60);
-            };
-    })();
-
-    function loop() {
-        var now = new Date().getTime();
-        currentTime = (now - startTime) / 50;
-
-        //context.fillStyle = 'rgba(25,25,25,1)'; // somewhat clear the context, this way there will be trails behind the stars 
-        //context.fillRect(0, 0, cw, ch);
-        context.clearRect(0, 0, cw, ch);
-
-        for (var i = 0; i < stars.length; i++) { // For each star
-            if (stars[i] != stars) {
-                stars[i].draw(); // Draw it
-            }
-        }
-
-        requestFrame(loop);
-    }
-
-    function init(time) {
-        //context.fillStyle = 'rgba(25,25,25,1)'; // Initial clear of the canvas, to avoid an issue where it all gets too dark
-        //context.fillRect(0, 0, cw, ch);
-        for (var i = 0; i < 500; i++) { // create 2500 stars
-            new star();
-        }
-        loop();
-    }
-    init();
-    return this;
-}
-
 function initHash() {
     $(window).hashchange(function () {
         var hash = location.hash;
         var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
         switch (cleanHash.split("-")[0]) {
-        case 'blank':
-            _rect.changeMenu("menu-main");
-            break;
-        case 'nav':
-            _rect.changeMenu("menu-nav");
-            break;
-        case 'contact':
-            _rect.changeMenu("menu-contact");
-            break;
-        case 'about':
-            _rect.changeMenu("menu-about");
-            break;
-        case 'projects':
-            _rect.changeMenu("menu-projects");
-            break;
-        default:
-            _rect.changeMenu("menu-main");
-            break;
+            case 'blank':
+                _rect.changeMenu("menu-main");
+                break;
+            case 'nav':
+                _rect.changeMenu("menu-nav");
+                break;
+            case 'contact':
+                _rect.changeMenu("menu-contact");
+                break;
+            case 'about':
+                _rect.changeMenu("menu-about");
+                break;
+            case 'projects':
+                _rect.changeMenu("menu-projects");
+                break;
+            default:
+                _rect.changeMenu("menu-main");
+                break;
         }
     });
 
@@ -686,7 +587,7 @@ function initPage() {
         _light.setAngle(55, true);
     });
     $("#modal-about").click(function () {
-        _light.setAngle(89, true);
+        _light.setAngle(85, true);
     });
     $("#modal-gallery").click(function () {
         _light.setAngle(15, true);
@@ -700,13 +601,6 @@ function initPage() {
     $("#modal-gallery-right").click(function () {
         _gallery.next();
     });
-
-    //wibble modal
-    _wibbly = $("#modal-unit-wibbly").wibbly({});
-    _wibbly.initWibbly();
-
-    //blackhole modal
-    _blackhole = blackhole('#blackhole');
 
     _modalUnits = $(".modal-content").modalUnits({});
 
@@ -733,9 +627,52 @@ function initPage() {
     $('#menu-projects').perfectScrollbar({
         wheelSpeed: 0.5
     });
-    $("#projects-project-1").click(function () {
-        _rect.openModal("project-1");
+    $("#projects-awge").click(function () {
+        _rect.openModal({
+            aboutText: "This is a lie",
+            title: "AWGE",
+            link: "https://awgeshit.com",
+            linkText: "VISIT",
+            galleryName: "awge"
+        });
     });
+    $("#projects-revenge").click(function () {
+        _rect.openModal({
+            aboutText: "This is a lie",
+            title: "Revenge x Storm",
+            link: "https://revengexstorm.com",
+            linkText: "VISIT",
+            galleryName: "revenge"
+        });
+    });
+    $("#projects-sounddown").click(function () {
+        _rect.openModal({
+            aboutText: "This is a lie",
+            title: "SoundDown",
+            link: "https://chrome.google.com/webstore/detail/sounddown/ljjaomnfoepedhkncdffdadnpmckoohb",
+            linkText: "VISIT",
+            galleryName: "sounddown"
+        });
+    });
+    $("#projects-nessly").click(function () {
+        _rect.openModal({
+            aboutText: "This is a lie",
+            title: "Nessly",
+            link: null,
+            linkText: "UNDER CONSTRUCTION",
+            galleryName: "nessly"
+        });
+    });
+    $("#projects-portal").click(function () {
+        _rect.openModal({
+            aboutText: "This is a lie",
+            title: "GTAV Portal Gun Mod",
+            link: "https://www.gta5-mods.com/scripts/portal-gun-net",
+            linkText: "VISIT",
+            galleryName: "portal"
+        });
+    });
+
 
     //about menu
     $("#about-page-up").click(function () {
@@ -746,8 +683,8 @@ function initPage() {
     });
 
     //contact menu
-    $("#contact-facebook").click(function () {
-        window.open("https://www.facebook.com/alex.shortt.98");
+    $("#contact-github").click(function () {
+        window.open("https://github.com/alex-shortt");
     });
     $("#contact-soundcloud").click(function () {
         window.open("https://soundcloud.com/alex_shortt");
@@ -764,112 +701,4 @@ function initPage() {
     $("#contact-back").click(function () {
         window.location.hash = "nav";
     });
-}
-
-jQuery.fn.wibbly = function (opts) {
-    opts = jQuery.extend({}, jQuery.fn.wibbly.defs, opts);
-    this.initialize = function () {
-        return this;
-    }
-    jQuery.fn.wibbly.defs = {};
-
-    var instance = this;
-    var element = jQuery(this);
-
-    var canvas = $(element).get(0);
-    var context = canvas.getContext('2d');
-    var ratio = window.devicePixelRatio || 1;
-
-    var totalLineHeight = 680;
-    var totalLines = 4;
-    var totalDiff = totalLineHeight / totalLines;
-    var fontHeight = 60 * ratio - 50; // Small centering
-
-    var smallestWidth = 280; // width of smallest line;
-    var offsetX = 20;
-    var offsetY = 8;
-    var iterations;
-    var verticalAlign, line1Diff, line2Diff, line3Diff, line4Diff, iterations, iteration, animationFrame;
-
-    var startRGB = [255, 255, 255];
-    var endRGB = [255, 255, 255];
-    var fullColorSet = [];
-
-    this.initWibbly = function () {
-        cancelAnimationFrame(animationFrame);
-        canvas.width = window.innerWidth * ratio;
-        canvas.height = window.innerHeight * ratio;
-        context.font = '180px Montserrat';
-        context.textAlign = 'center';
-        context.fillStyle = '#fff';
-        context.strokeStyle = "#000000";
-        context.lineWidth = "3";
-        context.textBaseline = "middle";
-        verticalAlign = (window.innerHeight / 2 * ratio) - totalLineHeight / 2;
-        line1Diff = totalLineHeight + fontHeight - totalDiff;
-        line2Diff = totalLineHeight + fontHeight - totalDiff * 2;
-        line3Diff = totalLineHeight + fontHeight - totalDiff * 3;
-        line4Diff = totalLineHeight + fontHeight - totalDiff * 4;
-        iterations = Math.floor(((window.innerWidth * ratio / 2) - (smallestWidth * ratio / 2)) / offsetX + 5);
-        iterations = Math.round(iterations / 10);
-        this.prepareColorSets(iterations);
-        iteration = 0;
-        animationFrame = requestAnimationFrame(function () {
-            _wibbly.draw();
-        });
-        //window.onresize = this.initWibbly();
-        $(window).mousemove(function (event) {
-            return;
-            offsetX = 20 * ((event.pageX / screen.width) - 0.5);
-            offsetY = 20 * ((event.pageY / screen.height) - 0.5);
-        });
-    }
-
-    this.draw = function () {
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        for (var i = iterations - 1; i > 0; i--) {
-            context.fillStyle = 'rgb(' + fullColorSet[i][0] + ',' + fullColorSet[i][1] + ',' + fullColorSet[i][2] + ')';
-            var x = window.innerWidth / 2 * ratio - i * offsetX;
-            var y = verticalAlign + i * offsetY + (Math.sin(i + iteration) * 2);
-            this.drawText(x, y);
-        }
-
-        iteration += 0.09;
-        animationFrame = requestAnimationFrame(function () {
-            _wibbly.draw();
-        });
-    }
-
-    this.drawText = function (x, y) {
-        context.fillText("AWGE", x, y + line4Diff);
-        context.strokeText("AWGE", x, y + line4Diff);
-
-        context.fillText("A website for A$AP Rocky", x, y + line3Diff);
-        context.strokeText("A website for A$AP Rocky", x, y + line3Diff);
-
-        context.fillText("Full E-Commerce and media distribution", x, y + line2Diff);
-        context.strokeText("Full E-Commerce and media distribution", x, y + line2Diff);
-
-        context.fillText("3/4 of a million users", x, y + line1Diff);
-        context.strokeText("3/4 of a million users", x, y + line1Diff);
-    }
-
-    this.prepareColorSets = function (iterations) {
-        fullColorSet = [];
-        for (var i = 0; i < iterations; i++) {
-            fullColorSet.push(this.colourGradientor(1 - i / iterations, startRGB, endRGB));
-        }
-    }
-
-    this.colourGradientor = function (p, rgb_beginning, rgb_end) {
-        var w = p * 2 - 1;
-        var w1 = (w + 1) / 2.0;
-        var w2 = 1 - w1;
-        var rgb = [parseInt(rgb_beginning[0] * w1 + rgb_end[0] * w2),
-             parseInt(rgb_beginning[1] * w1 + rgb_end[1] * w2),
-             parseInt(rgb_beginning[2] * w1 + rgb_end[2] * w2)];
-        return rgb;
-    }
-
-    return this.initialize();
 }
