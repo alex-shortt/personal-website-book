@@ -38,15 +38,22 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-            case 'menu-contact':
-                $("#rect-menu-container").css("border", "7px solid white");
-                break;
-            case 'menu-about':
-                $("#rect-menu-container").css("border", "7px solid white");
-                break;
-            default:
-                $("#rect-menu-container").css("border", "7px solid black");
-                break;
+        case 'menu-contact':
+            $("#rect-menu-container").css("border", "7px solid white");
+            this.enablePrevious(false);
+            break;
+        case 'menu-about':
+            $("#rect-menu-container").css("border", "7px solid white");
+            this.enablePrevious(true, "nav");
+            break;
+        case 'menu-projects':
+            $("#rect-menu-container").css("border", "7px solid black");
+            this.enablePrevious(true, "nav");
+            break;
+        default:
+            $("#rect-menu-container").css("border", "7px solid black");
+            this.enablePrevious(false);
+            break;
         }
 
         setTimeout(function (menu) {
@@ -65,6 +72,22 @@ jQuery.fn.rectangle = function (opts) {
         }, 700, menu);
     }
 
+    this.enablePrevious = function (enable, link) {
+        $("#rect-previous").unbind();
+        if (enable) {
+            setTimeout(function () {
+                $("#rect-previous").css("pointer-events", "all");
+                $("#rect-previous").css("opacity", 1);
+                $("#rect-previous").click(function () {
+                    window.location.hash = link;
+                });
+            }, 700);
+        } else {
+            $("#rect-previous").css("opacity", 0);
+            $("#rect-previous").css("pointer-events", "none");
+        }
+    }
+
     this.openModal = function (project) {
         $("#rect-menu-container").css("width", "0%");
 
@@ -81,21 +104,21 @@ jQuery.fn.rectangle = function (opts) {
                         transform: "translateY(0)"
                     });
                     _modalUnits.updateModal(project);
-                    
+
                     setTimeout(function () {
                         _light.responsive();
                         _modalUnits.updateGallery();
                         _modalUnits.updatePortal();
                         _modalUnits.updateAbout();
                     }, (750 / 4));
-                    
+
                     setTimeout(function () {
                         _light.responsive();
                         _modalUnits.updateGallery();
                         _modalUnits.updatePortal();
                         _modalUnits.updateAbout();
                     }, (750 / 2));
-                    
+
                     setTimeout(function () {
                         _light.responsive();
                         _modalUnits.updateGallery();
@@ -355,50 +378,50 @@ jQuery.fn.gallery = function (opts) {
 
     this.currentGallery = function () {
         switch (category) {
-            case "awge":
-                return [
+        case "awge":
+            return [
                     "assets/awge/awge-landing.png",
                     "assets/awge/awge-home.png",
                     "assets/awge/awge-shop.png",
                     "assets/awge/awge-videos.png",
                     "assets/awge/awge-contact.png"];
-                break;
-            case "revenge":
-                return [
+            break;
+        case "revenge":
+            return [
                     "assets/revenge/revenge-landing.png",
                     "assets/revenge/revenge-shop.png",
                     "assets/revenge/revenge-shoe.png",
                     "assets/revenge/revenge-kylie.png"];
-                break;
-            case "sounddown":
-                return [
+            break;
+        case "sounddown":
+            return [
                     "assets/sounddown/sounddown-listing.png",
                     "assets/sounddown/sounddown-download.png",
                     "assets/sounddown/sounddown-modal.png",
                     "assets/sounddown/sounddown-popup.png"];
-                break;
-            case "nessly":
-                return [
+            break;
+        case "nessly":
+            return [
                     "assets/nessly/nessly-home.png",
                     "assets/nessly/nessly-model.png",
                     "assets/nessly/nessly-store.png"];
-                break;
-            case "portal":
-                return [
+            break;
+        case "portal":
+            return [
                     "assets/portal/portal-poster.png",
                     "assets/portal/portal-listing.png",
                     "assets/portal/portal-game.png",
                     "assets/portal/portal-youtube.png",
                     "assets/portal/portal-kwebbelkop.png"];
-                break;
-            default:
-                return [
+            break;
+        default:
+            return [
                     "assets/awge/awge-landing.png",
                     "assets/awge/awge-home.png",
                     "assets/awge/awge-shop.png",
                     "assets/awge/awge-videos.png",
                     "assets/awge/awge-contact.png"];
-                break;
+            break;
         }
         return gallery;
     }
@@ -428,7 +451,7 @@ jQuery.fn.modalUnits = function (opts) {
         elem: "#modal-unit-about",
         elem2: "#modal-unit-about-text",
         angle: 17,
-        distPerc: 0.85
+        distPerc: 0.75
     };
 
     this.getScaledXY = function (angle, perc) {
@@ -523,24 +546,24 @@ function initHash() {
         var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
         switch (cleanHash.split("-")[0]) {
-            case 'blank':
-                _rect.changeMenu("menu-main");
-                break;
-            case 'nav':
-                _rect.changeMenu("menu-nav");
-                break;
-            case 'contact':
-                _rect.changeMenu("menu-contact");
-                break;
-            case 'about':
-                _rect.changeMenu("menu-about");
-                break;
-            case 'projects':
-                _rect.changeMenu("menu-projects");
-                break;
-            default:
-                _rect.changeMenu("menu-main");
-                break;
+        case 'blank':
+            _rect.changeMenu("menu-main");
+            break;
+        case 'nav':
+            _rect.changeMenu("menu-nav");
+            break;
+        case 'contact':
+            _rect.changeMenu("menu-contact");
+            break;
+        case 'about':
+            _rect.changeMenu("menu-about");
+            break;
+        case 'projects':
+            _rect.changeMenu("menu-projects");
+            break;
+        default:
+            _rect.changeMenu("menu-main");
+            break;
         }
     });
 
