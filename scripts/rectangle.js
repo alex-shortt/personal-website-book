@@ -90,6 +90,7 @@ jQuery.fn.rectangle = function (opts) {
 
     this.openModal = function (project) {
         $("#rect-menu-container").css("width", "0%");
+        $("#rect-menu-container").css("overflow", "hidden");
 
         setTimeout(function () {
             $("#rect-menu-container").css("height", "0%");
@@ -150,6 +151,9 @@ jQuery.fn.rectangle = function (opts) {
                 $("#rect-menu-container").css("height", "100%");
                 setTimeout(function () {
                     $("#rect-menu-container").css("width", "100%");
+                    setTimeout(function () {
+                        $("#rect-menu-container").css("overflow", "initial");
+                    }, 750);
                 }, 750);
             }, 790);
         }, 500);
