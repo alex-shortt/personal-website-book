@@ -97,7 +97,7 @@ $duration) {
         opacity: 1;
         color: black;
         transition: opacity .7s ease-in-out, color .25s linear;
-        &:hover{
+        &:hover {
             color: rgba(0, 0, 0, 0.6);
         }
     }
@@ -134,6 +134,60 @@ $duration) {
         content: "";
         transition: 0.25s height cubic-bezier(0.4, 0, 1, 1), 0.25s width cubic-bezier(0.4, 0, 1, 1);
         z-index: -1;
+    }
+}
+
+.about {
+    &-portrait {
+        flex: 1;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-image: url(../../assets/about/cool.jpg);
+    }
+    &-working {
+        flex: 2;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-image: url(../../assets/about/working.jpg);
+    }
+    &-mix {
+        flex: 2;
+        background-size: contain;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-image: url(../../assets/about/mix001.png);
+    }
+    &-desc {
+        flex-direction: column;
+        display: flex;
+        &>hr {
+            flex: 1;
+            width: 70%;
+            margin-top: 18px;
+            margin-bottom: 18px;
+        }
+        &-text {
+            text-align: center;
+            color: white;
+            @include shorttText();
+            flex: 2;
+        }
+    }
+    &-title{
+        text-align: center;
+        color: white;
+        @include shorttText();
+        flex: 2;
+        margin-top: 5px;
+    }
+    &-list {
+        text-align: center;
+        color: white;
+        @include shorttText();
+        flex: 2;
+        margin: 7px 0px;
     }
 }
 
@@ -192,6 +246,7 @@ $duration) {
         padding: 0;
         width: 305px;
         height: 477px;
+        overflow: hidden;
         &-option {
             color: white;
             @include shorttText();
@@ -218,6 +273,21 @@ $duration) {
                 &:hover {
                     color: rgba(255, 255, 255, 0.85);
                 }
+            }
+        }
+        &-carousel {
+            height: calc(100% * 3);
+            width: 100%;
+            transition: 0.6s all;
+            transform: translateY(calc(100% / 3 * 1));
+            &-page {
+                height: calc(100% / 3 - 56px);
+                padding: 28px 14px;
+                width: calc(100% - 28px);
+                color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
             }
         }
         &-physics {
@@ -480,7 +550,7 @@ $duration) {
                 @include shorttText();
             }
         }
-        :root {
+         :root {
             --portalDeg: 1;
             --portalX: -50%;
             --portalY: -50%;

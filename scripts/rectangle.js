@@ -2,6 +2,7 @@ var _rect;
 var _light;
 var _gallery;
 var _modalUnits;
+var _carousel;
 
 jQuery.fn.rectangle = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.rectangle.defs, opts);
@@ -38,22 +39,22 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-        case 'menu-contact':
-            $("#rect-menu-container").css("border", "7px solid white");
-            this.enablePrevious(false);
-            break;
-        case 'menu-about':
-            $("#rect-menu-container").css("border", "7px solid white");
-            this.enablePrevious(true, "nav");
-            break;
-        case 'menu-projects':
-            $("#rect-menu-container").css("border", "7px solid black");
-            this.enablePrevious(true, "nav");
-            break;
-        default:
-            $("#rect-menu-container").css("border", "7px solid black");
-            this.enablePrevious(false);
-            break;
+            case 'menu-contact':
+                $("#rect-menu-container").css("border", "7px solid white");
+                this.enablePrevious(false);
+                break;
+            case 'menu-about':
+                $("#rect-menu-container").css("border", "7px solid white");
+                this.enablePrevious(true, "nav");
+                break;
+            case 'menu-projects':
+                $("#rect-menu-container").css("border", "7px solid black");
+                this.enablePrevious(true, "nav");
+                break;
+            default:
+                $("#rect-menu-container").css("border", "7px solid black");
+                this.enablePrevious(false);
+                break;
         }
 
         setTimeout(function (menu) {
@@ -382,50 +383,50 @@ jQuery.fn.gallery = function (opts) {
 
     this.currentGallery = function () {
         switch (category) {
-        case "awge":
-            return [
+            case "awge":
+                return [
                     "assets/awge/awge-landing.png",
                     "assets/awge/awge-home.png",
                     "assets/awge/awge-shop.png",
                     "assets/awge/awge-videos.png",
                     "assets/awge/awge-contact.png"];
-            break;
-        case "revenge":
-            return [
+                break;
+            case "revenge":
+                return [
                     "assets/revenge/revenge-landing.png",
                     "assets/revenge/revenge-shop.png",
                     "assets/revenge/revenge-shoe.png",
                     "assets/revenge/revenge-kylie.png"];
-            break;
-        case "sounddown":
-            return [
+                break;
+            case "sounddown":
+                return [
                     "assets/sounddown/sounddown-listing.png",
                     "assets/sounddown/sounddown-download.png",
                     "assets/sounddown/sounddown-modal.png",
                     "assets/sounddown/sounddown-popup.png"];
-            break;
-        case "nessly":
-            return [
+                break;
+            case "nessly":
+                return [
                     "assets/nessly/nessly-home.png",
                     "assets/nessly/nessly-model.png",
                     "assets/nessly/nessly-store.png"];
-            break;
-        case "portal":
-            return [
+                break;
+            case "portal":
+                return [
                     "assets/portal/portal-poster.png",
                     "assets/portal/portal-listing.png",
                     "assets/portal/portal-game.png",
                     "assets/portal/portal-youtube.png",
                     "assets/portal/portal-kwebbelkop.png"];
-            break;
-        default:
-            return [
+                break;
+            default:
+                return [
                     "assets/awge/awge-landing.png",
                     "assets/awge/awge-home.png",
                     "assets/awge/awge-shop.png",
                     "assets/awge/awge-videos.png",
                     "assets/awge/awge-contact.png"];
-            break;
+                break;
         }
         return gallery;
     }
@@ -544,30 +545,83 @@ jQuery.fn.modalUnits = function (opts) {
     return this.initialize();
 }
 
+jQuery.fn.carousel = function (opts) {
+    opts = jQuery.extend({}, jQuery.fn.carousel.defs, opts);
+    this.initialize = function () {
+        return this;
+    }
+    jQuery.fn.carousel.defs = {};
+
+    var instance = this;
+    var element = jQuery(this);
+    var totalPages = $("#about-carousel").children().length;
+    var currentPage = 1;
+
+    this.changePage = function (step) {
+        $("#about-page-down").css({
+            color: "white",
+            cursor: "pointer"
+        });
+
+        $("#about-page-up").css({
+            color: "white",
+            cursor: "pointer"
+        });
+
+
+        currentPage += step;
+
+        if (currentPage > 1) {
+            currentPage = 1;
+        }
+        if (currentPage < 1 - totalPages + 1) {
+            currentPage = 1 - totalPages + 1;
+        }
+
+        if (currentPage == 1) {
+            $("#about-page-up").css({
+                color: "gray",
+                cursor: "pointer"
+            });
+        }
+
+        if (currentPage == 1 - totalPages + 1) {
+            $("#about-page-down").css({
+                color: "gray",
+                cursor: "pointer"
+            });
+        }
+
+        $("#about-carousel").css("transform", "translateY(calc(100% / 3 * " + currentPage + "))");
+    }
+
+    return this.initialize();
+}
+
 function initHash() {
     $(window).hashchange(function () {
         var hash = location.hash;
         var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
         switch (cleanHash.split("-")[0]) {
-        case 'blank':
-            _rect.changeMenu("menu-main");
-            break;
-        case 'nav':
-            _rect.changeMenu("menu-nav");
-            break;
-        case 'contact':
-            _rect.changeMenu("menu-contact");
-            break;
-        case 'about':
-            _rect.changeMenu("menu-about");
-            break;
-        case 'projects':
-            _rect.changeMenu("menu-projects");
-            break;
-        default:
-            _rect.changeMenu("menu-main");
-            break;
+            case 'blank':
+                _rect.changeMenu("menu-main");
+                break;
+            case 'nav':
+                _rect.changeMenu("menu-nav");
+                break;
+            case 'contact':
+                _rect.changeMenu("menu-contact");
+                break;
+            case 'about':
+                _rect.changeMenu("menu-about");
+                break;
+            case 'projects':
+                _rect.changeMenu("menu-projects");
+                break;
+            default:
+                _rect.changeMenu("menu-main");
+                break;
         }
     });
 
@@ -702,11 +756,13 @@ function initPage() {
 
 
     //about menu
-    $("#about-page-up").click(function () {
+    _carousel = $("#about-carousel").carousel({});
 
+    $("#about-page-up").click(function () {
+        _carousel.changePage(1);
     });
     $("#about-page-down").click(function () {
-
+        _carousel.changePage(-1);
     });
 
     //contact menu
