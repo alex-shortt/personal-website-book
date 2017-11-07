@@ -456,7 +456,7 @@ jQuery.fn.modalUnits = function (opts) {
         elem: "#modal-unit-about",
         elem2: "#modal-unit-about-text",
         angle: 17,
-        distPerc: 0.75
+        distPerc: 0.9
     };
 
     this.getScaledXY = function (angle, perc) {
@@ -506,7 +506,8 @@ jQuery.fn.modalUnits = function (opts) {
         $(portal.elem2).text(project.linkText);
 
         //set about text
-        $(about.elem2).text(project.aboutText);
+        $(about.elem2).empty();
+        $(about.elem2).html(project.aboutText);
 
         //set title of modal
         $("#modal-nav-title").text(project.title);
@@ -652,11 +653,9 @@ function initParallax() {
     });
 }
 
-function initPage() {
-    _rect = $("#parallax-wrapper").rectangle({});
-    _rect.fadeElementsIn();
+function initModal() {
+    _modalUnits = $(".modal-content").modalUnits({});
 
-    //universal modal
     $(".modal-close").click(function () {
         _rect.closeModal($(this).data("modal"));
     });
@@ -668,10 +667,10 @@ function initPage() {
         _light.setAngle(55, true);
     });
     $("#modal-about").click(function () {
-        _light.setAngle(85, true);
+        _light.setAngle(17, true);
     });
     $("#modal-gallery").click(function () {
-        _light.setAngle(15, true);
+        _light.setAngle(85, true);
     });
 
     //gallery modal 
@@ -682,90 +681,9 @@ function initPage() {
     $("#modal-gallery-right").click(function () {
         _gallery.next();
     });
+}
 
-    _modalUnits = $(".modal-content").modalUnits({});
-
-    //main menu
-    $("#menu-main-title").click(function () {
-        window.location.hash = "nav";
-    });
-
-    //nav menu
-    $("#menu-nav-projects").click(function () {
-        window.location.hash = "projects";
-    });
-    $("#menu-nav-about").click(function () {
-        window.location.hash = "about";
-    });
-    $("#menu-nav-contact").click(function () {
-        window.location.hash = "contact";
-    });
-    $("#menu-nav-back").click(function () {
-        window.location.hash = "";
-    });
-
-    //projects menu
-    $('#menu-projects').perfectScrollbar({
-        wheelSpeed: 0.5
-    });
-    $("#projects-awge").click(function () {
-        _rect.openModal({
-            aboutText: "This is a lie",
-            title: "AWGE",
-            link: "https://awgeshit.com",
-            linkText: "VISIT",
-            galleryName: "awge"
-        });
-    });
-    $("#projects-revenge").click(function () {
-        _rect.openModal({
-            aboutText: "This is a lie",
-            title: "Revenge x Storm",
-            link: "https://revengexstorm.com",
-            linkText: "VISIT",
-            galleryName: "revenge"
-        });
-    });
-    $("#projects-sounddown").click(function () {
-        _rect.openModal({
-            aboutText: "This is a lie",
-            title: "SoundDown",
-            link: "https://chrome.google.com/webstore/detail/sounddown/ljjaomnfoepedhkncdffdadnpmckoohb",
-            linkText: "VISIT",
-            galleryName: "sounddown"
-        });
-    });
-    $("#projects-nessly").click(function () {
-        _rect.openModal({
-            aboutText: "This is a lie",
-            title: "Nessly",
-            link: null,
-            linkText: "UNDER CONSTRUCTION",
-            galleryName: "nessly"
-        });
-    });
-    $("#projects-portal").click(function () {
-        _rect.openModal({
-            aboutText: "This is a lie",
-            title: "GTAV Portal Gun Mod",
-            link: "https://www.gta5-mods.com/scripts/portal-gun-net",
-            linkText: "VISIT",
-            galleryName: "portal"
-        });
-    });
-
-
-    //about menu
-    _carousel = $("#about-carousel").carousel({});
-
-    $("#about-page-up").click(function () {
-        _carousel.changePage(1);
-    });
-    $("#about-page-down").click(function () {
-        _carousel.changePage(-1);
-    });
-
-    //contact menu
+function initContact() {
     $("#contact-github").click(function () {
         window.open("https://github.com/alex-shortt");
     });
@@ -784,4 +702,132 @@ function initPage() {
     $("#contact-back").click(function () {
         window.location.hash = "nav";
     });
+}
+
+function initAbout() {
+    _carousel = $("#about-carousel").carousel({});
+
+    $("#about-page-up").click(function () {
+        _carousel.changePage(1);
+    });
+    $("#about-page-down").click(function () {
+        _carousel.changePage(-1);
+    });
+}
+
+function initProjects() {
+    $('#menu-projects').perfectScrollbar({
+        wheelSpeed: 0.5
+    });
+    $("#projects-awge").click(function () {
+        _rect.openModal({
+            aboutText: "\
+                        &bull;This is an ecommerce site for the A$AP Mob.<br>\
+                        &bull;I was hired by A$AP Rocky.<br>\
+                        &bull;I built this entire website myself.<br>\
+                        &bull;I oversaw $150,000 worth of merch.<br>\
+                        &bull;I managed the whole website.<br>\
+                        &bull;It currently has half a million users.<br>\
+                        ",
+            title: "AWGE",
+            link: "https://awgeshit.com",
+            linkText: "VISIT",
+            galleryName: "awge"
+        });
+    });
+    $("#projects-revenge").click(function () {
+        _rect.openModal({
+            aboutText: "\
+                        &bull;This is an ecommerce site.<br>\
+                        &bull;I was hired by Ian Connor.<br>\
+                        &bull;We sold 1,000 pairs of shoes in seconds.<br>\
+                        &bull;I oversaw $200,000 worth of merch.<br>\
+                        &bull;I managed the whole website.<br>\
+                        &bull;It currently has a million visitors.<br>\
+                        &bull;It was promoted by Kylie Jenner.<br>\
+                        ",
+            title: "Revenge x Storm",
+            link: "https://revengexstorm.com",
+            linkText: "VISIT",
+            galleryName: "revenge"
+        });
+    });
+    $("#projects-sounddown").click(function () {
+        _rect.openModal({
+            aboutText: "\
+                        &bull;This is a chrome extension.<br>\
+                        &bull;I built it myself as a side project.<br>\
+                        &bull;I might have used class time to do this...<br>\
+                        &bull;It downloads soundcloud songs with metadata.<br>\
+                        &bull;No marketing-- currently around 500 users.<br>\
+                        &bull;Over 50,000 songs downloaded.<br>\
+                        ",
+            title: "SoundDown",
+            link: "https://chrome.google.com/webstore/detail/sounddown/ljjaomnfoepedhkncdffdadnpmckoohb",
+            linkText: "VISIT",
+            galleryName: "sounddown"
+        });
+    });
+    $("#projects-nessly").click(function () {
+        _rect.openModal({
+            aboutText: "\
+                        &bull;This is a artist website.<br>\
+                        &bull;It is for the artist Nessly.<br>\
+                        &bull;I under construction by a small team.<br>\
+                        &bull;It has merch, interaction, and more.<br>\
+                        &bull;I worked on a 3D interaction.<br>\
+                        ",
+            title: "Nessly",
+            link: null,
+            linkText: "UNDER CONSTRUCTION",
+            galleryName: "nessly"
+        });
+    });
+    $("#projects-portal").click(function () {
+        _rect.openModal({
+             aboutText: "\
+                        &bull;This is a mod for GTAV.<br>\
+                        &bull;I made it myself when I was 15.<br>\
+                        &bull;Released for free, open source.<br>\
+                        &bull;Currently over 33,000 downloads.<br>\
+                        &bull;Reviewed by very famous youtubers.<br>\
+                        ",
+            title: "GTAV Portal Gun Mod",
+            link: "https://www.gta5-mods.com/scripts/portal-gun-net",
+            linkText: "VISIT",
+            galleryName: "portal"
+        });
+    });
+}
+
+function initNavMain() {
+    //main menu
+    $("#menu-main-title").click(function () {
+        window.location.hash = "nav";
+    });
+
+    //nav menu
+    $("#menu-nav-projects").click(function () {
+        window.location.hash = "projects";
+    });
+    $("#menu-nav-about").click(function () {
+        window.location.hash = "about";
+    });
+    $("#menu-nav-contact").click(function () {
+        window.location.hash = "contact";
+    });
+    $("#menu-nav-back").click(function () {
+        window.location.hash = "";
+    });
+}
+
+function initPage() {
+    _rect = $("#parallax-wrapper").rectangle({});
+    _rect.fadeElementsIn();
+
+    initModal();
+    initNavMain();
+    initProjects();
+    initAbout();
+    initContact();
 }

@@ -165,8 +165,9 @@ $duration) {
         &>hr {
             flex: 1;
             width: 70%;
-            margin-top: 18px;
             margin-bottom: 18px;
+            border: solid white 1.8px;
+            display: table;
         }
         &-text {
             text-align: center;
@@ -175,7 +176,7 @@ $duration) {
             flex: 2;
         }
     }
-    &-title{
+    &-title {
         text-align: center;
         color: white;
         @include shorttText();
