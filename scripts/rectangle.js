@@ -449,13 +449,13 @@ jQuery.fn.modalUnits = function (opts) {
     var portal = {
         elem: "#modal-unit-portal",
         elem2: "#modal-unit-portal-text",
-        angle: 54,
+        angle: 17,
         distPerc: 0.85
     };
     var about = {
         elem: "#modal-unit-about",
         elem2: "#modal-unit-about-text",
-        angle: 17,
+        angle: 54,
         distPerc: 0.9
     };
 
