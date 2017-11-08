@@ -39,22 +39,22 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-            case 'menu-contact':
-                $("#rect-menu-container").css("border", "7px solid white");
-                this.enablePrevious(false);
-                break;
-            case 'menu-about':
-                $("#rect-menu-container").css("border", "7px solid white");
-                this.enablePrevious(true, "nav");
-                break;
-            case 'menu-projects':
-                $("#rect-menu-container").css("border", "7px solid black");
-                this.enablePrevious(true, "nav");
-                break;
-            default:
-                $("#rect-menu-container").css("border", "7px solid black");
-                this.enablePrevious(false);
-                break;
+        case 'menu-contact':
+            $("#rect-menu-container").css("border", "7px solid white");
+            this.enablePrevious(false);
+            break;
+        case 'menu-about':
+            $("#rect-menu-container").css("border", "7px solid white");
+            this.enablePrevious(true, "nav");
+            break;
+        case 'menu-projects':
+            $("#rect-menu-container").css("border", "7px solid black");
+            this.enablePrevious(true, "nav");
+            break;
+        default:
+            $("#rect-menu-container").css("border", "7px solid black");
+            this.enablePrevious(false);
+            break;
         }
 
         setTimeout(function (menu) {
@@ -133,6 +133,8 @@ jQuery.fn.rectangle = function (opts) {
                         _modalUnits.updateGallery();
                         _modalUnits.updatePortal();
                         _modalUnits.updateAbout();
+                        _light.setAngle(17, true);
+
                     }, 750);
                 }, 500);
             }, 750);
@@ -205,6 +207,7 @@ jQuery.fn.flashlight = function (opts) {
         path.move(0, 0);
 
         var clipID = $(".light clipPath").attr('id');
+        $('.modal-content').css('-webkit-clip-path', 'url(#' + clipID + ')');
         $('.modal-content').css('clip-path', 'url(#' + clipID + ')');
 
         window.addEventListener('resize', function () {
@@ -263,6 +266,7 @@ jQuery.fn.flashlight = function (opts) {
         path.move(0, 0);
 
         var clipID = $(".light clipPath").attr('id');
+        $('.modal-content').css('-webkit-clip-path', 'url(#' + clipID + ')');
         $('.modal-content').css('clip-path', 'url(#' + clipID + ')');
         this.setAngle(0, false);
         path.move(0, 0);
@@ -383,50 +387,50 @@ jQuery.fn.gallery = function (opts) {
 
     this.currentGallery = function () {
         switch (category) {
-            case "awge":
-                return [
+        case "awge":
+            return [
                     "assets/awge/awge-landing.png",
                     "assets/awge/awge-home.png",
                     "assets/awge/awge-shop.png",
                     "assets/awge/awge-videos.png",
                     "assets/awge/awge-contact.png"];
-                break;
-            case "revenge":
-                return [
+            break;
+        case "revenge":
+            return [
                     "assets/revenge/revenge-landing.png",
                     "assets/revenge/revenge-shop.png",
                     "assets/revenge/revenge-shoe.png",
                     "assets/revenge/revenge-kylie.png"];
-                break;
-            case "sounddown":
-                return [
+            break;
+        case "sounddown":
+            return [
                     "assets/sounddown/sounddown-listing.png",
                     "assets/sounddown/sounddown-download.png",
                     "assets/sounddown/sounddown-modal.png",
                     "assets/sounddown/sounddown-popup.png"];
-                break;
-            case "nessly":
-                return [
+            break;
+        case "nessly":
+            return [
                     "assets/nessly/nessly-home.png",
                     "assets/nessly/nessly-model.png",
                     "assets/nessly/nessly-store.png"];
-                break;
-            case "portal":
-                return [
+            break;
+        case "portal":
+            return [
                     "assets/portal/portal-poster.png",
                     "assets/portal/portal-listing.png",
                     "assets/portal/portal-game.png",
                     "assets/portal/portal-youtube.png",
                     "assets/portal/portal-kwebbelkop.png"];
-                break;
-            default:
-                return [
+            break;
+        default:
+            return [
                     "assets/awge/awge-landing.png",
                     "assets/awge/awge-home.png",
                     "assets/awge/awge-shop.png",
                     "assets/awge/awge-videos.png",
                     "assets/awge/awge-contact.png"];
-                break;
+            break;
         }
         return gallery;
     }
@@ -605,24 +609,24 @@ function initHash() {
         var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
         switch (cleanHash.split("-")[0]) {
-            case 'blank':
-                _rect.changeMenu("menu-main");
-                break;
-            case 'nav':
-                _rect.changeMenu("menu-nav");
-                break;
-            case 'contact':
-                _rect.changeMenu("menu-contact");
-                break;
-            case 'about':
-                _rect.changeMenu("menu-about");
-                break;
-            case 'projects':
-                _rect.changeMenu("menu-projects");
-                break;
-            default:
-                _rect.changeMenu("menu-main");
-                break;
+        case 'blank':
+            _rect.changeMenu("menu-main");
+            break;
+        case 'nav':
+            _rect.changeMenu("menu-nav");
+            break;
+        case 'contact':
+            _rect.changeMenu("menu-contact");
+            break;
+        case 'about':
+            _rect.changeMenu("menu-about");
+            break;
+        case 'projects':
+            _rect.changeMenu("menu-projects");
+            break;
+        default:
+            _rect.changeMenu("menu-main");
+            break;
         }
     });
 
@@ -664,10 +668,10 @@ function initModal() {
     _light.setAngle(0);
 
     $("#modal-link").click(function () {
-        _light.setAngle(55, true);
+        _light.setAngle(17, true);
     });
     $("#modal-about").click(function () {
-        _light.setAngle(17, true);
+        _light.setAngle(55, true);
     });
     $("#modal-gallery").click(function () {
         _light.setAngle(85, true);
@@ -785,7 +789,7 @@ function initProjects() {
     });
     $("#projects-portal").click(function () {
         _rect.openModal({
-             aboutText: "\
+            aboutText: "\
                         &bull;This is a mod for GTAV.<br>\
                         &bull;I made it myself when I was 15.<br>\
                         &bull;Released for free, open source.<br>\

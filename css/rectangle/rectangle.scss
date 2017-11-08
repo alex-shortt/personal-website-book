@@ -403,8 +403,7 @@ $duration) {
         min-height: 100%;
         height: 100%;
         color: black;
-        //clip-path: url(#lightClip);
-        //background: red;
+        //transform: translateZ(0);
         background-image: url("../../assets/space.png");
     }
     &-svg {
@@ -545,13 +544,16 @@ $duration) {
             transform: translateX(-50%) translateY(-50%);
             top: 60%;
             left: 35%;
+            width: 300px;
+            height: 200px;
+            overflow-y: auto;
             color: white;
             &-text {
                 color: white;
                 @include shorttText();
             }
         }
-         :root {
+        :root {
             --portalDeg: 1;
             --portalX: -50%;
             --portalY: -50%;
@@ -788,18 +790,22 @@ $yDir) {
 @include keyframes(modal-expand) {
     0% {}
     25% {
+        -moz-clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
         -webkit-clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
         clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
     }
     50% {
+        -moz-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
         -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
         clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
     }
     75% {
+        -moz-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
         -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
         clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
     }
     100% {
+        -moz-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         fill: white;
@@ -808,19 +814,23 @@ $yDir) {
 
 @include keyframes(modal-minify) {
     0% {
+        -moz-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         -webkit-clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
         fill: white;
     }
     25% {
+        -moz-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
         -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
         clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), 0% 100%);
     }
     50% {
+        -moz-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
         -webkit-clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
         clip-path: polygon(0% 0%, 100% 0%, corner(16px, 1, -1), corner(16px, -1, -1));
     }
     75% {
+        -moz-clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
         -webkit-clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
         clip-path: polygon(0% 0%, corner(16px, 1, 1), corner(16px, 1, -1), corner(16px, -1, -1));
     }
