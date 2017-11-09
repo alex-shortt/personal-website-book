@@ -3,6 +3,7 @@ var _light;
 var _gallery;
 var _modalUnits;
 var _carousel;
+var _message;
 
 jQuery.fn.rectangle = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.rectangle.defs, opts);
@@ -39,26 +40,34 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-        case 'menu-social':
-            $("#rect-menu-container").css("border", "7px solid white");
-            this.enablePrevious(false);
-            break;
-        case 'menu-about':
-            $("#rect-menu-container").css("border", "7px solid white");
-            this.enablePrevious(true, "nav");
-            break;
-        case 'menu-projects':
-            $("#rect-menu-container").css("border", "7px solid black");
-            this.enablePrevious(true, "nav");
-            break;
-        case 'menu-message':
-            $("#rect-menu-container").css("border", "7px solid black");
-            this.enablePrevious(true, "nav");
-            break;
-        default:
-            $("#rect-menu-container").css("border", "7px solid black");
-            this.enablePrevious(false);
-            break;
+            case 'menu-social':
+                $("#rect-menu-container").css("border", "7px solid white");
+                this.enablePrevious(false);
+                _message.hideSpeech();
+
+                break;
+            case 'menu-about':
+                $("#rect-menu-container").css("border", "7px solid white");
+                this.enablePrevious(true, "nav");
+                _message.hideSpeech();
+
+                break;
+            case 'menu-projects':
+                $("#rect-menu-container").css("border", "7px solid black");
+                this.enablePrevious(true, "nav");
+                _message.hideSpeech();
+                break;
+            case 'menu-message':
+                $("#rect-menu-container").css("border", "7px solid black");
+                this.enablePrevious(true, "nav");
+                _message.showSpeech(750);
+                break;
+            default:
+                $("#rect-menu-container").css("border", "7px solid black");
+                this.enablePrevious(false);
+                _message.hideSpeech();
+
+                break;
         }
 
         setTimeout(function (menu) {
@@ -216,7 +225,6 @@ jQuery.fn.flashlight = function (opts) {
 
         window.addEventListener('resize', function () {
             _light.responsive();
-
         });
 
         $(document).click(function (e) {
@@ -391,50 +399,50 @@ jQuery.fn.gallery = function (opts) {
 
     this.currentGallery = function () {
         switch (category) {
-        case "awge":
-            return [
+            case "awge":
+                return [
                     "assets/awge/awge-landing.png",
                     "assets/awge/awge-home.png",
                     "assets/awge/awge-shop.png",
                     "assets/awge/awge-videos.png",
                     "assets/awge/awge-contact.png"];
-            break;
-        case "revenge":
-            return [
+                break;
+            case "revenge":
+                return [
                     "assets/revenge/revenge-landing.png",
                     "assets/revenge/revenge-shop.png",
                     "assets/revenge/revenge-shoe.png",
                     "assets/revenge/revenge-kylie.png"];
-            break;
-        case "sounddown":
-            return [
+                break;
+            case "sounddown":
+                return [
                     "assets/sounddown/sounddown-listing.png",
                     "assets/sounddown/sounddown-download.png",
                     "assets/sounddown/sounddown-modal.png",
                     "assets/sounddown/sounddown-popup.png"];
-            break;
-        case "nessly":
-            return [
+                break;
+            case "nessly":
+                return [
                     "assets/nessly/nessly-home.png",
                     "assets/nessly/nessly-model.png",
                     "assets/nessly/nessly-store.png"];
-            break;
-        case "portal":
-            return [
+                break;
+            case "portal":
+                return [
                     "assets/portal/portal-poster.png",
                     "assets/portal/portal-listing.png",
                     "assets/portal/portal-game.png",
                     "assets/portal/portal-youtube.png",
                     "assets/portal/portal-kwebbelkop.png"];
-            break;
-        default:
-            return [
+                break;
+            default:
+                return [
                     "assets/awge/awge-landing.png",
                     "assets/awge/awge-home.png",
                     "assets/awge/awge-shop.png",
                     "assets/awge/awge-videos.png",
                     "assets/awge/awge-contact.png"];
-            break;
+                break;
         }
         return gallery;
     }
@@ -607,33 +615,170 @@ jQuery.fn.carousel = function (opts) {
     return this.initialize();
 }
 
+jQuery.fn.message = function (opts) {
+    opts = jQuery.extend({}, jQuery.fn.message.defs, opts);
+
+    jQuery.fn.message.defs = {};
+
+    var name = $("#message-name");
+    var message = $("#message-message");
+    var speech = $("#menu-message-speech");
+
+    var contact = $(".menu-message-contact");
+    var confirm = $(".menu-message-confirm");
+
+    var rect = $("#rect-menu-container");
+    var send = $("#menu-message-contact-send");
+    var redo = $("#menu-message-confirm-redo");
+
+    var speechClosed = "M 0 0 L 75 0   L 75 0";
+    var speechOpen = "M 0 0 L 75 100 L 75 0";
+
+    var draw;
+    var path;
+    var visible = false;
+
+    this.initialize = function () {
+        draw = SVG($(speech).attr('id'));
+        window.addEventListener('resize', function () {
+            _message.positionSVG();
+        });
+        return this;
+    }
+
+    this.checkCompletion = function () {
+        var nameText = $(name).val();
+        var messageText = $(message).val();
+
+        var good = true;
+
+        if (nameText == "") {
+            $(name).css("animation", "shake 0.5s both");
+            setTimeout(function () {
+                $(name).css("animation", "none");
+            }, 500);
+            good = false;
+        }
+
+        if (messageText == "") {
+            $(message).css("animation", "shake 0.5s both");
+            setTimeout(function () {
+                $(message).css("animation", "none");
+            }, 500);
+            good = false;
+        }
+
+        return good;
+    }
+
+    this.sendMessage = function () {
+        var nameText = $(name).val();
+        var messageText = $(message).val();
+
+        if (!this.checkCompletion()) {
+            return;
+        }
+
+        //send message php
+
+        $(redo).css("animation", "none");
+        $(send).css("animation", "sendButton 1s ease-in-out forwards");
+
+        setTimeout(function () {
+            $(contact).css("opacity", 0);
+            setTimeout(function () {
+                $(contact).css("display", "none");
+                $(confirm).css("display", "initial");
+                $(confirm).css("opacity", 1);
+                $(name).val("");
+                $(message).val("");
+            }, 1000);
+        }, 1200);
+    }
+
+    this.redoMessage = function () {
+        $(send).css("animation", "none");
+        $(redo).css("animation", "sendButton 1s ease-in-out forwards");
+
+        setTimeout(function () {
+            $(confirm).css("opacity", 0);
+            setTimeout(function () {
+                $(confirm).css("display", "none");
+                $(contact).css("display", "flex");
+                $(contact).css("opacity", 1);
+            }, 1000);
+        }, 1200);
+    }
+
+    this.showSpeech = function (delay) {
+        if (visible) return;
+
+        if (delay == null) {
+            path = draw.path(speechClosed);
+            path.move(0, 0);
+            this.positionSVG();
+            path.animate(750, '<>').plot(speechOpen);
+            visible = true;
+        } else {
+            setTimeout(function () {
+                path = draw.path(speechClosed);
+                path.move(0, 0);
+                _message.positionSVG();
+                path.animate(750, '<>').plot(speechOpen);
+                visible = true;
+            }, delay);
+        }
+    }
+
+    this.positionSVG = function () {
+        var x = $(rect).offset().left + $(rect).width() + 14 - path.width() - 50;
+        var y = $(rect).offset().top + $(rect).height() + 7;
+        $(speech).css("left", x);
+        $(speech).css("top", y);
+    }
+
+    this.hideSpeech = function () {
+        if (!visible) return;
+        path.animate(750, '<>').plot(speechClosed);
+        setTimeout(function () {
+            path.remove();
+            $(speech).css("left", 0);
+            $(speech).css("top", 0);
+
+            visible = false;
+        }, 750);
+    }
+
+    return this.initialize();
+}
+
 function initHash() {
     $(window).hashchange(function () {
         var hash = location.hash;
         var cleanHash = (hash.replace(/^#/, '') || 'blank');
 
         switch (cleanHash.split("-")[0]) {
-        case 'blank':
-            _rect.changeMenu("menu-main");
-            break;
-        case 'nav':
-            _rect.changeMenu("menu-nav");
-            break;
-        case 'social':
-            _rect.changeMenu("menu-social");
-            break;
-        case 'message':
-            _rect.changeMenu("menu-message");
-            break;
-        case 'about':
-            _rect.changeMenu("menu-about");
-            break;
-        case 'projects':
-            _rect.changeMenu("menu-projects");
-            break;
-        default:
-            _rect.changeMenu("menu-main");
-            break;
+            case 'blank':
+                _rect.changeMenu("menu-main");
+                break;
+            case 'nav':
+                _rect.changeMenu("menu-nav");
+                break;
+            case 'social':
+                _rect.changeMenu("menu-social");
+                break;
+            case 'message':
+                _rect.changeMenu("menu-message");
+                break;
+            case 'about':
+                _rect.changeMenu("menu-about");
+                break;
+            case 'projects':
+                _rect.changeMenu("menu-projects");
+                break;
+            default:
+                _rect.changeMenu("menu-main");
+                break;
         }
     });
 
@@ -835,6 +980,17 @@ function initNavMain() {
     });
 }
 
+function initMessage() {
+    _message = $("#menu-message").message({})
+
+    $("#menu-message-contact-send").click(function () {
+        _message.sendMessage();
+    });
+    $("#menu-message-confirm-redo").click(function () {
+        _message.redoMessage();
+    });
+}
+
 function initPage() {
     _rect = $("#parallax-wrapper").rectangle({});
     _rect.fadeElementsIn();
@@ -844,4 +1000,5 @@ function initPage() {
     initProjects();
     initAbout();
     initSocial();
+    initMessage();
 }

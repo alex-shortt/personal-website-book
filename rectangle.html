@@ -25,6 +25,7 @@
         }
         gtag('js', new Date());
         gtag('config', 'UA-97408879-4');
+
     </script>
 </head>
 
@@ -77,9 +78,12 @@
     </div>
 
     <div id="menu-message-speech" class="menu-message-speech">
-        <svg width="200px" height="250px">
-            <path d="M 0 0 L 75 100 L 75 0" />
+        <!--<svg width="200px" height="250px">
+            <path id="menu-message-speech-path" d="M 0 0 L 75 100 L 75 0">
+                <animate id="p1" attributeName="d" values="M 0 0 L 75 0 L 75 0;M 0 0 L 75 100 L 75 0" dur="1s" repeatCount="1"/>
+            </path>
         </svg>
+-->
     </div>
 
     <div id="parallax-wrapper" class="rect-box">
@@ -97,8 +101,8 @@
             <div id="menu-nav" class="rect-menu menu-nav">
                 <h1 id="menu-nav-projects" class="menu-nav-option">Projects</h1>
                 <h1 id="menu-nav-about" class="menu-nav-option">About</h1>
-                <h1 id="menu-nav-social" class="menu-nav-option">Social</h1>
                 <h1 id="menu-nav-message" class="menu-nav-option">Message</h1>
+                <h1 id="menu-nav-social" class="menu-nav-option">Social</h1>
                 <!--<h1 id="menu-nav-back" class="menu-nav-option fa fa-2x fa-arrow-left"></h1>-->
             </div>
             <div id="menu-projects" class="rect-menu menu-projects">
@@ -221,27 +225,30 @@
                 </div>
             </div>
             <div id="menu-message" class="rect-menu menu-message">
-                <div class="menu-message-contact">
+                <div class="menu-message-contact menu-message-tab">
                     <label class="menu-message-contact-label" for="menu-message-contact-name">Name/Email:</label>
-                    <input class="menu-message-contact-name menu-message-contact-input" placeholder="" />
-
+                    <input id="message-name" class="menu-message-contact-name menu-message-contact-input" placeholder="" required />
                     <label class="menu-message-contact-label" for="menu-message-contact-textarea">Message:</label>
-                    <textarea class="menu-message-contact-message menu-message-contact-input"></textarea>
-
-                    <h2 class="menu-message-contact-send">Send</h2>
+                    <textarea id="message-message" class="menu-message-contact-message menu-message-contact-input" required ></textarea>
+                    <h2 id="menu-message-contact-send" class="menu-message-contact-send">Send</h2>
                 </div>
-                <div class="menu-message-confirm"></div>
+                <div class="menu-message-confirm menu-message-tab">
+                    <h1 class="menu-message-confirm-text">Message sent successfully.</h1>
+                    <h1 class="menu-message-confirm-text">Thanks!</h1>
+                    <h2 id="menu-message-confirm-redo" class="menu-message-confirm-redo">Send Another?</h2>
+                </div>
             </div>
         </div>
         <div id="rect-background" class="rect-background"></div>
     </div>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             initPage();
             initHash();
             initParallax();
         });
+
     </script>
 </body>
 

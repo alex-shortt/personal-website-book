@@ -120,7 +120,7 @@ $duration) {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translateY(-50%) translateX(-50%);
+            transform: translateY(-50%) translateX(-50%) translateZ(0);
             border: 7px solid black;
         }
     }
@@ -319,6 +319,9 @@ $duration) {
     &-message {
         background: white;
         display: block;
+        &-tab {
+            transition: opacity 1s ease-out;
+        }
         &-contact {
             display: flex;
             flex-direction: column;
@@ -342,8 +345,10 @@ $duration) {
                 border: 2px solid black;
                 line-height: 1.5em;
                 padding: 5px;
+                font-size: 12pt;
                 &:focus {
-                    border: 2px solid black;
+                    outline: none;
+                    box-shadow: inset 0px 0px 13px 0px rgba(0, 0, 0, 0.31);
                 }
             }
             &-label {
@@ -351,7 +356,11 @@ $duration) {
                 font-weight: bold;
                 margin: 5px 0px;
             }
+            &-button {
+                width: 100%;
+            }
             &-send {
+                position: relative;
                 @include shorttText();
                 width: calc(100% - 10px);
                 background: black;
@@ -360,17 +369,37 @@ $duration) {
                 margin-top: 20px;
                 padding: 5px;
                 cursor: pointer;
+                animation-delay: 0.3s;
             }
         }
         &-confirm {
             display: none;
+            opacity: 0;
+            &-text {
+                flex: 1;
+                @include shorttText();
+                color: black;
+                text-align: center;
+            }
+            &-redo {
+                flex: 1;
+                @include shorttText();
+                width: calc(100% - 10px);
+                background: black;
+                color: white;
+                text-align: center;
+                margin-top: 20px;
+                padding: 5px;
+                cursor: pointer;
+                animation-delay: 0.3s;
+            }
         }
         &-speech {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 0;
+            left: 0;
             z-index: 1;
-            transform: translateX(-50%) translateY(-50%) translateX(130px) translateY(363.5px);
+            //transform: translateX(-50%) translateY(-50%) translateX(130px) translateY(363px);
             pointer-events: none;
             &>svg {
                 stroke: black;
@@ -402,6 +431,35 @@ $duration) {
 #about-page-up {
     color: gray;
     cursor: auto;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateZ(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translate3d(-6px, 0, 0);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translate3d(6px, 0, 0);
+    }
+}
+
+@keyframes sendButton {
+    from {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    to {
+        clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    }
 }
 
 #projects {
@@ -616,7 +674,7 @@ $duration) {
                 @include shorttText();
             }
         }
-        :root {
+         :root {
             --portalDeg: 1;
             --portalX: -50%;
             --portalY: -50%;
