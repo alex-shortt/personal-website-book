@@ -76,6 +76,12 @@
         </svg>
     </div>
 
+    <div id="menu-message-speech" class="menu-message-speech">
+        <svg width="200px" height="250px">
+            <path d="M 0 0 L 75 100 L 75 0" />
+        </svg>
+    </div>
+
     <div id="parallax-wrapper" class="rect-box">
         <div id="hand-despair" class="fade-in parallax hand hand-despair" data-speed="3.2">
             <img class="hand-image-despair" src="./assets/hand-despair.png">
@@ -91,7 +97,8 @@
             <div id="menu-nav" class="rect-menu menu-nav">
                 <h1 id="menu-nav-projects" class="menu-nav-option">Projects</h1>
                 <h1 id="menu-nav-about" class="menu-nav-option">About</h1>
-                <h1 id="menu-nav-contact" class="menu-nav-option">Contact</h1>
+                <h1 id="menu-nav-social" class="menu-nav-option">Social</h1>
+                <h1 id="menu-nav-message" class="menu-nav-option">Message</h1>
                 <!--<h1 id="menu-nav-back" class="menu-nav-option fa fa-2x fa-arrow-left"></h1>-->
             </div>
             <div id="menu-projects" class="rect-menu menu-projects">
@@ -193,25 +200,37 @@
                     <i id="about-page-down" class="menu-about-arrow-button fa fa-arrow-circle-down" aria-hidden="true"></i>
                 </div>
             </div>
-            <div id="menu-contact" class="rect-menu menu-contact">
-                <div class="menu-contact-option">
-                    <h1 id="contact-github" class="menu-contact-option-text fa fa-3x fa-github" aria-hidden="true"></h1>
+            <div id="menu-social" class="rect-menu menu-social">
+                <div class="menu-social-option">
+                    <h1 id="social-github" class="menu-social-option-text fa fa-3x fa-github" aria-hidden="true"></h1>
                 </div>
-                <div class="menu-contact-option">
-                    <h1 id="contact-soundcloud" class="menu-contact-option-text fa fa-3x fa-soundcloud" aria-hidden="true"></h1>
+                <div class="menu-social-option">
+                    <h1 id="social-soundcloud" class="menu-social-option-text fa fa-3x fa-soundcloud" aria-hidden="true"></h1>
                 </div>
-                <div class="menu-contact-option">
-                    <h1 id="contact-twitter" class="menu-contact-option-text fa fa-3x fa-twitter" aria-hidden="true"></h1>
+                <div class="menu-social-option">
+                    <h1 id="social-twitter" class="menu-social-option-text fa fa-3x fa-twitter" aria-hidden="true"></h1>
                 </div>
-                <div class="menu-contact-option">
-                    <h1 id="contact-instagram" class="menu-contact-option-text fa fa-3x fa-instagram" aria-hidden="true"></h1>
+                <div class="menu-social-option">
+                    <h1 id="social-instagram" class="menu-social-option-text fa fa-3x fa-instagram" aria-hidden="true"></h1>
                 </div>
-                <div class="menu-contact-option">
-                    <h1 id="contact-linkedin" class="menu-contact-option-text fa fa-3x fa-linkedin" aria-hidden="true"></h1>
+                <div class="menu-social-option">
+                    <h1 id="social-linkedin" class="menu-social-option-text fa fa-3x fa-linkedin" aria-hidden="true"></h1>
                 </div>
-                <div class="menu-contact-option">
-                    <h1 id="contact-back" class="menu-contact-option-text fa fa-2x fa-arrow-left" aria-hidden="true"></h1>
+                <div class="menu-social-option">
+                    <h1 id="social-back" class="menu-social-option-text fa fa-2x fa-arrow-left" aria-hidden="true"></h1>
                 </div>
+            </div>
+            <div id="menu-message" class="rect-menu menu-message">
+                <div class="menu-message-contact">
+                    <label class="menu-message-contact-label" for="menu-message-contact-name">Name/Email:</label>
+                    <input class="menu-message-contact-name menu-message-contact-input" placeholder="" />
+
+                    <label class="menu-message-contact-label" for="menu-message-contact-textarea">Message:</label>
+                    <textarea class="menu-message-contact-message menu-message-contact-input"></textarea>
+
+                    <h2 class="menu-message-contact-send">Send</h2>
+                </div>
+                <div class="menu-message-confirm"></div>
             </div>
         </div>
         <div id="rect-background" class="rect-background"></div>
@@ -233,14 +252,4 @@ Idea::
 
 Lucas V type design, plans are laid out in plans.ai
 
-Projects page is text in the middle explaining the projects then media floating around the sides, bouncing off each other (think of way to use three.js)
-
-    position: absolute;
-    top: 0;
-    transform-origin: left;
-    transform: rotate(-90deg) translateX(-100%);
-    font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
-    margin: 0;
-
----- > Add to an h1 for previous button
 -->

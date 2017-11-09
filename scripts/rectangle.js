@@ -39,7 +39,7 @@ jQuery.fn.rectangle = function (opts) {
         });
 
         switch (menu) {
-        case 'menu-contact':
+        case 'menu-social':
             $("#rect-menu-container").css("border", "7px solid white");
             this.enablePrevious(false);
             break;
@@ -48,6 +48,10 @@ jQuery.fn.rectangle = function (opts) {
             this.enablePrevious(true, "nav");
             break;
         case 'menu-projects':
+            $("#rect-menu-container").css("border", "7px solid black");
+            this.enablePrevious(true, "nav");
+            break;
+        case 'menu-message':
             $("#rect-menu-container").css("border", "7px solid black");
             this.enablePrevious(true, "nav");
             break;
@@ -615,8 +619,11 @@ function initHash() {
         case 'nav':
             _rect.changeMenu("menu-nav");
             break;
-        case 'contact':
-            _rect.changeMenu("menu-contact");
+        case 'social':
+            _rect.changeMenu("menu-social");
+            break;
+        case 'message':
+            _rect.changeMenu("menu-message");
             break;
         case 'about':
             _rect.changeMenu("menu-about");
@@ -687,23 +694,23 @@ function initModal() {
     });
 }
 
-function initContact() {
-    $("#contact-github").click(function () {
+function initSocial() {
+    $("#social-github").click(function () {
         window.open("https://github.com/alex-shortt");
     });
-    $("#contact-soundcloud").click(function () {
+    $("#social-soundcloud").click(function () {
         window.open("https://soundcloud.com/alex_shortt");
     });
-    $("#contact-twitter").click(function () {
+    $("#social-twitter").click(function () {
         window.open("https://twitter.com/_alexshortt");
     });
-    $("#contact-instagram").click(function () {
+    $("#social-instagram").click(function () {
         window.open("https://www.instagram.com/alexander.shortt/");
     });
-    $("#contact-linkedin").click(function () {
+    $("#social-linkedin").click(function () {
         window.open("https://www.linkedin.com/in/alexshortt/");
     });
-    $("#contact-back").click(function () {
+    $("#social-back").click(function () {
         window.location.hash = "nav";
     });
 }
@@ -817,8 +824,11 @@ function initNavMain() {
     $("#menu-nav-about").click(function () {
         window.location.hash = "about";
     });
-    $("#menu-nav-contact").click(function () {
-        window.location.hash = "contact";
+    $("#menu-nav-social").click(function () {
+        window.location.hash = "social";
+    });
+    $("#menu-nav-message").click(function () {
+        window.location.hash = "message";
     });
     $("#menu-nav-back").click(function () {
         window.location.hash = "";
@@ -833,5 +843,5 @@ function initPage() {
     initNavMain();
     initProjects();
     initAbout();
-    initContact();
+    initSocial();
 }

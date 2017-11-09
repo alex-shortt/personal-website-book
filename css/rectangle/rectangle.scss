@@ -316,7 +316,70 @@ $duration) {
             }
         }
     }
-    &-contact {
+    &-message {
+        background: white;
+        display: block;
+        &-contact {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            &-name {
+                //flex: 2;
+                margin-bottom: 10px;
+                @include shorttText();
+                font-weight: bold;
+            }
+            &-message {
+                flex: 1;
+                @include shorttText();
+                font-weight: bold;
+                resize: none;
+                overflow-y: auto;
+            }
+            &-input {
+                border: 2px solid black;
+                line-height: 1.5em;
+                padding: 5px;
+                &:focus {
+                    border: 2px solid black;
+                }
+            }
+            &-label {
+                @include shorttText();
+                font-weight: bold;
+                margin: 5px 0px;
+            }
+            &-send {
+                @include shorttText();
+                width: calc(100% - 10px);
+                background: black;
+                color: white;
+                text-align: center;
+                margin-top: 20px;
+                padding: 5px;
+                cursor: pointer;
+            }
+        }
+        &-confirm {
+            display: none;
+        }
+        &-speech {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            transform: translateX(-50%) translateY(-50%) translateX(130px) translateY(363.5px);
+            pointer-events: none;
+            &>svg {
+                stroke: black;
+                fill: white;
+                stroke-width: 7px;
+            }
+        }
+    }
+    &-social {
         background: white;
         &-option {
             flex: 1;
