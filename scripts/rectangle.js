@@ -679,7 +679,9 @@ jQuery.fn.message = function (opts) {
             return;
         }
 
-        //send message php
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "./scripts/email.php?name=" + encodeURIComponent(nameText) + "&message=" + encodeURIComponent(messageText), true);
+        xhr.send();
 
         $(redo).css("animation", "none");
         $(send).css("animation", "sendButton 1s ease-in-out forwards");
