@@ -4,16 +4,16 @@
     <title>alex shortt</title>
 
     <link rel="stylesheet" type="text/css" href="css/rectangle/rectangle.css">
-    <link rel="stylesheet" type="text/css" href="css/external/perfect-scrollbar.min.css">
+    <link rel="stylesheet" type="text/css" href="css/external/roundslider.min.css">
 
     <script src="https://use.fontawesome.com/27cf0ad925.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="scripts/hashchange.min.js" type="text/javascript"></script>
+    <script src="scripts/roundslider.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js" type="text/javascript"></script>
-    <script src="scripts/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js"></script>
     <link rel="icon" type="image/png" href="assets/favicon.png" sizes="32x32">
-    
+
     <script src="scripts/rectangle.js" type="text/javascript"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -44,30 +44,9 @@
             <div class="modal-comet modal-comet-2"></div>
             <div class="modal-comet modal-comet-3"></div>
             <div class="modal-comet modal-comet-4"></div>
-            <div id="modal-unit-portal" class="modal-unit-portal">
-                <div class="modal-unit-portal-layer"></div>
-                <div class="modal-unit-portal-layer"></div>
-                <div class="modal-unit-portal-layer"></div>
-                <div class="modal-unit-portal-layer"></div>
-                <div class="modal-unit-portal-layer"></div>
-                <h1 id="modal-unit-portal-text" class="modal-unit-portal-text">...</h1>
-            </div>
-            <div id="modal-unit-gallery" class="modal-unit-gallery">
-                <div id="modal-gallery-left" class="modal-unit-gallery-left"></div>
-                <div id="modal-gallery-right" class="modal-unit-gallery-right"></div>
-            </div>
-            <div id="modal-unit-about" class="modal-unit-about">
-                <h3 id="modal-unit-about-text" class="modal-unit-about-text">...</h3>
-            </div>
-        </div>
-        <div class="modal-nav">
-            <h1 id="modal-nav-title" class="modal-nav-title">...</h1>
-            <hr />
-            <h2 class="modal-nav-button" id="modal-link">Link</h2>
-            <h2 class="modal-nav-button" id="modal-about">About</h2>
-            <h2 class="modal-nav-button" id="modal-gallery">Gallery</h2>
         </div>
         <img id="modal-handle" class="modal-handle" src="./assets/girl-hand.png" />
+        <div id="modal-slider" class="modal-slider"></div>
     </div>
 
     <div class="light" id="light"></div>
@@ -78,14 +57,7 @@
         </svg>
     </div>
 
-    <div id="menu-message-speech" class="menu-message-speech">
-        <!--<svg width="200px" height="250px">
-            <path id="menu-message-speech-path" d="M 0 0 L 75 100 L 75 0">
-                <animate id="p1" attributeName="d" values="M 0 0 L 75 0 L 75 0;M 0 0 L 75 100 L 75 0" dur="1s" repeatCount="1"/>
-            </path>
-        </svg>
--->
-    </div>
+    <div id="menu-message-speech" class="menu-message-speech"></div>
 
     <div id="parallax-wrapper" class="rect-box">
         <div id="hand-despair" class="fade-in parallax hand hand-despair" data-speed="3.2">
@@ -104,26 +76,6 @@
                 <h1 id="menu-nav-about" class="menu-nav-option">About</h1>
                 <h1 id="menu-nav-message" class="menu-nav-option">Message</h1>
                 <h1 id="menu-nav-social" class="menu-nav-option">Social</h1>
-                <!--<h1 id="menu-nav-back" class="menu-nav-option fa fa-2x fa-arrow-left"></h1>-->
-            </div>
-            <div id="menu-projects" class="rect-menu menu-projects">
-                <div class="menu-projects-wrapper">
-                    <div id="projects-awge" class="menu-projects-option">
-                        <h1 class="menu-projects-option-text">AWGE</h1>
-                    </div>
-                    <div id="projects-revenge" class="menu-projects-option">
-                        <h1 class="menu-projects-option-text">Revenge x Storm</h1>
-                    </div>
-                    <div id="projects-sounddown" class="menu-projects-option">
-                        <h1 class="menu-projects-option-text">SoundDown</h1>
-                    </div>
-                    <div id="projects-nessly" class="menu-projects-option">
-                        <h1 class="menu-projects-option-text">Nessly</h1>
-                    </div>
-                    <div id="projects-portal" class="menu-projects-option">
-                        <h1 class="menu-projects-option-text">Portal Gun <br> Mod</h1>
-                    </div>
-                </div>
             </div>
             <div id="menu-about" class="rect-menu menu-about">
                 <div class="stars"></div>
@@ -230,7 +182,7 @@
                     <label class="menu-message-contact-label" for="menu-message-contact-name">Name/Email:</label>
                     <input id="message-name" class="menu-message-contact-name menu-message-contact-input" placeholder="" required />
                     <label class="menu-message-contact-label" for="menu-message-contact-textarea">Message:</label>
-                    <textarea id="message-message" class="menu-message-contact-message menu-message-contact-input" required ></textarea>
+                    <textarea id="message-message" class="menu-message-contact-message menu-message-contact-input" required></textarea>
                     <h2 id="menu-message-contact-send" class="menu-message-contact-send">Send</h2>
                 </div>
                 <div class="menu-message-confirm menu-message-tab">

@@ -1,9 +1,9 @@
 var _rect;
 var _light;
-var _gallery;
-var _modalUnits;
 var _carousel;
 var _message;
+var _slider;
+var _modalUnits = [];
 
 jQuery.fn.rectangle = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.rectangle.defs, opts);
@@ -118,34 +118,28 @@ jQuery.fn.rectangle = function (opts) {
                         opacity: 1,
                         transform: "translateY(0)"
                     });
-                    _modalUnits.updateModal(project);
-
                     setTimeout(function () {
                         _light.responsive();
-                        _modalUnits.updateGallery();
-                        _modalUnits.updatePortal();
-                        _modalUnits.updateAbout();
+                        _slider.updatePos();
+                        updateModalUnits();
                     }, (750 / 4));
 
                     setTimeout(function () {
                         _light.responsive();
-                        _modalUnits.updateGallery();
-                        _modalUnits.updatePortal();
-                        _modalUnits.updateAbout();
+                        _slider.updatePos();
+                        updateModalUnits();
                     }, (750 / 2));
 
                     setTimeout(function () {
                         _light.responsive();
-                        _modalUnits.updateGallery();
-                        _modalUnits.updatePortal();
-                        _modalUnits.updateAbout();
+                        _slider.updatePos();
+                        updateModalUnits();
                     }, (750 * 3 / 4));
 
                     setTimeout(function () {
+                        updateModalUnits();
+                        _slider.updatePos();
                         _light.responsive();
-                        _modalUnits.updateGallery();
-                        _modalUnits.updatePortal();
-                        _modalUnits.updateAbout();
                         _light.setAngle(17, true);
 
                     }, 750);
@@ -284,7 +278,7 @@ jQuery.fn.flashlight = function (opts) {
         path.move(0, 0);
     }
 
-    this.setAngle = function (newAngle, animate) {
+    this.setAngle = function (newAngle, animate, time) {
         angle = newAngle;
 
         var transX = $(imgElement).offset().left + (transPosX * $(imgElement).width());
@@ -293,7 +287,10 @@ jQuery.fn.flashlight = function (opts) {
         //literally no idea why but this works
         path.stop();
         if (animate) {
-            path.animate().rotate(angle, transX, transY);
+            if (time != null)
+                path.animate(time, '<>').rotate(angle, transX, transY);
+            else
+                path.animate().rotate(angle, transX, transY);
         } else {
             path.rotate(angle, transX, transY);
         }
@@ -339,141 +336,26 @@ jQuery.fn.flashlight = function (opts) {
     return this.initialize();
 }
 
-jQuery.fn.gallery = function (opts) {
-    opts = jQuery.extend({}, jQuery.fn.gallery.defs, opts);
-    jQuery.fn.gallery.defs = {};
-
-    var instance = this;
-    var element = jQuery(this);
-    var category = "";
-    var gallery = ["assets/css3-drawn.png",
-                  "assets/girl.png",
-                  "assets/jungle.jpg",
-                  "assets/moon.png",
-                  "assets/jupiter.png",
-                  "assets/girl-hand.png"];
-    var catInd = 0;
-    var index = 0;
-    var images = [];
-
-    this.initialize = function () {
-        this.updateImage();
-        return this;
-    }
-
-    this.updateImage = function () {
-        $(element).css("background-image", "url(" + this.currentGallery()[index] + ")");
-    }
-
-    this.transitionImage = function () {
-        $(element).css("opacity", 0);
-        setTimeout(function (obj) {
-            obj.updateImage();
-        }, 250, this);
-        setTimeout(function () {
-            $(element).css("opacity", 1);
-        }, 500);
-    }
-
-    this.next = function () {
-        index++;
-        if (index > this.currentGallery().length - 1) {
-            index = 0;
-        }
-        this.transitionImage();
-    }
-
-    this.previous = function () {
-        index--;
-        if (index < 0) {
-            index = this.currentGallery().length - 1;
-        }
-        this.transitionImage();
-    }
-
-    this.setGallery = function (cat) {
-        category = cat;
-        index = 0;
-        this.updateImage();
-    }
-
-    this.currentGallery = function () {
-        switch (category) {
-            case "awge":
-                return [
-                    "assets/awge/awge-landing.png",
-                    "assets/awge/awge-home.png",
-                    "assets/awge/awge-shop.png",
-                    "assets/awge/awge-videos.png",
-                    "assets/awge/awge-contact.png"];
-                break;
-            case "revenge":
-                return [
-                    "assets/revenge/revenge-landing.png",
-                    "assets/revenge/revenge-shop.png",
-                    "assets/revenge/revenge-shoe.png",
-                    "assets/revenge/revenge-kylie.png"];
-                break;
-            case "sounddown":
-                return [
-                    "assets/sounddown/sounddown-listing.png",
-                    "assets/sounddown/sounddown-download.png",
-                    "assets/sounddown/sounddown-modal.png",
-                    "assets/sounddown/sounddown-popup.png"];
-                break;
-            case "nessly":
-                return [
-                    "assets/nessly/nessly-home.png",
-                    "assets/nessly/nessly-model.png",
-                    "assets/nessly/nessly-store.png"];
-                break;
-            case "portal":
-                return [
-                    "assets/portal/portal-poster.png",
-                    "assets/portal/portal-listing.png",
-                    "assets/portal/portal-game.png",
-                    "assets/portal/portal-youtube.png",
-                    "assets/portal/portal-kwebbelkop.png"];
-                break;
-            default:
-                return [
-                    "assets/awge/awge-landing.png",
-                    "assets/awge/awge-home.png",
-                    "assets/awge/awge-shop.png",
-                    "assets/awge/awge-videos.png",
-                    "assets/awge/awge-contact.png"];
-                break;
-        }
-        return gallery;
-    }
-
-    return this.initialize();
-}
-
 jQuery.fn.modalUnits = function (opts) {
     opts = jQuery.extend({}, jQuery.fn.modalUnits.defs, opts);
-    jQuery.fn.rectangle.defs = {};
+    jQuery.fn.modalUnits.defs = {
+        angle: 45,
+        distPerc: 0.85,
+        image: "assets/jupiter.png",
+        link: "google.com",
+        id: 'modal-unit-default',
+        text: "default"
+    };
+
+    var angle = opts.angle;
+    var distPerc = opts.distPerc;
+    var image = opts.image;
+    var link = opts.link;
+    var text = opts.text;
+    var id = opts.id;
 
     var instance = this;
     var element = jQuery(this);
-
-    var gallery = {
-        elem: "#modal-unit-gallery",
-        angle: 85,
-        distPerc: 0.75
-    };
-    var portal = {
-        elem: "#modal-unit-portal",
-        elem2: "#modal-unit-portal-text",
-        angle: 17,
-        distPerc: 0.85
-    };
-    var about = {
-        elem: "#modal-unit-about",
-        elem2: "#modal-unit-about-text",
-        angle: 54,
-        distPerc: 0.9
-    };
 
     this.getScaledXY = function (angle, perc) {
         var transPoint = _light.getTransPoint();
@@ -504,57 +386,68 @@ jQuery.fn.modalUnits = function (opts) {
         };
     }
 
-    this.updateModal = function (project) {
-        //project.aboutText, project.link, project.linkText, project.galleryName
-
-        //update gallery images
-        _gallery.setGallery(project.galleryName);
-
-        //set new link for project
-        $(portal.elem).unbind();
-        if (project.link != null) {
-            $(portal.elem).click(function () {
-                window.open(project.link);
-            });
-        }
-
-        //set link text
-        $(portal.elem2).text(project.linkText);
-
-        //set about text
-        $(about.elem2).empty();
-        $(about.elem2).html(project.aboutText);
-
-        //set title of modal
-        $("#modal-nav-title").text(project.title);
-    }
-
-    this.updateGallery = function () {
-        var newCoords = this.getScaledXY(gallery.angle, gallery.distPerc);
-        $(gallery.elem).css("top", newCoords.y + "px");
-        $(gallery.elem).css("left", newCoords.x + "px");
-    }
-
-    this.updatePortal = function () {
-        var newCoords = this.getScaledXY(portal.angle, portal.distPerc);
-        $(portal.elem).css("top", newCoords.y + "px");
-        $(portal.elem).css("left", newCoords.x + "px");
-    }
-
-    this.updateAbout = function () {
-        var newCoords = this.getScaledXY(about.angle, about.distPerc);
-        $(about.elem).css("top", newCoords.y + "px");
-        $(about.elem).css("left", newCoords.x + "px");
+    this.updatePos = function () {
+        var newCoords = this.getScaledXY(angle, distPerc);
+        $("#" + id).css("top", newCoords.y + "px");
+        $("#" + id).css("left", newCoords.x + "px");
     }
 
     this.initialize = function () {
-        //this.updateGallery();
-        //this.updateBlackHole();
+        id = "modal-unit-" + text.replace(/ /g, "-");
+
+        var elem = $("<div class='modal-unit'></div>");
+        elem.css("background-image", "url(" + image + ")");
+        elem.attr('id', id);
+        elem.click(function () {
+            window.open(link);
+        });
+        elem.append("<h2 class='modal-unit-text'>" + text + "</h2>");
+        $(element).append(elem);
+        return this;
+    }
+
+    return this.initialize();
+}
+
+jQuery.fn.slider = function (opts) {
+    opts = jQuery.extend({}, jQuery.fn.slider.defs, opts);
+    jQuery.fn.slider.defs = {};
+
+    var instance = this;
+    var elem = jQuery(this);
+
+    this.updatePos = function () {
+        $("#modal-slider").css("bottom", $(window).height() - _light.getTransPoint().y);
+        $("#modal-slider").css("left", _light.getTransPoint().x);
+    }
+
+    this.updateEvent = function (e) {
+        console.log(e);
+    }
+
+    this.initialize = function () {
+        $(elem).roundSlider({
+            circleShape: "quarter-top-right",
+            radius: 70,
+            showTooltip: false,
+            change: "traceEvent",
+            drag: "traceEvent",
+            tooltipFormat: "asdf"
+        });
+        
+        function asdf(args){
+            console.log(args);
+        }
+        
+        function traceEvent(e) {
+            console.log(e);
+        }
+
+        $("#modal-slider").css("bottom", $(window).height() - _light.getTransPoint().y);
+        $("#modal-slider").css("left", _light.getTransPoint().x);
 
         window.addEventListener('resize', function () {
-            _modalUnits.updateGallery();
-            _modalUnits.updatePortal();
-            _modalUnits.updateAbout();
+            _slider.updatePos();
         });
         return this;
     }
@@ -733,6 +626,7 @@ jQuery.fn.message = function (opts) {
     }
 
     this.positionSVG = function () {
+        if (path == null) return;
         var x = $(rect).offset().left + $(rect).width() + 14 - path.width() - 50;
         var y = $(rect).offset().top + $(rect).height() + 7;
         $(speech).css("left", x);
@@ -753,6 +647,14 @@ jQuery.fn.message = function (opts) {
 
     return this.initialize();
 }
+
+
+function updateModalUnits() {
+    _modalUnits.forEach(function (obj) {
+        obj.updatePos();
+    });
+}
+
 
 function initHash() {
     $(window).hashchange(function () {
@@ -776,7 +678,7 @@ function initHash() {
                 _rect.changeMenu("menu-about");
                 break;
             case 'projects':
-                _rect.changeMenu("menu-projects");
+                _rect.openModal();
                 break;
             default:
                 _rect.changeMenu("menu-main");
@@ -812,10 +714,11 @@ function initParallax() {
 }
 
 function initModal() {
-    _modalUnits = $(".modal-content").modalUnits({});
-
     $(".modal-close").click(function () {
         _rect.closeModal($(this).data("modal"));
+        setTimeout(function () {
+            window.location.hash = "nav";
+        }, 750)
     });
 
     _light = $(".modal-content").flashlight({});
@@ -831,13 +734,48 @@ function initModal() {
         _light.setAngle(85, true);
     });
 
-    //gallery modal 
-    _gallery = $("#modal-unit-gallery").gallery({});
-    $("#modal-gallery-left").click(function () {
-        _gallery.previous();
-    });
-    $("#modal-gallery-right").click(function () {
-        _gallery.next();
+    _modalUnits.push($(".modal-content").modalUnits({
+        angle: 45,
+        distPerc: 1,
+        image: "assets/saturn.png",
+        link: "https://awgeshit.com",
+        text: "AWGE"
+    }));
+    _modalUnits.push($(".modal-content").modalUnits({
+        angle: 10,
+        distPerc: 0.8,
+        image: "assets/jupiter.png",
+        link: "https://revengexstorm.com",
+        text: "Revenge X Storm"
+    }));
+    _modalUnits.push($(".modal-content").modalUnits({
+        angle: 38,
+        distPerc: 0.7,
+        image: "assets/moon.png",
+        link: "https://reddit.com",
+        text: "Sound Down"
+    }));
+    _modalUnits.push($(".modal-content").modalUnits({
+        angle: 80,
+        distPerc: 1,
+        image: "assets/jupiter.png",
+        link: "https://facebook.com",
+        text: "Nessly"
+    }));
+    _modalUnits.push($(".modal-content").modalUnits({
+        angle: 69,
+        distPerc: 0.54,
+        image: "assets/saturn.png",
+        link: "https://twitter.com",
+        text: "GTAV Portal Gun Mod"
+    }));
+
+    _slider = $("#modal-slider").slider({});
+
+    window.addEventListener('resize', function () {
+        _modalUnits.forEach(function (obj) {
+            obj.updatePos();
+        });
     });
 }
 
@@ -870,91 +808,6 @@ function initAbout() {
     });
     $("#about-page-down").click(function () {
         _carousel.changePage(-1);
-    });
-}
-
-function initProjects() {
-    $('#menu-projects').perfectScrollbar({
-        wheelSpeed: 0.5
-    });
-    $("#projects-awge").click(function () {
-        _rect.openModal({
-            aboutText: "\
-                        &bull;This is an ecommerce site for the A$AP Mob.<br>\
-                        &bull;I was hired by A$AP Rocky.<br>\
-                        &bull;I built this entire website myself.<br>\
-                        &bull;I oversaw $150,000 worth of merch.<br>\
-                        &bull;I managed the whole website.<br>\
-                        &bull;It currently has half a million users.<br>\
-                        ",
-            title: "AWGE",
-            link: "https://awgeshit.com",
-            linkText: "VISIT",
-            galleryName: "awge"
-        });
-    });
-    $("#projects-revenge").click(function () {
-        _rect.openModal({
-            aboutText: "\
-                        &bull;This is an ecommerce site.<br>\
-                        &bull;I was hired by Ian Connor.<br>\
-                        &bull;We sold 1,000 pairs of shoes in seconds.<br>\
-                        &bull;I oversaw $200,000 worth of merch.<br>\
-                        &bull;I managed the whole website.<br>\
-                        &bull;It currently has a million visitors.<br>\
-                        &bull;It was promoted by Kylie Jenner.<br>\
-                        ",
-            title: "Revenge x Storm",
-            link: "https://revengexstorm.com",
-            linkText: "VISIT",
-            galleryName: "revenge"
-        });
-    });
-    $("#projects-sounddown").click(function () {
-        _rect.openModal({
-            aboutText: "\
-                        &bull;This is a chrome extension.<br>\
-                        &bull;I built it myself as a side project.<br>\
-                        &bull;I might have used class time to do this...<br>\
-                        &bull;It downloads soundcloud songs with metadata.<br>\
-                        &bull;No marketing-- currently around 500 users.<br>\
-                        &bull;Over 50,000 songs downloaded.<br>\
-                        ",
-            title: "SoundDown",
-            link: "https://chrome.google.com/webstore/detail/sounddown/ljjaomnfoepedhkncdffdadnpmckoohb",
-            linkText: "VISIT",
-            galleryName: "sounddown"
-        });
-    });
-    $("#projects-nessly").click(function () {
-        _rect.openModal({
-            aboutText: "\
-                        &bull;This is a artist website.<br>\
-                        &bull;It is for the artist Nessly.<br>\
-                        &bull;I under construction by a small team.<br>\
-                        &bull;It has merch, interaction, and more.<br>\
-                        &bull;I worked on a 3D interaction.<br>\
-                        ",
-            title: "Nessly",
-            link: null,
-            linkText: "UNDER CONSTRUCTION",
-            galleryName: "nessly"
-        });
-    });
-    $("#projects-portal").click(function () {
-        _rect.openModal({
-            aboutText: "\
-                        &bull;This is a mod for GTAV.<br>\
-                        &bull;I made it myself when I was 15.<br>\
-                        &bull;Released for free, open source.<br>\
-                        &bull;Currently over 33,000 downloads.<br>\
-                        &bull;Reviewed by very famous youtubers.<br>\
-                        ",
-            title: "GTAV Portal Gun Mod",
-            link: "https://www.gta5-mods.com/scripts/portal-gun-net",
-            linkText: "VISIT",
-            galleryName: "portal"
-        });
     });
 }
 
@@ -999,7 +852,6 @@ function initPage() {
 
     initModal();
     initNavMain();
-    initProjects();
     initAbout();
     initSocial();
     initMessage();

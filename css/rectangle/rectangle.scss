@@ -2,7 +2,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translate(-50%, -50%);
 }
 
 @mixin centeredFlex() {
@@ -89,7 +89,7 @@ $duration) {
         position: absolute;
         top: 0;
         transform-origin: left;
-        transform: rotate(-90deg) translateX(-82%) translateY(-50%);
+        transform: rotate(-90deg) translate(-82%, -50%);
         @include shorttText();
         padding: 2px;
         margin: 0;
@@ -110,7 +110,7 @@ $duration) {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translateX(-50%) translateY(-50%);
+        transform: translate(-50%, -50%);
         &-container {
             opacity: 0;
             transition: width 0.75s ease-out, height 0.75s ease-out, opacity 2s ease-in-out, border 1.45s ease-in-out;
@@ -120,7 +120,7 @@ $duration) {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translateY(-50%) translateX(-50%) translateZ(0);
+            transform: translate(-50%, -50%) translateZ(0);
             border: 7px solid black;
         }
     }
@@ -526,6 +526,30 @@ $duration) {
         color: black;
         //transform: translateZ(0);
         background-image: url("../../assets/space.png");
+        cursor: -webkit-grab;
+    }
+    &-slider {
+        position: absolute !important;
+        bottom: 0;
+        & .rs-control {
+            margin: 3vh 3vw;
+        }
+        & .rs-range-color {
+            background-color: black;
+        }
+        & .rs-handle {
+            background-color: #fff;
+            border: 5px solid black;
+        }
+        & .rs-path {
+            background-color: transparent;
+        }
+        & .rs-bg-color {
+            background-color: transparent;
+        }
+        & .rs-border {
+            border: 1px solid #000;
+        }
     }
     &-svg {
         position: absolute;
@@ -639,40 +663,26 @@ $duration) {
         }
     }
     &-unit {
-        &-gallery {
-            position: absolute;
-            top: 20%;
-            left: 15%;
-            transform: translateX(-50%) translateY(-50%);
-            width: 600px;
-            height: 600px;
-            display: flex;
-            background-size: contain;
-            background-position: center center;
-            background-repeat: no-repeat;
-            transition: opacity .25s linear;
-            &-left {
-                cursor: url(../../assets/precedent.cur), auto;
-                flex: 1;
-            }
-            &-right {
-                cursor: url(../../assets/suivant.cur), auto;
-                flex: 1;
-            }
-        }
-        &-about {
-            position: absolute;
-            transform: translateX(-50%) translateY(-50%);
-            top: 60%;
-            left: 35%;
-            width: 300px;
-            height: 200px;
-            overflow-y: auto;
+        background-size: contain;
+        background-position: center center;
+        width: 200px;
+        height: 200px;
+        cursor: pointer;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-repeat: no-repeat;
+        transform: translate(-50%, -50%);
+        &-text {
+            @include shorttText();
+            text-shadow: 0px 0px 1px rgba(0, 0, 0, 1);
+            position: relative;
+            top: 50%;
+            left: 50%;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            margin: 0;
             color: white;
-            &-text {
-                color: white;
-                @include shorttText();
-            }
         }
          :root {
             --portalDeg: 1;
@@ -684,7 +694,7 @@ $duration) {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translateX(-50%) translateY(-50%);
+            transform: translate(-50%, -50%);
             &:hover>.modal-unit-portal-layer {
                 width: 150px;
                 height: 150px;
@@ -747,7 +757,7 @@ $duration) {
                 position: absolute;
                 top: 50%;
                 left: 50%;
-                transform: translateX(-50%) translateY(-50%);
+                transform: translate(-50%, -50%);
                 @include shorttText();
                 margin: 0;
                 transition: opacity 0.5s linear;
