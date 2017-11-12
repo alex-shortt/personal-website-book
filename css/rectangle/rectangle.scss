@@ -526,11 +526,11 @@ $duration) {
         color: black;
         //transform: translateZ(0);
         background-image: url("../../assets/space.png");
-        cursor: -webkit-grab;
     }
     &-slider {
         position: absolute !important;
         bottom: 0;
+        opacity: 0;
         & .rs-control {
             margin: 3vh 3vw;
         }
@@ -577,7 +577,6 @@ $duration) {
         position: absolute;
         transform-origin: 19.8% 95%;
         height: 97.59px;
-        transition: 1s linear transform;
         transform: rotate(calc(0deg - 25.5deg));
     }
     &-comet {

@@ -286,11 +286,16 @@ jQuery.fn.flashlight = function (opts) {
 
         //literally no idea why but this works
         path.stop();
+
+        $(handle).css("transition", "none");
         if (animate) {
-            if (time != null)
+            if (time != null) {
                 path.animate(time, '<>').rotate(angle, transX, transY);
-            else
+                $(handle).css("transition", "transform linear " + time + "ms");
+            } else {
                 path.animate().rotate(angle, transX, transY);
+                $(handle).css("transition", "transform linear 1s");
+            }
         } else {
             path.rotate(angle, transX, transY);
         }
@@ -428,20 +433,20 @@ jQuery.fn.slider = function (opts) {
     this.initialize = function () {
         $(elem).roundSlider({
             circleShape: "quarter-top-right",
-            radius: 70,
+            radius: 50,
+            width: 1,
+            handleSize: "+60",
             showTooltip: false,
             change: "traceEvent",
             drag: "traceEvent",
-            tooltipFormat: "asdf"
+            tooltipFormat: "traceEvent"
         });
-        
-        function asdf(args){
+
+        function asdf(args) {
             console.log(args);
         }
-        
-        function traceEvent(e) {
-            console.log(e);
-        }
+
+
 
         $("#modal-slider").css("bottom", $(window).height() - _light.getTransPoint().y);
         $("#modal-slider").css("left", _light.getTransPoint().x);
@@ -653,6 +658,10 @@ function updateModalUnits() {
     _modalUnits.forEach(function (obj) {
         obj.updatePos();
     });
+}
+
+function traceEvent(e) {
+    _light.setAngle(e.value);
 }
 
 
