@@ -2,7 +2,6 @@ var _rect;
 var _light;
 var _carousel;
 var _message;
-var _slider;
 var _modalUnits = [];
 
 jQuery.fn.rectangle = function (opts) {
@@ -120,27 +119,23 @@ jQuery.fn.rectangle = function (opts) {
                     });
                     setTimeout(function () {
                         _light.responsive();
-                        _slider.updatePos();
                         updateModalUnits();
                     }, (750 / 4));
 
                     setTimeout(function () {
                         _light.responsive();
-                        _slider.updatePos();
                         updateModalUnits();
                     }, (750 / 2));
 
                     setTimeout(function () {
                         _light.responsive();
-                        _slider.updatePos();
                         updateModalUnits();
                     }, (750 * 3 / 4));
 
                     setTimeout(function () {
                         updateModalUnits();
-                        _slider.updatePos();
                         _light.responsive();
-                        _light.setAngle(17, true);
+                        //_light.setAngle(17, true);
 
                     }, 750);
                 }, 500);
@@ -180,13 +175,24 @@ jQuery.fn.flashlight = function (opts) {
     var element = jQuery(this);
     var draw;
     var path;
+    var rect;
     var clip;
     var isMoving = false;
+    var flashlightOpen = false;
 
     var svg_biggest = "M1369.275,15.326c150.669,0,272.807,122.141,272.807,272.807 c0,45.723-11.245,88.819-31.126,126.67l0.005-0.023l-218.463,735.127l-23.223-0.002l0,0h0.003l-23.224,0.001l-218.46-735.126 l0.006,0.023c-19.88-37.852-31.129-80.947-31.129-126.67C1096.471,137.467,1218.612,15.326,1369.275,15.326z";
     var svg_big = "M782.529,3.328c109.238,0,197.791,88.555,197.791,197.791 c0,33.15-8.153,64.396-22.567,91.839l0.004-0.017L805.751,825.925l-23.223-0.002l0,0h0.002l-23.223,0.001L607.305,292.941 l0.004,0.017c-14.413-27.443-22.569-58.688-22.569-91.839C584.74,91.882,673.294,3.328,782.529,3.328z";
     var svg_small = "M431.901,263.82c57.33,0,103.804,46.475,103.804,103.805 c0,17.398-4.279,33.796-11.844,48.199l0.002-0.009l-68.74,279.721l-23.222-0.001l0,0c0,0,0,0,0,0l-23.223,0.001l-68.74-279.721 l0.002,0.009c-7.564-14.403-11.844-30.801-11.844-48.199C328.097,310.295,374.572,263.82,431.901,263.82z";
     var svg_handDrawn = "M0,0v5272.492h5938.288V0H0z M1483.912,3865.3l-271.854,247.191L1170,4092.845l71.672-330.013 c6.326-70.161,65.177-123.925,136.985-123.925c76.027,0,137.66,61.633,137.66,137.661 C1516.318,3810.604,1504.378,3841.273,1483.912,3865.3z";
+
+    var arrow = $("#modal-arrow");
+    var arrowDraw;
+    var arrowCurve;
+    var arrowArrowS;
+    var arrowArrowW;
+    var svg_arrow_curve = "M0.001,51.103c303.532,0,549.147,245.615,549.147,549.147";
+    var svg_arrow_arrowS = "573.787,577.985 549.771,602 523.787,576.015";
+    var svg_arrow_arrowW = "24.077,76.01 -0.2,52.259 25.498,25.991";
 
     var angle = 0; //mother angle (both shaft and handle)
     var posX = 0; //position of light shaft origin X
@@ -198,6 +204,8 @@ jQuery.fn.flashlight = function (opts) {
     var imgPosY = 0.255; //percentage distance in the Y that the svg origin is in imgElement
     var imgElement = $("#modal-girl-image");
 
+    var slider = $("#modal-slider");
+
     var handle = $("#modal-handle");
     var handlePosX = 0.2616; //percentage distance in the X that the handle is in imgElement
     var handlePosY = 0.2024; //percentage distance in the Y that the handle is in imgElement
@@ -206,19 +214,48 @@ jQuery.fn.flashlight = function (opts) {
     var transPosY = 0.4519; //percentage distance in the Y that the transform origin is in imgElement
 
     this.initialize = function () {
+        //flashlight
         draw = SVG('light');
-        //biggest symmetrical
         path = draw.path(svg_biggest);
-
         clip = draw.clip().add(path);
         path.move(0, 0);
-
         var clipID = $(".light clipPath").attr('id');
         $('.modal-content').css('-webkit-clip-path', 'url(#' + clipID + ')');
         $('.modal-content').css('clip-path', 'url(#' + clipID + ')');
 
+        //slider
+        $(slider).roundSlider({
+            circleShape: "quarter-top-right",
+            mouseScrollAction: true,
+            radius: 50,
+            width: 1,
+            handleSize: "+60",
+            showTooltip: false,
+            change: "traceEvent",
+            drag: "traceEvent",
+            tooltipFormat: "traceEvent"
+        });
+        $("#modal-slider").css("bottom", $(window).height() - this.getTransPoint().y);
+        $("#modal-slider").css("left", this.getTransPoint().x);
+
+        //guide arrow
+        arrowDraw = SVG('modal-arrow');
+        arrowCurve = arrowDraw.path(svg_arrow_curve).stroke({
+            width: 15
+        }).fill('none');
+        //arrowCurve.move(0, 0);
+        arrowArrowW = arrowDraw.polyline(svg_arrow_arrowW).stroke({
+            width: 15
+        }).fill('none');
+        arrowArrowS = arrowDraw.polyline(svg_arrow_arrowS).stroke({
+            width: 15
+        }).fill('none');
+
+
+        //misc
         window.addEventListener('resize', function () {
             _light.responsive();
+            _light.updateSliderPos();
         });
 
         $(document).click(function (e) {
@@ -245,9 +282,41 @@ jQuery.fn.flashlight = function (opts) {
         return this;
     }
 
+    this.updateArrowPos = function () {
+        arrowCurve.remove();
+        arrowArrowS.remove();
+        arrowArrowW.remove();
+
+        arrowCurve = arrowDraw.path(svg_arrow_curve).stroke({
+            width: 15
+        }).fill('none');
+        //arrowCurve.move(0, 0);
+        arrowArrowW = arrowDraw.polyline(svg_arrow_arrowW).stroke({
+            width: 15
+        }).fill('none');
+        arrowArrowS = arrowDraw.polyline(svg_arrow_arrowS).stroke({
+            width: 15
+        }).fill('none');
+
+        arrowCurve.move(this.getTransPoint().x, this.getTransPoint().y - arrowCurve.height());
+        arrowArrowS.move(this.getTransPoint().x + arrowCurve.width() - (arrowArrowS.width() / 2), this.getTransPoint().y - arrowArrowS.height());
+        arrowArrowW.move(this.getTransPoint().x, this.getTransPoint().y - arrowCurve.height() - (arrowArrowW.height() / 2));
+
+        arrowCurve.scale(0.1, this.getTransPoint().x, this.getTransPoint().y);
+        arrowArrowS.scale(0.1, this.getTransPoint().x, this.getTransPoint().y);
+        arrowArrowW.scale(0.1, this.getTransPoint().x, this.getTransPoint().y);
+    }
+
+    this.updateSliderPos = function () {
+        $(slider).css("bottom", $(window).height() - this.getTransPoint().y);
+        $(slider).css("left", this.getTransPoint().x);
+    }
+
     this.responsive = function () {
-        if (isMoving) return;
+        if (isMoving || flashlightOpen) return;
         isMoving = true;
+        this.updateSliderPos();
+        this.updateArrowPos();
         var moveX = $(imgElement).offset().left + ($(imgElement).width() * imgPosX);
         var moveY = $(imgElement).offset().top + ($(imgElement).height() * imgPosY);
         //this.setScale($(imgElement).width() / scaleWidth);
@@ -264,8 +333,8 @@ jQuery.fn.flashlight = function (opts) {
     }
 
     this.resetState = function () {
-        path.remove();
-        clip.remove();
+        if (path != null) path.remove();
+        if (clip != null) clip.remove();
 
         path = draw.path(svg_biggest);
         clip = draw.clip().add(path);
@@ -287,14 +356,14 @@ jQuery.fn.flashlight = function (opts) {
         //literally no idea why but this works
         path.stop();
 
-        $(handle).css("transition", "none");
+        $(handle).css("transition", "opacity 0.5s linear");
         if (animate) {
             if (time != null) {
                 path.animate(time, '<>').rotate(angle, transX, transY);
-                $(handle).css("transition", "transform linear " + time + "ms");
+                $(handle).css("transition", "transform linear " + time + "ms, opacity 0.5s linear");
             } else {
                 path.animate().rotate(angle, transX, transY);
-                $(handle).css("transition", "transform linear 1s");
+                $(handle).css("transition", "transform linear 1s, opacity 0.5s linear");
             }
         } else {
             path.rotate(angle, transX, transY);
@@ -338,6 +407,36 @@ jQuery.fn.flashlight = function (opts) {
         return path;
     }
 
+    this.isFlashlightOpen = function () {
+        return flashlightOpen;
+    }
+
+    this.opacityLeftoverElements = function (opacity) {
+        $(handle).css("opacity", opacity);
+        $(".modal-unit").each(function (obj, elem) {
+            $(elem).css("opacity", opacity);
+        });
+    }
+
+    this.openFlashlight = function () {
+        path.animate(1000).scale(10, 10);
+        this.opacityLeftoverElements(0);
+        flashlightOpen = true;
+        setTimeout(function () {
+            $('.modal-content').css('-webkit-clip-path', 'none');
+            $('.modal-content').css('clip-path', 'none');
+        }, 1000);
+    }
+
+    this.closeFlashlight = function () {
+        var clipID = $(".light clipPath").attr('id');
+        $('.modal-content').css('-webkit-clip-path', 'url(#' + clipID + ')');
+        $('.modal-content').css('clip-path', 'url(#' + clipID + ')');
+        this.opacityLeftoverElements(1);
+        path.animate(1000).scale(1, 1);
+        flashlightOpen = false;
+    }
+
     return this.initialize();
 }
 
@@ -347,7 +446,7 @@ jQuery.fn.modalUnits = function (opts) {
         angle: 45,
         distPerc: 0.85,
         image: "assets/jupiter.png",
-        link: "google.com",
+        link: "projects-default",
         id: 'modal-unit-default',
         text: "default"
     };
@@ -404,56 +503,10 @@ jQuery.fn.modalUnits = function (opts) {
         elem.css("background-image", "url(" + image + ")");
         elem.attr('id', id);
         elem.click(function () {
-            window.open(link);
+            window.location.hash = link;
         });
         elem.append("<h2 class='modal-unit-text'>" + text + "</h2>");
         $(element).append(elem);
-        return this;
-    }
-
-    return this.initialize();
-}
-
-jQuery.fn.slider = function (opts) {
-    opts = jQuery.extend({}, jQuery.fn.slider.defs, opts);
-    jQuery.fn.slider.defs = {};
-
-    var instance = this;
-    var elem = jQuery(this);
-
-    this.updatePos = function () {
-        $("#modal-slider").css("bottom", $(window).height() - _light.getTransPoint().y);
-        $("#modal-slider").css("left", _light.getTransPoint().x);
-    }
-
-    this.updateEvent = function (e) {
-        console.log(e);
-    }
-
-    this.initialize = function () {
-        $(elem).roundSlider({
-            circleShape: "quarter-top-right",
-            radius: 50,
-            width: 1,
-            handleSize: "+60",
-            showTooltip: false,
-            change: "traceEvent",
-            drag: "traceEvent",
-            tooltipFormat: "traceEvent"
-        });
-
-        function asdf(args) {
-            console.log(args);
-        }
-
-
-
-        $("#modal-slider").css("bottom", $(window).height() - _light.getTransPoint().y);
-        $("#modal-slider").css("left", _light.getTransPoint().x);
-
-        window.addEventListener('resize', function () {
-            _slider.updatePos();
-        });
         return this;
     }
 
@@ -661,7 +714,7 @@ function updateModalUnits() {
 }
 
 function traceEvent(e) {
-    _light.setAngle(e.value);
+    if (_light != null) _light.setAngle(e.value);
 }
 
 
@@ -688,6 +741,16 @@ function initHash() {
                 break;
             case 'projects':
                 _rect.openModal();
+                if (cleanHash.split("-")[1] != null) {
+                    _light.openFlashlight();
+                    switch (cleanHash.split("-")[1]) {
+
+                    }
+                } else {
+                    if (_light.isFlashlightOpen()) {
+                        _light.closeFlashlight();
+                    }
+                }
                 break;
             default:
                 _rect.changeMenu("menu-main");
@@ -747,39 +810,37 @@ function initModal() {
         angle: 45,
         distPerc: 1,
         image: "assets/saturn.png",
-        link: "https://awgeshit.com",
+        link: "projects-awge",
         text: "AWGE"
     }));
     _modalUnits.push($(".modal-content").modalUnits({
         angle: 10,
         distPerc: 0.8,
         image: "assets/jupiter.png",
-        link: "https://revengexstorm.com",
+        link: "projects-revenge",
         text: "Revenge X Storm"
     }));
     _modalUnits.push($(".modal-content").modalUnits({
         angle: 38,
         distPerc: 0.7,
         image: "assets/moon.png",
-        link: "https://reddit.com",
+        link: "projects-sounddown",
         text: "Sound Down"
     }));
     _modalUnits.push($(".modal-content").modalUnits({
         angle: 80,
         distPerc: 1,
         image: "assets/jupiter.png",
-        link: "https://facebook.com",
+        link: "projects-nessly",
         text: "Nessly"
     }));
     _modalUnits.push($(".modal-content").modalUnits({
         angle: 69,
         distPerc: 0.54,
         image: "assets/saturn.png",
-        link: "https://twitter.com",
+        link: "projects-portal",
         text: "GTAV Portal Gun Mod"
     }));
-
-    _slider = $("#modal-slider").slider({});
 
     window.addEventListener('resize', function () {
         _modalUnits.forEach(function (obj) {
