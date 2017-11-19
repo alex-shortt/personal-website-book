@@ -185,15 +185,6 @@ jQuery.fn.flashlight = function (opts) {
     var svg_small = "M431.901,263.82c57.33,0,103.804,46.475,103.804,103.805 c0,17.398-4.279,33.796-11.844,48.199l0.002-0.009l-68.74,279.721l-23.222-0.001l0,0c0,0,0,0,0,0l-23.223,0.001l-68.74-279.721 l0.002,0.009c-7.564-14.403-11.844-30.801-11.844-48.199C328.097,310.295,374.572,263.82,431.901,263.82z";
     var svg_handDrawn = "M0,0v5272.492h5938.288V0H0z M1483.912,3865.3l-271.854,247.191L1170,4092.845l71.672-330.013 c6.326-70.161,65.177-123.925,136.985-123.925c76.027,0,137.66,61.633,137.66,137.661 C1516.318,3810.604,1504.378,3841.273,1483.912,3865.3z";
 
-    var arrow = $("#modal-arrow");
-    var arrowDraw;
-    var arrowCurve;
-    var arrowArrowS;
-    var arrowArrowW;
-    var svg_arrow_curve = "M0.001,51.103c303.532,0,549.147,245.615,549.147,549.147";
-    var svg_arrow_arrowS = "573.787,577.985 549.771,602 523.787,576.015";
-    var svg_arrow_arrowW = "24.077,76.01 -0.2,52.259 25.498,25.991";
-
     var angle = 0; //mother angle (both shaft and handle)
     var posX = 0; //position of light shaft origin X
     var posY = 0; //position of light shaft origin Y
@@ -205,6 +196,8 @@ jQuery.fn.flashlight = function (opts) {
     var imgElement = $("#modal-girl-image");
 
     var slider = $("#modal-slider");
+    var arrow = $("#modal-arrow");
+    var projects = $("#modal-project");
 
     var handle = $("#modal-handle");
     var handlePosX = 0.2616; //percentage distance in the X that the handle is in imgElement
@@ -238,20 +231,6 @@ jQuery.fn.flashlight = function (opts) {
         $("#modal-slider").css("bottom", $(window).height() - this.getTransPoint().y);
         $("#modal-slider").css("left", this.getTransPoint().x);
 
-        //guide arrow
-        arrowDraw = SVG('modal-arrow');
-        arrowCurve = arrowDraw.path(svg_arrow_curve).stroke({
-            width: 15
-        }).fill('none');
-        //arrowCurve.move(0, 0);
-        arrowArrowW = arrowDraw.polyline(svg_arrow_arrowW).stroke({
-            width: 15
-        }).fill('none');
-        arrowArrowS = arrowDraw.polyline(svg_arrow_arrowS).stroke({
-            width: 15
-        }).fill('none');
-
-
         //misc
         window.addEventListener('resize', function () {
             _light.responsive();
@@ -282,31 +261,6 @@ jQuery.fn.flashlight = function (opts) {
         return this;
     }
 
-    this.updateArrowPos = function () {
-        arrowCurve.remove();
-        arrowArrowS.remove();
-        arrowArrowW.remove();
-
-        arrowCurve = arrowDraw.path(svg_arrow_curve).stroke({
-            width: 15
-        }).fill('none');
-        //arrowCurve.move(0, 0);
-        arrowArrowW = arrowDraw.polyline(svg_arrow_arrowW).stroke({
-            width: 15
-        }).fill('none');
-        arrowArrowS = arrowDraw.polyline(svg_arrow_arrowS).stroke({
-            width: 15
-        }).fill('none');
-
-        arrowCurve.move(this.getTransPoint().x, this.getTransPoint().y - arrowCurve.height());
-        arrowArrowS.move(this.getTransPoint().x + arrowCurve.width() - (arrowArrowS.width() / 2), this.getTransPoint().y - arrowArrowS.height());
-        arrowArrowW.move(this.getTransPoint().x, this.getTransPoint().y - arrowCurve.height() - (arrowArrowW.height() / 2));
-
-        arrowCurve.scale(0.1, this.getTransPoint().x, this.getTransPoint().y);
-        arrowArrowS.scale(0.1, this.getTransPoint().x, this.getTransPoint().y);
-        arrowArrowW.scale(0.1, this.getTransPoint().x, this.getTransPoint().y);
-    }
-
     this.updateSliderPos = function () {
         $(slider).css("bottom", $(window).height() - this.getTransPoint().y);
         $(slider).css("left", this.getTransPoint().x);
@@ -316,7 +270,6 @@ jQuery.fn.flashlight = function (opts) {
         if (isMoving || flashlightOpen) return;
         isMoving = true;
         this.updateSliderPos();
-        this.updateArrowPos();
         var moveX = $(imgElement).offset().left + ($(imgElement).width() * imgPosX);
         var moveY = $(imgElement).offset().top + ($(imgElement).height() * imgPosY);
         //this.setScale($(imgElement).width() / scaleWidth);
@@ -411,7 +364,23 @@ jQuery.fn.flashlight = function (opts) {
         return flashlightOpen;
     }
 
-    this.opacityLeftoverElements = function (opacity) {
+    this.setProjectsVisible = function (visible) {
+        var opacity = (visible ? 1 : 0);
+        var pointer = (visible ? "all" : "none");
+
+        var oppOpacity = (visible ? 0 : 1);
+        var oppPointer = (visible ? "none" : "all");
+
+        $(projects).css("pointer-events", oppPointer);
+        $(arrow).css("pointer-events", pointer);
+        $(handle).css("pointer-events", pointer);
+        $(slider).css("pointer-events", pointer);
+        $(".modal-unit").each(function (obj, elem) {
+            $(elem).css("pointer-events", pointer);
+        });
+
+        $(projects).css("opacity", oppOpacity);
+        $(arrow).css("opacity", opacity);
         $(handle).css("opacity", opacity);
         $(".modal-unit").each(function (obj, elem) {
             $(elem).css("opacity", opacity);
@@ -420,7 +389,7 @@ jQuery.fn.flashlight = function (opts) {
 
     this.openFlashlight = function () {
         path.animate(1000).scale(10, 10);
-        this.opacityLeftoverElements(0);
+        this.setProjectsVisible(false);
         flashlightOpen = true;
         setTimeout(function () {
             $('.modal-content').css('-webkit-clip-path', 'none');
@@ -432,7 +401,8 @@ jQuery.fn.flashlight = function (opts) {
         var clipID = $(".light clipPath").attr('id');
         $('.modal-content').css('-webkit-clip-path', 'url(#' + clipID + ')');
         $('.modal-content').css('clip-path', 'url(#' + clipID + ')');
-        this.opacityLeftoverElements(1);
+        this.setProjectsVisible(true);
+        path.scale(10, 10);
         path.animate(1000).scale(1, 1);
         flashlightOpen = false;
     }
