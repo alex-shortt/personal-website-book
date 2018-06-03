@@ -45,6 +45,12 @@ jQuery.fn.rectangle = function(opts) {
         _message.hideSpeech();
 
         break;
+      case 'menu-gallery':
+        $("#rect-menu-container").css("border", "7px solid black");
+        this.enablePrevious(true, "nav");
+        _message.hideSpeech();
+
+        break;
       case 'menu-about':
         $("#rect-menu-container").css("border", "7px solid white");
         this.enablePrevious(true, "nav");
@@ -120,9 +126,7 @@ jQuery.fn.rectangle = function(opts) {
           }, (750 / 4));
 
           setTimeout(function() {
-            $("#modal").css({
-              opacity: 1
-            });
+            $("#modal").css({opacity: 1});
           }, ((750 / 4) + 50));
         }, 500);
       }, 750);
@@ -688,6 +692,9 @@ function initHash() {
       case 'social':
         _rect.changeMenu("menu-social");
         break;
+      case 'gallery':
+        _rect.changeMenu("menu-gallery");
+        break;
       case 'message':
         _rect.changeMenu("menu-message");
         break;
@@ -820,6 +827,9 @@ function initNavMain() {
   });
   $("#menu-nav-social").click(function() {
     window.location.hash = "social";
+  });
+  $("#menu-nav-gallery").click(function() {
+    window.location.hash = "gallery";
   });
   $("#menu-nav-message").click(function() {
     window.location.hash = "message";
