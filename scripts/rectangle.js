@@ -1,5 +1,4 @@
 var _rect;
-var _light;
 var _carousel;
 var _message;
 
@@ -27,6 +26,31 @@ jQuery.fn.rectangle = function(opts) {
     }, 1400);
   }
 
+  this.setupProjects = function() {
+    $("#hand-despair").css("opacity", 0);
+
+    setTimeout(function() {
+      $("#hand-help").css("opacity", 0);
+    }, 200);
+
+    setTimeout(function() {
+      $("#rect-menu-container").addClass("rect-menu-container-skew");
+    }, 1000);
+  }
+
+  this.resetRect = function(options) {
+    $("#rect-menu-container").css("border", "7px solid " + options.color);
+    this.enablePrevious(options.prev, (
+      options.prev
+      ? options.prevLink
+      : null));
+    options.speech
+      ? _message.showSpeech(750)
+      : _message.hideSpeech();
+    this.fadeElementsIn();
+    $("#rect-menu-container").removeClass("rect-menu-container-skew");
+  }
+
   this.changeMenu = function(menu) {
     //add active class to select whole page at once (for fading in/out)
     $(".rect-menu").each(function() {
@@ -39,38 +63,25 @@ jQuery.fn.rectangle = function(opts) {
 
     switch (menu) {
       case 'menu-social':
-        $("#rect-menu-container").css("border", "7px solid white");
-        this.enablePrevious(false);
-        _message.hideSpeech();
-
+        this.resetRect({prev: false, color: "white"});
         break;
       case 'menu-gallery':
-        $("#rect-menu-container").css("border", "7px solid black");
-        this.enablePrevious(true, "nav");
-        _message.hideSpeech();
-
+        this.resetRect({prev: true, prevLink: "nav", color: "black"});
         break;
       case 'menu-about':
-        $("#rect-menu-container").css("border", "7px solid white");
-        this.enablePrevious(true, "nav");
-        _message.hideSpeech();
-
+        this.resetRect({prev: true, prevLink: "nav", color: "white"});
         break;
       case 'menu-projects':
-        $("#rect-menu-container").css("border", "7px solid black");
-        this.enablePrevious(true, "nav");
+        //this.resetRect({prev: true, prevLink: "nav", color: "black", fadeIn: "false"});
+        _rect.setupProjects();
+        this.enablePrevious(false);
         _message.hideSpeech();
         break;
       case 'menu-message':
-        $("#rect-menu-container").css("border", "7px solid black");
-        this.enablePrevious(true, "nav");
-        _message.showSpeech(750);
+        this.resetRect({prev: true, prevLink: "nav", color: "black", speech: true});
         break;
       default:
-        $("#rect-menu-container").css("border", "7px solid black");
-        this.enablePrevious(false);
-        _message.hideSpeech();
-
+        this.resetRect({prev: false, color: "black"});
         break;
     }
 
@@ -292,11 +303,6 @@ jQuery.fn.message = function(opts) {
   return this.initialize();
 }
 
-function traceEvent(e) {
-  if (_light != null)
-    _light.setAngle(e.value);
-  }
-
 function initHash() {
   $(window).hashchange(function() {
     var hash = location.hash;
@@ -322,7 +328,7 @@ function initHash() {
         _rect.changeMenu("menu-about");
         break;
       case 'projects':
-
+        _rect.changeMenu("menu-projects");
         break;
       default:
         _rect.changeMenu("menu-main");
@@ -430,7 +436,10 @@ function initMessage() {
 
 function initPage() {
   _rect = $("#parallax-wrapper").rectangle({});
-  _rect.fadeElementsIn();
+
+  setTimeout(function() {
+    $("#rect-menu-container").css("opacity", 1);
+  }, 500);
 
   initNavMain();
   initAbout();

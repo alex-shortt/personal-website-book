@@ -30,47 +30,6 @@
 </head>
 
 <body>
-  <div id="modal" class="modal">
-    <!-- animation -->
-    <!-- 01 https://www.instagram.com/p/BF38Q2IyIZR/ -->
-    <!-- 02 https://www.instagram.com/p/BK50hTvjoM8/ -->
-    <!--  the rect skews to match the book,
-          then opactiy fade to overlay book,
-          then css animation to open with girl sitting there -->
-    <!-- controls: each page has the name of the project on the paper edge, vertical,
-          clicking on it flips to that page, it'll have illustration in it with project somehow -->
-    <!-- animate legs swinging back/forth, remove top and maybe bottom? idk  -->
-    <!--  -->
-    <svg class="modal-svg">
-            <line class="modal-svg-line" x1="0" y1="80%" x2="100%" y2="80%"></line>
-        </svg>
-    <h1 data-modal="project-1" class="modal-close fa fa-3x fa-times" aria-hidden="true"></h1>
-    <img src="./assets/girl-no-hand.png" id="modal-girl-image" class="modal-girl-image" draggable="false" />
-    <div class="modal-content">
-      <div class="modal-space-stars modal-space"></div>
-      <div class="modal-space-twinkling modal-space"></div>
-      <div class="modal-comet modal-comet-1"></div>
-      <div class="modal-comet modal-comet-2"></div>
-      <div class="modal-comet modal-comet-3"></div>
-      <div class="modal-comet modal-comet-4"></div>
-      <div id="modal-project" class="modal-project">
-        <img class="modal-project-image" src="./assets/portal/portal-game.png" />
-        <h1 class="modal-project-title">AWGE</h1>
-      </div>
-    </div>
-    <img id="modal-arrow" class="modal-arrow" src="./assets/arrows.png" draggable="false" />
-    <img id="modal-handle" class="modal-handle" src="./assets/girl-hand.png" draggable="false" />
-    <div id="modal-slider" class="modal-slider"></div>
-  </div>
-
-  <div class="light" id="light"></div>
-
-  <div id="splash-svg" class="splash-svg">
-    <svg width="100%" height="100%">
-            <rect width="100%" height="100%" />
-        </svg>
-  </div>
-
   <div id="menu-message-speech" class="menu-message-speech"></div>
 
   <div id="parallax-wrapper" class="rect-box">
@@ -91,6 +50,22 @@
         <h1 id="menu-nav-about" class="menu-nav-option">About</h1>
         <h1 id="menu-nav-message" class="menu-nav-option">Message</h1>
         <h1 id="menu-nav-social" class="menu-nav-option">Social</h1>
+      </div>
+      <div id="menu-projects" class="rect-menu menu-projects">
+        <!-- animation -->
+        <!-- 01 https://www.instagram.com/p/BF38Q2IyIZR/ -->
+        <!-- 02 https://www.instagram.com/p/BK50hTvjoM8/ -->
+        <!--  the rect skews to match the book,
+              then opactiy fade to overlay book,
+              then css animation to open with girl sitting there -->
+        <!--  controls option 1: each page has the name of the project on the paper edge, vertical,
+              clicking on it flips to that page, it'll have illustration in it with project somehow -->
+        <!--  controls option 2: table of contents page with each project,
+              clicking it goes to the end with new image/whatever somehow thing -->
+        <!--  animate legs swinging back/forth, remove top and maybe bottom? idk -->
+        <!-- Projects: AWGE, AWGE Forums, Revenge x Storm ?, Nessly, Pia Mia, SoundDown, Portal Gun Mod -->
+
+
       </div>
       <div id="menu-about" class="rect-menu menu-about">
         <div class="stars"></div>
