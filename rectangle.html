@@ -1,229 +1,230 @@
 <html>
 
 <head>
-    <title>alex shortt</title>
+  <title>alex shortt</title>
 
-    <link rel="stylesheet" type="text/css" href="css/rectangle/rectangle.min.css">
-    <link rel="stylesheet" type="text/css" href="css/external/roundslider.min.css">
+  <link rel="stylesheet" type="text/css" href="css/rectangle/rectangle.min.css">
+  <link rel="stylesheet" type="text/css" href="css/external/roundslider.min.css">
 
-    <script src="https://use.fontawesome.com/27cf0ad925.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
-    <script src="scripts/hashchange.min.js" type="text/javascript"></script>
-    <script src="scripts/roundslider.min.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js"></script>
-    <link rel="icon" type="image/png" href="assets/favicon.png" sizes="32x32">
+  <script src="https://use.fontawesome.com/27cf0ad925.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+  <script src="scripts/hashchange.min.js" type="text/javascript"></script>
+  <script src="scripts/roundslider.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.15.0/TweenMax.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.3/svg.min.js"></script>
+  <link rel="icon" type="image/png" href="assets/favicon.png" sizes="32x32">
 
-    <script src="scripts/rectangle.js" type="text/javascript"></script>
+  <script src="scripts/rectangle.js" type="text/javascript"></script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97408879-4"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-97408879-4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'UA-97408879-4');
-
-    </script>
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'UA-97408879-4');
+  </script>
 </head>
 
 <body>
-    <div id="modal" class="modal">
-        <svg class="modal-svg">
+  <div id="modal" class="modal">
+    <!-- animation -->
+    <!-- 01 https://www.instagram.com/p/BF38Q2IyIZR/ -->
+    <!-- 02 https://www.instagram.com/p/BK50hTvjoM8/ -->
+    <!--  the rect skews to match the book,
+          then opactiy fade to overlay book,
+          then css animation to open with girl sitting there -->
+    <!-- controls: each page has the name of the project on the paper edge, vertical,
+          clicking on it flips to that page, it'll have illustration in it with project somehow -->
+    <!-- animate legs swinging back/forth, remove top and maybe bottom? idk  -->
+    <!--  -->
+    <svg class="modal-svg">
             <line class="modal-svg-line" x1="0" y1="80%" x2="100%" y2="80%"></line>
         </svg>
-        <h1 data-modal="project-1" class="modal-close fa fa-3x fa-times" aria-hidden="true"></h1>
-        <img src="./assets/girl-no-hand.png" id="modal-girl-image" class="modal-girl-image" draggable="false" />
-        <div class="modal-content">
-            <div class="modal-space-stars modal-space"></div>
-            <div class="modal-space-twinkling modal-space"></div>
-            <div class="modal-comet modal-comet-1"></div>
-            <div class="modal-comet modal-comet-2"></div>
-            <div class="modal-comet modal-comet-3"></div>
-            <div class="modal-comet modal-comet-4"></div>
-            <div id="modal-project" class="modal-project">
-                <img class="modal-project-image" src="./assets/portal/portal-game.png" />
-                <h1 class="modal-project-title">AWGE</h1>
-            </div>
-        </div>
-        <img id="modal-arrow" class="modal-arrow" src="./assets/arrows.png" draggable="false" />
-        <img id="modal-handle" class="modal-handle" src="./assets/girl-hand.png" draggable="false" />
-        <div id="modal-slider" class="modal-slider"></div>
+    <h1 data-modal="project-1" class="modal-close fa fa-3x fa-times" aria-hidden="true"></h1>
+    <img src="./assets/girl-no-hand.png" id="modal-girl-image" class="modal-girl-image" draggable="false" />
+    <div class="modal-content">
+      <div class="modal-space-stars modal-space"></div>
+      <div class="modal-space-twinkling modal-space"></div>
+      <div class="modal-comet modal-comet-1"></div>
+      <div class="modal-comet modal-comet-2"></div>
+      <div class="modal-comet modal-comet-3"></div>
+      <div class="modal-comet modal-comet-4"></div>
+      <div id="modal-project" class="modal-project">
+        <img class="modal-project-image" src="./assets/portal/portal-game.png" />
+        <h1 class="modal-project-title">AWGE</h1>
+      </div>
     </div>
+    <img id="modal-arrow" class="modal-arrow" src="./assets/arrows.png" draggable="false" />
+    <img id="modal-handle" class="modal-handle" src="./assets/girl-hand.png" draggable="false" />
+    <div id="modal-slider" class="modal-slider"></div>
+  </div>
 
-    <div class="light" id="light"></div>
+  <div class="light" id="light"></div>
 
-    <div id="splash-svg" class="splash-svg">
-        <svg width="100%" height="100%">
+  <div id="splash-svg" class="splash-svg">
+    <svg width="100%" height="100%">
             <rect width="100%" height="100%" />
         </svg>
+  </div>
+
+  <div id="menu-message-speech" class="menu-message-speech"></div>
+
+  <div id="parallax-wrapper" class="rect-box">
+    <div id="hand-despair" class="fade-in parallax hand hand-despair" data-speed="3.2">
+      <img class="hand-image-despair" src="./assets/hand-despair.png" draggable="false">
     </div>
-
-    <div id="menu-message-speech" class="menu-message-speech"></div>
-
-    <div id="parallax-wrapper" class="rect-box">
-        <div id="hand-despair" class="fade-in parallax hand hand-despair" data-speed="3.2">
-            <img class="hand-image-despair" src="./assets/hand-despair.png" draggable="false">
-        </div>
-        <div id="hand-help" class="parallax hand hand-help" data-revert="true" data-speed="1.6">
-            <img class="hand-image-help" src="./assets/hand-help.png" draggable="false">
-        </div>
-        <div id="rect-menu-container" class="rect-menu-container">
-            <h1 id="rect-previous" class="rect-previous">Previous</h1>
-            <div id="menu-main" class="rect-menu menu-main">
-                <h1 id="menu-main-title" class="menu-main-title">Alex Shortt</h1>
-            </div>
-            <div id="menu-nav" class="rect-menu menu-nav">
-                <h1 id="menu-nav-projects" class="menu-nav-option">Projects</h1>
-                <h1 id="menu-nav-about" class="menu-nav-option">About</h1>
-                <h1 id="menu-nav-gallery" class="menu-nav-option">Gallery</h1>
-                <h1 id="menu-nav-message" class="menu-nav-option">Message</h1>
-                <h1 id="menu-nav-social" class="menu-nav-option">Social</h1>
-            </div>
-            <div id="menu-about" class="rect-menu menu-about">
-                <div class="stars"></div>
-                <div id="about-carousel" class="menu-about-carousel">
-                    <div class="menu-about-carousel-page">
-                        <div class="about-portrait"></div>
-                        <div class="about-desc">
-                            <h2 class="about-title">This is me.</h2>
-                        </div>
-                    </div>
-                    <div class="menu-about-carousel-page">
-                        <div class="about-desc">
-                            <h3 class="about-desc-text">Alex Shortt</h3>
-                            <hr />
-                            <h3 class="about-desc-text">18 years old</h3>
-                            <hr />
-                            <h3 class="about-desc-text">UC Santa Barbara '22</h3>
-                            <hr />
-                            <h3 class="about-desc-text">Bay Area / Santa Barbara</h3>
-                        </div>
-                    </div>
-                    <div class="menu-about-carousel-page">
-                        <div class="about-working"></div>
-                        <div class="about-desc">
-                            <h3 class="about-desc-text">I work hard.</h3>
-                        </div>
-                    </div>
-                    <div class="menu-about-carousel-page">
-                        <div class="about-desc">
-                            <h2 class="about-title">I know all this:</h2>
-                        </div>
-                        <div class="about-desc">
-                            <h3 class="about-list">HTML/CSS</h3>
-                            <h3 class="about-list">JS/jQuery</h3>
-                            <h3 class="about-list">Sass/Scss/Less</h3>
-                            <h3 class="about-list">React</h3>
-                            <h3 class="about-list">Stripe</h3>
-                            <h3 class="about-list">Shopify</h3>
-                            <h3 class="about-list">Google Analytics</h3>
-                            <h3 class="about-list">Git</h3>
-                            <h3 class="about-list">Node.js</h3>
-                            <h3 class="about-list">Java</h3>
-                        </div>
-                    </div>
-                    <div class="menu-about-carousel-page">
-                        <div class="about-desc">
-                            <h2 class="about-title">And a bit of this:</h2>
-                        </div>
-                        <div class="about-desc">
-                            <h3 class="about-list">Android Dev</h3>
-                            <h3 class="about-list">C#</h3>
-                            <h3 class="about-list">Photoshop</h3>
-                            <h3 class="about-list">Illustrator</h3>
-                            <h3 class="about-list">FL Studio</h3>
-                            <h3 class="about-list">Serato DJ</h3>
-                        </div>
-                    </div>
-                    <div class="menu-about-carousel-page">
-                        <div class="about-mix"></div>
-                        <div class="about-desc">
-                            <h2 class="about-title">I mix music.</h2>
-                        </div>
-                    </div>
-                    <div class="menu-about-carousel-page">
-                        <div class="about-desc">
-                            <h2 class="about-title">In Short(t).</h2>
-                            <hr />
-                        </div>
-                        <div class="about-desc">
-                            <h3 class="about-list">I program.</h3>
-                            <h3 class="about-list">I design.</h3>
-                            <h3 class="about-list">I mix music.</h3>
-                            <h3 class="about-list">I can make powerpoints in space.</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="menu-about-arrow">
-                    <i id="about-page-up" class="menu-about-arrow-button fa fa-arrow-circle-up" aria-hidden="true"></i>
-                    <i id="about-page-down" class="menu-about-arrow-button fa fa-arrow-circle-down" aria-hidden="true"></i>
-                </div>
-            </div>
-            <div id="menu-gallery" class="rect-menu menu-gallery">
-                Gallery
-                <!-- 3d Models + light interaction -->
-                  <!-- https://www.turbosquid.com/3d-models/free-obj-model-sculpture-venus-milo-aphrodite/1093053 -->
-                  <!-- https://www.turbosquid.com/3d-models/scan-statue-nymph-preparing-obj-free/942377 -->
-                <!-- Tube TV with light controls / crazy effects -->
-                <!-- the girl w/ flashlight // good because of static rect size -->
-            </div>
-            <div id="menu-social" class="rect-menu menu-social">
-                <div class="menu-social-option">
-                    <h1 id="social-github" class="menu-social-option-text fa fa-3x fa-github" aria-hidden="true"></h1>
-                </div>
-                <div class="menu-social-option">
-                    <h1 id="social-soundcloud" class="menu-social-option-text fa fa-3x fa-soundcloud" aria-hidden="true"></h1>
-                </div>
-                <div class="menu-social-option">
-                    <h1 id="social-twitter" class="menu-social-option-text fa fa-3x fa-twitter" aria-hidden="true"></h1>
-                </div>
-                <div class="menu-social-option">
-                    <h1 id="social-instagram" class="menu-social-option-text fa fa-3x fa-instagram" aria-hidden="true"></h1>
-                </div>
-                <div class="menu-social-option">
-                    <h1 id="social-linkedin" class="menu-social-option-text fa fa-3x fa-linkedin" aria-hidden="true"></h1>
-                </div>
-                <div class="menu-social-option">
-                    <h1 id="social-back" class="menu-social-option-text fa fa-2x fa-arrow-left" aria-hidden="true"></h1>
-                </div>
-            </div>
-            <div id="menu-message" class="rect-menu menu-message">
-                <div class="menu-message-contact menu-message-tab">
-                    <label class="menu-message-contact-label" for="menu-message-contact-name">Name/Email:</label>
-                    <input id="message-name" class="menu-message-contact-name menu-message-contact-input" placeholder="" required />
-                    <label class="menu-message-contact-label" for="menu-message-contact-textarea">Message:</label>
-                    <textarea id="message-message" class="menu-message-contact-message menu-message-contact-input" required></textarea>
-                    <h2 id="menu-message-contact-send" class="menu-message-contact-send">Send</h2>
-                </div>
-                <div class="menu-message-confirm menu-message-tab">
-                    <h1 class="menu-message-confirm-text">Message sent successfully.</h1>
-                    <h1 class="menu-message-confirm-text">Thanks!</h1>
-                    <h2 id="menu-message-confirm-redo" class="menu-message-confirm-redo">Send Another?</h2>
-                </div>
-            </div>
-        </div>
-        <div id="rect-background" class="rect-background"></div>
+    <div id="hand-help" class="parallax hand hand-help" data-revert="true" data-speed="1.6">
+      <img class="hand-image-help" src="./assets/hand-help.png" draggable="false">
     </div>
+    <div id="rect-menu-container" class="rect-menu-container">
+      <h1 id="rect-previous" class="rect-previous">Previous</h1>
+      <div id="menu-main" class="rect-menu menu-main">
+        <h1 id="menu-main-title" class="menu-main-title">Alex Shortt</h1>
+      </div>
+      <div id="menu-nav" class="rect-menu menu-nav">
+        <h1 id="menu-nav-projects" class="menu-nav-option">Projects</h1>
+        <h1 id="menu-nav-gallery" class="menu-nav-option">Gallery</h1>
+        <h1 id="menu-nav-about" class="menu-nav-option">About</h1>
+        <h1 id="menu-nav-message" class="menu-nav-option">Message</h1>
+        <h1 id="menu-nav-social" class="menu-nav-option">Social</h1>
+      </div>
+      <div id="menu-about" class="rect-menu menu-about">
+        <div class="stars"></div>
+        <div id="about-carousel" class="menu-about-carousel">
+          <div class="menu-about-carousel-page">
+            <div class="about-portrait"></div>
+            <div class="about-desc">
+              <h2 class="about-title">This is me.</h2>
+            </div>
+          </div>
+          <div class="menu-about-carousel-page">
+            <div class="about-desc">
+              <h3 class="about-desc-text">Alex Shortt</h3>
+              <hr />
+              <h3 class="about-desc-text">18 years old</h3>
+              <hr />
+              <h3 class="about-desc-text">UC Santa Barbara '22</h3>
+              <hr />
+              <h3 class="about-desc-text">Bay Area / Santa Barbara</h3>
+            </div>
+          </div>
+          <div class="menu-about-carousel-page">
+            <div class="about-working"></div>
+            <div class="about-desc">
+              <h3 class="about-desc-text">I work hard.</h3>
+            </div>
+          </div>
+          <div class="menu-about-carousel-page">
+            <div class="about-desc">
+              <h2 class="about-title">I know all this:</h2>
+            </div>
+            <div class="about-desc">
+              <h3 class="about-list">HTML/CSS</h3>
+              <h3 class="about-list">JS/jQuery</h3>
+              <h3 class="about-list">Sass/Scss/Less</h3>
+              <h3 class="about-list">React</h3>
+              <h3 class="about-list">Stripe</h3>
+              <h3 class="about-list">Shopify</h3>
+              <h3 class="about-list">Google Analytics</h3>
+              <h3 class="about-list">Git</h3>
+              <h3 class="about-list">Node.js</h3>
+              <h3 class="about-list">Java</h3>
+            </div>
+          </div>
+          <div class="menu-about-carousel-page">
+            <div class="about-desc">
+              <h2 class="about-title">And a bit of this:</h2>
+            </div>
+            <div class="about-desc">
+              <h3 class="about-list">Android Dev</h3>
+              <h3 class="about-list">C#</h3>
+              <h3 class="about-list">Photoshop</h3>
+              <h3 class="about-list">Illustrator</h3>
+              <h3 class="about-list">FL Studio</h3>
+              <h3 class="about-list">Serato DJ</h3>
+            </div>
+          </div>
+          <div class="menu-about-carousel-page">
+            <div class="about-mix"></div>
+            <div class="about-desc">
+              <h2 class="about-title">I mix music.</h2>
+            </div>
+          </div>
+          <div class="menu-about-carousel-page">
+            <div class="about-desc">
+              <h2 class="about-title">In Short(t).</h2>
+              <hr />
+            </div>
+            <div class="about-desc">
+              <h3 class="about-list">I program.</h3>
+              <h3 class="about-list">I design.</h3>
+              <h3 class="about-list">I mix music.</h3>
+              <h3 class="about-list">I can make powerpoints in space.</h3>
+            </div>
+          </div>
+        </div>
+        <div class="menu-about-arrow">
+          <i id="about-page-up" class="menu-about-arrow-button fa fa-arrow-circle-up" aria-hidden="true"></i>
+          <i id="about-page-down" class="menu-about-arrow-button fa fa-arrow-circle-down" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div id="menu-gallery" class="rect-menu menu-gallery">
+        Gallery
+        <!-- 3d Models + light interaction -->
+        <!-- https://www.turbosquid.com/3d-models/free-obj-model-sculpture-venus-milo-aphrodite/1093053 -->
+        <!-- https://www.turbosquid.com/3d-models/scan-statue-nymph-preparing-obj-free/942377 -->
+        <!-- Tube TV with light controls / crazy effects -->
+        <!-- the girl w/ flashlight // good because of static rect size -->
+      </div>
+      <div id="menu-social" class="rect-menu menu-social">
+        <div class="menu-social-option">
+          <h1 id="social-github" class="menu-social-option-text fa fa-3x fa-github" aria-hidden="true"></h1>
+        </div>
+        <div class="menu-social-option">
+          <h1 id="social-soundcloud" class="menu-social-option-text fa fa-3x fa-soundcloud" aria-hidden="true"></h1>
+        </div>
+        <div class="menu-social-option">
+          <h1 id="social-twitter" class="menu-social-option-text fa fa-3x fa-twitter" aria-hidden="true"></h1>
+        </div>
+        <div class="menu-social-option">
+          <h1 id="social-instagram" class="menu-social-option-text fa fa-3x fa-instagram" aria-hidden="true"></h1>
+        </div>
+        <div class="menu-social-option">
+          <h1 id="social-linkedin" class="menu-social-option-text fa fa-3x fa-linkedin" aria-hidden="true"></h1>
+        </div>
+        <div class="menu-social-option">
+          <h1 id="social-back" class="menu-social-option-text fa fa-2x fa-arrow-left" aria-hidden="true"></h1>
+        </div>
+      </div>
+      <div id="menu-message" class="rect-menu menu-message">
+        <div class="menu-message-contact menu-message-tab">
+          <label class="menu-message-contact-label" for="menu-message-contact-name">Name/Email:</label>
+          <input id="message-name" class="menu-message-contact-name menu-message-contact-input" placeholder="" required />
+          <label class="menu-message-contact-label" for="menu-message-contact-textarea">Message:</label>
+          <textarea id="message-message" class="menu-message-contact-message menu-message-contact-input" required></textarea>
+          <h2 id="menu-message-contact-send" class="menu-message-contact-send">Send</h2>
+        </div>
+        <div class="menu-message-confirm menu-message-tab">
+          <h1 class="menu-message-confirm-text">Message sent successfully.</h1>
+          <h1 class="menu-message-confirm-text">Thanks!</h1>
+          <h2 id="menu-message-confirm-redo" class="menu-message-confirm-redo">Send Another?</h2>
+        </div>
+      </div>
+    </div>
+    <div id="rect-background" class="rect-background"></div>
+  </div>
 
-    <script>
-        $(document).ready(function() {
-            initPage();
-            initHash();
-            initParallax();
-        });
-
-    </script>
+  <script>
+    $(document).ready(function() {
+      initPage();
+      initHash();
+      initParallax();
+    });
+  </script>
 </body>
 
 </html>
-
-<!--
-Idea::
-
-Lucas V type design, plans are laid out in plans.ai
-
--->
