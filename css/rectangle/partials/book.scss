@@ -2,6 +2,22 @@ $width: 100%;
 $height: 100%;
 $pageColor: white;
 $edgeColor: black;
+@mixin pseudoLine {
+  background: $edgeColor;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+@mixin pageAdjust {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
 
 ::after,
 ::before {
@@ -31,7 +47,8 @@ ul {
     width: 100%;
     max-width: 1170px;
     text-align: center;
-
+    //transform-style: preserve-3d;
+    //transform: rotateX(-31deg) rotateY(-20deg) translateY(-61px) translateX(50%);
     & > li {
       width: $width;
       //min-height: 300px;
@@ -51,6 +68,14 @@ ul {
       -webkit-transition: all 0.8s ease, z-index 0.6s;
       -moz-transition: all 0.8s ease, z-index 0.6s;
       transition: all 0.8s ease, z-index 0.6s;
+      -webkit-transform-origin: 0 100%;
+      -moz-transform-origin: 0 100%;
+      transform-origin: 0 100%;
+      @include pageAdjust;
+
+      & li {
+        @include pageAdjust;
+      }
 
       & li:first-child {
         background-color: $edgeColor;
@@ -66,6 +91,7 @@ ul {
         transform: translateZ(2px);
         /*
         &::after {
+        @include pseudoLine;
           width: 4px;
           height: 100%;
           -webkit-transform: rotateY(90deg) translateZ(-2px) translateX(2px);
@@ -74,6 +100,7 @@ ul {
         }
 
         &::before {
+        @include pseudoLine;
           width: 4px;
           height: 100%;
           -webkit-transform: rotateY(90deg) translateZ(158px) translateX(2px);
@@ -90,6 +117,7 @@ ul {
         transform: rotateY(180deg) translateZ(2px);
         /*
         &::after {
+        @include pseudoLine;
           width: 4px;
           height: $width;
           -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(80px) translateX(-2px) translateY(-78px);
@@ -98,6 +126,7 @@ ul {
         }
 
         &::before {
+        @include pseudoLine;
           width: 4px;
           height: 73%;
           //box-shadow: 0 0 30px 5px #333;
@@ -113,15 +142,24 @@ ul {
       -webkit-transform: rotateY(-15deg) translateZ(-8px);
       -moz-transform: rotateY(-15deg) translateZ(-8px);
       transform: rotateY(-15deg) translateZ(-8px);
+      -webkit-transform-origin: 0 100%;
+      -moz-transform-origin: 0 100%;
+      transform-origin: 0 100%;
+      @include pageAdjust;
+
+      & li {
+        @include pageAdjust;
+      }
 
       & li:first-child {
+        overflow: hidden;
         background: $edgeColor;
         -webkit-transform: translateZ(2px);
         -moz-transform: translateZ(2px);
         transform: translateZ(2px);
-
         /*
         &::after {
+        @include pseudoLine;
           width: 4px;
           height: 100%;
           -webkit-transform: rotateY(90deg) translateZ(-2px) translateX(2px);
@@ -130,6 +168,7 @@ ul {
         }
 
         &::before {
+        @include pseudoLine;
           width: 4px;
           height: 100%;
           -webkit-transform: rotateY(90deg) translateZ(158px) translateX(2px);
@@ -144,9 +183,9 @@ ul {
         -webkit-transform: translateZ(-2px);
         -moz-transform: translateZ(-2px);
         transform: translateZ(-2px);
-
         /*
         &::after {
+        @include pseudoLine;
           width: 4px;
           height: $width;
           -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(80px) translateX(2px) translateY(-78px);
@@ -155,6 +194,7 @@ ul {
         }
 
         &::before {
+        @include pseudoLine;
           width: 4px;
           height: 73%;
           //box-shadow: 10px -1px 80px 20px #666;
@@ -163,6 +203,12 @@ ul {
           transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px) translateX(2px) translateY(-78px);
         }
         */
+      }
+
+      &-content {
+        padding: 10px;
+        height: calc(100% - 20px);
+        width: calc(100% - 20px);
       }
     }
   }
@@ -173,6 +219,11 @@ ul {
     transform: rotateY(60deg) translateX(-5px) translateZ(-12px);
     width: 16px !important;
     z-index: 0;
+    @include pageAdjust;
+
+    & li {
+      @include pageAdjust;
+    }
 
     & li:first-child {
       background: $edgeColor;
@@ -181,6 +232,7 @@ ul {
       transform: translateZ(2px);
 
       &::after {
+        @include pseudoLine;
         width: 4px;
         height: 100%;
         -webkit-transform: rotateY(90deg) translateZ(-2px) translateX(2px);
@@ -189,6 +241,7 @@ ul {
       }
 
       &::before {
+        @include pseudoLine;
         width: 4px;
         height: 100%;
         -webkit-transform: rotateY(-90deg) translateZ(-12px);
@@ -204,6 +257,7 @@ ul {
       transform: translateZ(-2px);
 
       &::after {
+        @include pseudoLine;
         width: 4px;
         height: 16px;
         -webkit-transform: rotateX(90deg) rotateZ(90deg) translateZ(8px) translateX(2px) translateY(-6px);
@@ -212,6 +266,7 @@ ul {
       }
 
       &::before {
+        @include pseudoLine;
         width: 4px;
         height: 16px;
         //box-shadow: 5px -1px 100px 40px rgba(0, 0, 0, 0.2);
@@ -367,262 +422,3 @@ ul {
     }
   }
 }
-/* thickness of cover */
-.book-cover-back li:first-child::after,
-.book-cover-back li:first-child::before,
-.book-cover-back li:last-child::after,
-.book-cover-back li:last-child::before,
-.book-cover-front li:first-child::after,
-.book-cover-front li:first-child::before,
-.book-cover-front li:last-child::after,
-.book-cover-front li:last-child::before,
-.book-spine li:first-child::after,
-.book-spine li:first-child::before,
-.book-spine li:last-child::after,
-.book-spine li:last-child::before {
-  background: $edgeColor;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.book-cover-back,
-.book-cover-back li,
-.book-cover-front,
-.book-cover-front li,
-.book-spine,
-.book-spine li {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-}
-
-.book-cover-back,
-.book-cover-front {
-  -webkit-transform-origin: 0 100%;
-  -moz-transform-origin: 0 100%;
-  transform-origin: 0 100%;
-}
-/*
-TODO:
-
-
-
-	5. events
-
-& > .hardcover_front {
-	-webkit-transform: rotateY(-145deg) translateZ(0);
-	-moz-transform: rotateY(-145deg) translateZ(0);
-	transform: rotateY(-145deg) translateZ(0);
-	z-index: 0;
-}
-
-& > .page li:nth-child(1) {
-	-webkit-transform: rotateY(-30deg);
-	-moz-transform: rotateY(-30deg);
-	transform: rotateY(-30deg);
-	-webkit-transition-duration: 1.5s;
-	-moz-transition-duration: 1.5s;
-	transition-duration: 1.5s;
-}
-
-& > .page li:nth-child(2) {
-	-webkit-transform: rotateY(-35deg);
-	-moz-transform: rotateY(-35deg);
-	transform: rotateY(-35deg);
-	-webkit-transition-duration: 1.8s;
-	-moz-transition-duration: 1.8s;
-	transition-duration: 1.8s;
-}
-
-& > .page li:nth-child(3) {
-	-webkit-transform: rotateY(-118deg);
-	-moz-transform: rotateY(-118deg);
-	transform: rotateY(-118deg);
-	-webkit-transition-duration: 1.6s;
-	-moz-transition-duration: 1.6s;
-	transition-duration: 1.6s;
-}
-
-& > .page li:nth-child(4) {
-	-webkit-transform: rotateY(-130deg);
-	-moz-transform: rotateY(-130deg);
-	transform: rotateY(-130deg);
-	-webkit-transition-duration: 1.4s;
-	-moz-transition-duration: 1.4s;
-	transition-duration: 1.4s;
-}
-
-& > .page li:nth-child(5) {
-	-webkit-transform: rotateY(-140deg);
-	-moz-transform: rotateY(-140deg);
-	transform: rotateY(-140deg);
-	-webkit-transition-duration: 1.2s;
-	-moz-transition-duration: 1.2s;
-	transition-duration: 1.2s;
-}
-
-	6. Bonus
-
-/* cover CSS
-
-.coverDesign {
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	overflow: hidden;
-	-webkit-backface-visibility: hidden;
-	-moz-backface-visibility: hidden;
-	backface-visibility: hidden;
-}
-
-.coverDesign::after {
-	background-image: -webkit-linear-gradient( -135deg, rgba(255, 255, 255, 0.45) 0%, transparent 100%);
-	background-image: -moz-linear-gradient( -135deg, rgba(255, 255, 255, 0.45) 0%, transparent 100%);
-	background-image: linear-gradient( -135deg, rgba(255, 255, 255, 0.45) 0%, transparent 100%);
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	right: 0;
-}
-
-.coverDesign h1 {
-	color: #fff;
-	font-size: 2.2em;
-	letter-spacing: 0.05em;
-	text-align: center;
-	margin: 54% 0 0 0;
-	text-shadow: -1px -1px 0 rgba(0,0,0,0.1);
-}
-
-.coverDesign p {
-	color: #f8f8f8;
-	font-size: 1em;
-	text-align: center;
-	text-shadow: -1px -1px 0 rgba(0,0,0,0.1);
-}
-
-.yellow {
-	background-color: #f1c40f;
-	background-image: -webkit-linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
-	background-image: -moz-linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
-	background-image: linear-gradient(top, #f1c40f 58%, #e7ba07 0%);
-}
-
-.blue {
-	background-color: #3498db;
-	background-image: -webkit-linear-gradient(top, #3498db 58%, #2a90d4 0%);
-	background-image: -moz-linear-gradient(top, #3498db 58%, #2a90d4 0%);
-	background-image: linear-gradient(top, #3498db 58%, #2a90d4 0%);
-}
-
-.grey {
-	background-color: #f8e9d1;
-	background-image: -webkit-linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
-	background-image: -moz-linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
-	background-image: linear-gradient(top, #f8e9d1 58%, #e7d5b7 0%);
-}
-
-/* Basic ribbon
-
-.ribbon {
-	background: #c0392b;
-	color: #fff;
-	display: block;
-	font-size: 0.7em;
-	position: absolute;
-	top: 11px;
-	right: 1px;
-	width: 40px;
-	height: 20px;
-	line-height: 20px;
-	letter-spacing: 0.15em;
-	text-align: center;
-	-webkit-transform: rotateZ(45deg) translateZ(1px);
-	-moz-transform: rotateZ(45deg) translateZ(1px);
-	transform: rotateZ(45deg) translateZ(1px);
-	-webkit-backface-visibility: hidden;
-	-moz-backface-visibility: hidden;
-	backface-visibility: hidden;
-	z-index: 10;
-}
-
-.ribbon::before,
-.ribbon::after{
-	position: absolute;
-	top: -20px;
-	width: 0;
-	height: 0;
-	border-bottom: 20px solid #c0392b;
-	border-top: 20px solid transparent;
-}
-
-.ribbon::before{
-	left: -20px;
-	border-left: 20px solid transparent;
-}
-
-.ribbon::after{
-	right: -20px;
-	border-right: 20px solid transparent;
-}
-
-/* figcaption
-
-figcaption {
-	padding-left: 40px;
-	text-align: left;
-	position: absolute;
-	top: 0%;
-	left: 160px;
-	width: 310px;
-}
-
-figcaption h1 {
-	margin: 0;
-}
-
-figcaption span {
-	color: #16a085;
-	padding: 0.6em 0 1em 0;
-	display: block;
-}
-
-figcaption p {
-	color: #63707d;
-	line-height: 1.3;
-}
-
-/* Media Queries
-@media screen and (max-width: 37.8125em) {
-	.align > li {
-		width: 100%;
-		min-height: 440px;
-		height: auto;
-		padding: 0;
-		margin: 0 0 30px 0;
-	}
-
-	.book {
-		margin: 0 auto;
-	}
-
-	figcaption {
-		text-align: center;
-		width: 320px;
-		top: 250px;
-		padding-left: 0;
-		left: -80px;
-		font-size: 90%;
-	}
-}
-
-*/

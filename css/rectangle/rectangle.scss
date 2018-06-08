@@ -129,7 +129,7 @@ body {
       border: 7px solid black;
 
       &-skew {
-        transform: translate(-50%, -50%) translateZ(0) skew(0deg, 18.6deg);
+        //transform: translate(-50%, -50%) translateZ(0) skew(0deg, 18.6deg);
         border-radius: 5px;
       }
     }
@@ -338,11 +338,14 @@ body {
   }
 
   &-projects {
-    background: red; //black
+    background: transparent; //black
     //width: 235px;
     //height: 378.5px;
-    height: 401px;
+    //height: 401px;
     border-radius: 5px;
+    padding: 0;
+    width: 90%;
+    height: 90%;
 
     &-wrapper {}
 
