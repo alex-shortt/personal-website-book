@@ -73,6 +73,7 @@ jQuery.fn.rectangle = function(opts) {
         break;
       case 'menu-projects':
         //this.resetRect({prev: true, prevLink: "nav", color: "black", fadeIn: "false"});
+        $("#rect-menu-container").css("border", "7px solid transparent");
         _rect.setupProjects();
         this.enablePrevious(false);
         _message.hideSpeech();
