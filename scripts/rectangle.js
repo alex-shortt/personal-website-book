@@ -78,6 +78,10 @@ jQuery.fn.rectangle = function(opts) {
         _rect.setupProjects();
         this.enablePrevious(false);
         _message.hideSpeech();
+        _book.changePage(0);
+        setTimeout(function() {
+          _book.changePage(1);
+        }, 1250);
         break;
       case 'menu-message':
         this.resetRect({prev: true, prevLink: "nav", color: "black", speech: true});
@@ -326,6 +330,8 @@ jQuery.fn.book = function(opts) {
   }
 
   this.updatePage = function() {
+    var randomInterval = .125;
+
     // front cover: open or close
     this.closePage(0);
     if (curPage != 0) {
@@ -341,18 +347,20 @@ jQuery.fn.book = function(opts) {
       angle += frontAngles[0];
       var time = ((frontTimes[1] - frontTimes[0]) / numFront) * i;
       time += frontTimes[0]
+      time += (Math.random() - 0.5) * randomInterval;
       this.openPage(i, angle, time);
     }
 
     // pages that flip towards back cover
     var numBack = numPages - curPage + 1;
-    var backAngles = [-25, -35];
+    var backAngles = [-16, -35];
     var backTimes = [1.8, 2];
     for (var i = curPage; i <= numPages; i++) {
       var angle = ((backAngles[1] - backAngles[0]) / numBack) * (numPages - i);
       angle += backAngles[0];
       var time = ((backTimes[1] - backTimes[0]) / numBack) * (numPages - i);
       time += backTimes[0]
+      time += (Math.random() - 0.5) * randomInterval;
       this.openPage(i, angle, time);
     }
   }
@@ -517,6 +525,22 @@ function initProjects() {
   _book = $(".book").book({});
 
   _book.updatePage();
+
+  $(".page").each(function(ind, obj) {
+    $(obj).children().each(function(ind, obj) {
+      $(obj).click(function() {
+        if($(this).data("page") == "0"){
+          _book.changePage(0);
+          setTimeout(function(){
+            window.location.hash = "nav";
+          }, 1750);
+        }
+        else if($(this).data("page")) {
+          _book.changePage(parseInt($(this).data("page")));
+        }
+      })
+    });
+  })
 }
 
 function initMessage() {
