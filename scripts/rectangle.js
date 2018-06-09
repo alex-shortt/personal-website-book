@@ -1,6 +1,7 @@
 var _rect;
 var _carousel;
 var _message;
+var _book;
 
 jQuery.fn.rectangle = function(opts) {
   opts = jQuery.extend({}, jQuery.fn.rectangle.defs, opts);
@@ -304,6 +305,94 @@ jQuery.fn.message = function(opts) {
   return this.initialize();
 }
 
+jQuery.fn.book = function(opts) {
+  opts = jQuery.extend({}, jQuery.fn.book.defs, opts);
+  this.initialize = function() {
+    return this;
+  }
+  jQuery.fn.book.defs = {};
+
+  var instance = this;
+  var element = jQuery(this);
+
+  // 0 is front cover
+  var curPage = 0;
+  // not including cover
+  const numPages = $(".book-page > li").length;
+
+  this.changePage = function(newPage) {
+    curPage = newPage;
+    this.updatePage();
+  }
+
+  this.updatePage = function() {
+    // front cover: open or close
+    this.closePage(0);
+    if (curPage != 0) {
+      this.openPage(0, -145);
+    }
+
+    // pages that flip towards front cover
+    var numFront = curPage - 1;
+    var frontAngles = [-145, -110];
+    var frontTimes = [1.2, 1.8];
+    for (var i = 1; i <= numFront; i++) {
+      var angle = ((frontAngles[1] - frontAngles[0]) / numFront) * i;
+      angle += frontAngles[0];
+      var time = ((frontTimes[1] - frontTimes[0]) / numFront) * i;
+      time += frontTimes[0]
+      this.openPage(i, angle, time);
+    }
+
+    // pages that flip towards back cover
+    var numBack = numPages - curPage + 1;
+    var backAngles = [-25, -35];
+    var backTimes = [1.8, 2];
+    for (var i = curPage; i <= numPages; i++) {
+      var angle = ((backAngles[1] - backAngles[0]) / numBack) * (numPages - i);
+      angle += backAngles[0];
+      var time = ((backTimes[1] - backTimes[0]) / numBack) * (numPages - i);
+      time += backTimes[0]
+      this.openPage(i, angle, time);
+    }
+  }
+
+  this.openPage = function(numPage, angle, time) {
+    this.closePage(numPage);
+    if (numPage == 0) {
+      var selector = ".book-cover-front";
+
+      $(selector).css("-webkit-transform", "rotateY(" + angle + "deg)  translateZ(0)");
+      $(selector).css("-moz-transform", "rotateY(" + angle + "deg)  translateZ(0)");
+      $(selector).css("transform", "rotateY(" + angle + "deg)  translateZ(0)");
+      if (time) {
+        $(selector).css("-webkit-transition-duration", time + "s");
+        $(selector).css("-moz-transition-duration", time + "s");
+        $(selector).css("transition-duration", time + "s");
+      }
+      $(selector).css("z-index", 0);
+    } else {
+      var selector = ".book-page li:nth-child(" + numPage + ")";
+
+      $(selector).css("-webkit-transform", "rotateY(" + angle + "deg)");
+      $(selector).css("-moz-transform", "rotateY(" + angle + "deg)");
+      $(selector).css("transform", "rotateY(" + angle + "deg)");
+      $(selector).css("-webkit-transition-duration", time + "s");
+      $(selector).css("-moz-transition-duration", time + "s");
+      $(selector).css("transition-duration", time + "s");
+    }
+  }
+
+  this.closePage = function(numPage) {
+    var selector = numPage == 0
+      ? ".book-cover-front"
+      : ".book-page li:nth-child(" + numPage + ")";
+    $(selector).removeAttr("style");
+  }
+
+  return this.initialize();
+}
+
 function initHash() {
   $(window).hashchange(function() {
     var hash = location.hash;
@@ -424,6 +513,12 @@ function initNavMain() {
   });
 }
 
+function initProjects() {
+  _book = $(".book").book({});
+
+  _book.updatePage();
+}
+
 function initMessage() {
   _message = $("#menu-message").message({})
 
@@ -446,4 +541,5 @@ function initPage() {
   initAbout();
   initSocial();
   initMessage();
+  initProjects();
 }

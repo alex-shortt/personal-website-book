@@ -89,6 +89,7 @@ ul {
         -webkit-transform: translateZ(2px);
         -moz-transform: translateZ(2px);
         transform: translateZ(2px);
+        border-radius: 0 5px 5px 0;
         /*
         &::after {
         @include pseudoLine;
@@ -115,6 +116,7 @@ ul {
         -webkit-transform: rotateY(180deg) translateZ(2px);
         -moz-transform: rotateY(180deg) translateZ(2px);
         transform: rotateY(180deg) translateZ(2px);
+        border-radius: 5px 0 0 5px;
         /*
         &::after {
         @include pseudoLine;
@@ -157,6 +159,7 @@ ul {
         -webkit-transform: translateZ(2px);
         -moz-transform: translateZ(2px);
         transform: translateZ(2px);
+        border-radius: 0 5px 5px 0;
         /*
         &::after {
         @include pseudoLine;
@@ -183,6 +186,7 @@ ul {
         -webkit-transform: translateZ(-2px);
         -moz-transform: translateZ(-2px);
         transform: translateZ(-2px);
+        border-radius: 0 5px 5px 0;
         /*
         &::after {
         @include pseudoLine;
@@ -310,6 +314,7 @@ ul {
       transition-timing-function: ease;
     }
 
+    /*
     & li:nth-child(1) {
       -webkit-transform: rotateY(-28deg);
       -moz-transform: rotateY(-28deg);
@@ -354,6 +359,7 @@ ul {
       -moz-transition-duration: 0.6s;
       transition-duration: 0.6s;
     }
+    */
 
     & > li {
       //background: -webkit-linear-gradient(left, #e1ddd8 0%, #fffbf6 100%);
@@ -367,7 +373,7 @@ ul {
       border-radius: 0 5px 5px 0;
     }
   }
-
+  /*
   &:hover {
     & > .book-cover-front {
       -webkit-transform: rotateY(-145deg) translateZ(0);
@@ -421,4 +427,5 @@ ul {
       transition-duration: 1.2s;
     }
   }
+  */
 }
