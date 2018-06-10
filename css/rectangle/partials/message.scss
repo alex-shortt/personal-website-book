@@ -1,0 +1,110 @@
+.menu-message{
+
+    background: white;
+    display: block;
+
+    &-tab {
+      transition: opacity 1s ease-out;
+    }
+
+    &-contact {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+
+      &-name {
+        //flex: 2;
+        margin-bottom: 10px;
+        @include shorttText();
+        font-weight: bold;
+      }
+
+      &-message {
+        flex: 1;
+        @include shorttText();
+        font-weight: bold;
+        resize: none;
+        overflow-y: auto;
+      }
+
+      &-input {
+        border: 2px solid black;
+        line-height: 1.5em;
+        padding: 5px;
+        font-size: 12pt;
+
+        &:focus {
+          outline: none;
+          box-shadow: inset 0 0 13px 0 rgba(0, 0, 0, 0.31);
+        }
+      }
+
+      &-label {
+        @include shorttText();
+        font-weight: bold;
+        margin: 5px 0;
+      }
+
+      &-button {
+        width: 100%;
+      }
+
+      &-send {
+        position: relative;
+        @include shorttText();
+        width: calc(100% - 10px);
+        background: black;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+        padding: 5px;
+        cursor: pointer;
+        animation-delay: 0.3s;
+        @include noDrag();
+      }
+    }
+
+    &-confirm {
+      display: none;
+      opacity: 0;
+
+      &-text {
+        flex: 1;
+        @include shorttText();
+        color: black;
+        text-align: center;
+      }
+
+      &-redo {
+        flex: 1;
+        @include shorttText();
+        width: calc(100% - 10px);
+        background: black;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+        padding: 5px;
+        cursor: pointer;
+        animation-delay: 0.3s;
+        @include noDrag();
+      }
+    }
+
+    &-speech {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      //transform: translateX(-50%) translateY(-50%) translateX(130px) translateY(363px);
+      pointer-events: none;
+
+      & > svg {
+        transform: translateY(-0.4px);
+        stroke: black;
+        fill: white;
+        stroke-width: 7px;
+      }
+    }
+}

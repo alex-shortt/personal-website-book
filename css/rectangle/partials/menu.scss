@@ -1,0 +1,77 @@
+.menu {
+  &-main {
+    &-title {
+      color: black;
+      text-align: center;
+      margin: 0;
+      @include shorttText();
+      cursor: pointer;
+      @include noDrag();
+    }
+  }
+
+  &-nav {
+    display: none;
+    opacity: 0;
+
+    &-option {
+      @include shorttText();
+      @include noDrag();
+      cursor: pointer;
+      transition: color 0.25s linear;
+
+      &:hover {
+        color: rgba(0, 0, 0, 0.6);
+      }
+    }
+  }
+
+  &-projects {
+    background: transparent; //black
+    //width: 235px;
+    //height: 378.5px;
+    //height: 401px;
+    border-radius: 5px;
+    padding: 0;
+    width: 90%;
+    height: 90%;
+
+    &-wrapper {}
+
+    &-option {
+      height: 25%;
+      text-align: center;
+      cursor: pointer;
+      @include centeredFlex();
+      transition: all 0.25s linear;
+      background-position: center;
+      background-size: cover;
+
+      &-text {
+        @include shorttText();
+      }
+    }
+  }
+
+  &-social {
+    background: white;
+
+    &-option {
+      flex: 1;
+      @include centeredFlex();
+
+      &-text {
+        @include shorttText();
+        font-size: 2em;
+        cursor: pointer;
+        margin: 0;
+        transition: opacity 0.15s linear;
+        color: black;
+
+        &:hover {
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,138 @@
+// MIXINS
+// MIXINS
+// MIXINS
+@mixin absoluteCenter() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@mixin centeredFlex() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin noDrag() {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+@mixin shorttText() {
+  font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
+}
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+@mixin animation($animate...) {
+  $max: length($animate);
+  $animations: '';
+  @for $i from 1 through $max {
+    $animations: #{$animations + nth($animate, $i)};
+    @if $i < $max {
+      $animations: #{$animations + ", "};
+    }
+  }
+  -webkit-animation: $animations;
+  -moz-animation: $animations;
+  -o-animation: $animations;
+  animation: $animations;
+}
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+@mixin backlight($x, $y, $spread, $size, $colorA, $colorB, $duration) {
+  position: absolute;
+  content: "";
+  top: $y;
+  left: $x;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale($size);
+  -webkit-filter: blur($spread);
+  -moz-filter: blur($spread);
+  -ms-filter: blur($spread);
+  filter: blur($spread);
+  background: linear-gradient(270deg, $colorA, $colorB);
+  background-size: 200% 200%;
+  animation: animateGlow $duration ease infinite;
+  @keyframes animateGlow {
+    0% {
+      background-position: 0 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0 50%;
+    }
+  }
+}
+// ANIMATIONS
+// ANIMATIONS
+// ANIMATIONS
+@include keyframes(shake) {
+  0%,
+  100% {
+    transform: translateZ(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate3d(-6px, 0, 0);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate3d(6px, 0, 0);
+  }
+}
+@include keyframes(sendButton) {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  to {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  }
+}
+@include  keyframes(textColor) {
+  0% {
+    color: #7e0fff;
+  }
+
+  50% {
+    color: #0fffc1;
+  }
+
+  100% {
+    color: #7e0fff;
+  }
+}

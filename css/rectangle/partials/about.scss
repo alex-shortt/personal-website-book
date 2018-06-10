@@ -1,0 +1,134 @@
+.menu-about {
+  background: black;
+  padding: 0;
+  width: 305px;
+  height: 477px;
+  overflow: hidden;
+
+  &-option {
+    color: white;
+    @include shorttText();
+    cursor: pointer;
+    transition: color 0.25s linear;
+
+    &:hover {
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  &-arrow {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    &-button {
+      font-size: 1.75em !important;
+      color: white;
+      margin: 3px;
+      flex: 1;
+      cursor: pointer;
+      transition: color 0.15s linear;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.85);
+      }
+    }
+  }
+
+  &-carousel {
+    height: calc(100% * 3);
+    width: 100%;
+    transition: 0.6s all;
+    transform: translateY(calc(100% / 3 * 1));
+
+    &-page {
+      height: calc(100% / 3 - 56px);
+      padding: 28px 14px;
+      width: calc(100% - 28px);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+
+  &-physics {
+    height: 100%;
+    width: 100%;
+  }
+
+  &-text {
+    @include shorttText();
+    text-align: center;
+  }
+}
+
+.about {
+  &-portrait {
+    flex: 1;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/about/cool.jpg");
+  }
+
+  &-working {
+    flex: 2;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/about/working.jpg");
+  }
+
+  &-mix {
+    flex: 2;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/about/mix001.png");
+  }
+
+  &-desc {
+    flex-direction: column;
+    display: flex;
+
+    & > hr {
+      flex: 1;
+      width: 70%;
+      margin-bottom: 18px;
+      border: solid white 1.8px;
+      display: table;
+    }
+
+    &-text {
+      text-align: center;
+      color: white;
+      @include shorttText();
+      flex: 2;
+    }
+  }
+
+  &-title {
+    text-align: center;
+    color: white;
+    @include shorttText();
+    flex: 2;
+    margin-top: 5px;
+  }
+
+  &-list {
+    text-align: center;
+    color: white;
+    @include shorttText();
+    flex: 2;
+    margin: 7px 0;
+  }
+}
+
+#about-page-up {
+  color: gray;
+  cursor: auto;
+}
