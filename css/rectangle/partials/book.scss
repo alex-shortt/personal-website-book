@@ -525,9 +525,10 @@ ul {
       font-size: 0.8em;
       transition: all .25s linear;
       text-decoration: none !important;
+      opacity: .75;
 
       &:hover {
-        text-shadow: 0 0 10px #fff, 0 0 10px #ffffff, 0 0 10px #ffffff;
+        opacity: 1;
       }
     }
 
