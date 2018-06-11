@@ -136,3 +136,13 @@
     color: #7e0fff;
   }
 }
+
+@include keyframes(particleAnimation) {
+  from {
+    left: -100px;
+  }
+
+  to {
+    left: calc(100% + 100px);
+  }
+}
