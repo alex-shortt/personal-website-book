@@ -163,7 +163,7 @@ ul {
       }
 
       & li:first-child {
-        overflow: hidden;
+        //overflow: hidden;
         background: $edgeColor;
         -webkit-transform: translateZ(2px);
         -moz-transform: translateZ(2px);
@@ -216,12 +216,6 @@ ul {
           transform: rotateX(90deg) rotateZ(90deg) translateZ(-140px) translateX(2px) translateY(-78px);
         }
         */
-      }
-
-      &-content {
-        padding: 10px;
-        height: calc(100% - 20px);
-        width: calc(100% - 20px);
       }
     }
   }
@@ -569,5 +563,37 @@ ul {
 
   &-toc {
     justify-content: center !important;
+  }
+}
+
+.backcover {
+  &-content {
+    padding: 10px;
+    height: calc(100% - 20px);
+    width: calc(100% - 20px);
+    overflow: hidden;
+    position: relative;
+  }
+
+  &-saturn {
+    position: absolute;
+    width: 70%;
+    right: -67px;
+    top: 40px;
+    animation: saturn-hover 5s ease-in-out infinite;
+    transition: right 1.75s ease-out, opacity .75s ease-in;
+
+    &-hidden{
+      animation: none !important;
+      right: -70% !important;
+    }
+  }
+
+  &-girl {
+    position: absolute;
+    bottom: -35px;
+    left: 20px;
+    width: 60%;
+    transition: opacity 1s ease-in;
   }
 }

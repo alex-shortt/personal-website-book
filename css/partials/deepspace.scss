@@ -1,12 +1,11 @@
 .deepspace {
   &-comet {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 50px;
     width: 1px;
     height: 1px;
     background-color: white;
-    position: fixed;
     animation-name: particleAnimation;
     animation-timing-function: linear;
     animation-iteration-count: infinite;

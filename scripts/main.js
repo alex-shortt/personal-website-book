@@ -322,7 +322,7 @@ jQuery.fn.book = function(opts) {
 
   // 0 is front cover
   var curPage = 0;
-  // not including cover
+  // not including back cover
   const numPages = $(".book-page > li").length;
 
   this.changePage = function(newPage) {
@@ -331,6 +331,8 @@ jQuery.fn.book = function(opts) {
   }
 
   this.updatePage = function() {
+    if (curPage > numPages + 1)
+      curPage = numPage + 1;
     this.hideAllPages();
     this.showPage(curPage);
 
@@ -400,11 +402,23 @@ jQuery.fn.book = function(opts) {
       $(obj).find(".page-content").addClass("hidden");
       $(obj).find(".page-back").addClass("hidden");
     });
+    $("#backcover-girl").addClass("hidden");
+    $("#backcover-saturn").addClass("backcover-saturn-hidden");
   }
 
   this.showPage = function(numPage) {
-    $(".book-page li:nth-child(" + numPage + ")").find(".page-content").removeClass("hidden");
-    $(".book-page li:nth-child(" + numPage + ")").find(".page-back").removeClass("hidden");
+    setTimeout(function() {
+      $(".book-page li:nth-child(" + numPage + ")").find(".page-content").removeClass("hidden");
+      $(".book-page li:nth-child(" + numPage + ")").find(".page-back").removeClass("hidden");
+    }, 750);
+    if (numPage == numPages + 1) {
+      setTimeout(function() {
+        $("#backcover-saturn").removeClass("backcover-saturn-hidden");
+        setTimeout(function() {
+          $("#backcover-girl").removeClass("hidden");
+        }, 250);
+      }, 1000);
+    }
   }
 
   this.closePage = function(numPage) {
