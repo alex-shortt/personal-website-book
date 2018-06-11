@@ -53,11 +53,12 @@
     display: block;
 
     &-stars {
-      background: #000 url("http://www.script-tutorials.com/demos/360/images/stars.png") repeat top center;
+      background: #000 url("/assets/space/deepspace.png") repeat top center;
+      background-position: 30% 19% !important;
     }
 
     &-twinkling {
-      background: transparent url("http://www.script-tutorials.com/demos/360/images/twinkling.png") repeat top center;
+      background: transparent url("/assets/space/twinkling.png") repeat top center;
       -moz-animation: move-twink-back 250s linear infinite;
       -ms-animation: move-twink-back 250s linear infinite;
       -o-animation: move-twink-back 250s linear infinite;

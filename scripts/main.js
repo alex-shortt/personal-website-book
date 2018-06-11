@@ -397,14 +397,12 @@ jQuery.fn.book = function(opts) {
 
   this.hideAllPages = function() {
     $(".page:not(.page-toc)").each(function(ind, obj) {
-      console.log("hide " + ind);
       $(obj).find(".page-content").addClass("hidden");
       $(obj).find(".page-back").addClass("hidden");
     });
   }
 
   this.showPage = function(numPage) {
-    console.log("SHOW --" + numPage);
     $(".book-page li:nth-child(" + numPage + ")").find(".page-content").removeClass("hidden");
     $(".book-page li:nth-child(" + numPage + ")").find(".page-back").removeClass("hidden");
   }
