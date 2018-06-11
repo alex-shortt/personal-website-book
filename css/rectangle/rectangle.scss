@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:700');
+
+.hidden {
+  opacity: 0;
+}
 @import 'partials/mixins.scss';
 @import 'partials/main.scss';
 @import 'partials/message.scss';

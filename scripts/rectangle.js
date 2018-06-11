@@ -312,6 +312,7 @@ jQuery.fn.message = function(opts) {
 jQuery.fn.book = function(opts) {
   opts = jQuery.extend({}, jQuery.fn.book.defs, opts);
   this.initialize = function() {
+    this.hideAllPages();
     return this;
   }
   jQuery.fn.book.defs = {};
@@ -330,6 +331,9 @@ jQuery.fn.book = function(opts) {
   }
 
   this.updatePage = function() {
+    this.hideAllPages();
+    this.showPage(curPage);
+
     var randomInterval = .125;
 
     // front cover: open or close
@@ -389,6 +393,20 @@ jQuery.fn.book = function(opts) {
       $(selector).css("-moz-transition-duration", time + "s");
       $(selector).css("transition-duration", time + "s");
     }
+  }
+
+  this.hideAllPages = function() {
+    $(".page:not(.page-toc)").each(function(ind, obj) {
+      console.log("hide " + ind);
+      $(obj).find(".page-content").addClass("hidden");
+      $(obj).find(".page-back").addClass("hidden");
+    });
+  }
+
+  this.showPage = function(numPage) {
+    console.log("SHOW --" + numPage);
+    $(".book-page li:nth-child(" + numPage + ")").find(".page-content").removeClass("hidden");
+    $(".book-page li:nth-child(" + numPage + ")").find(".page-back").removeClass("hidden");
   }
 
   this.closePage = function(numPage) {
@@ -529,13 +547,12 @@ function initProjects() {
   $(".page").each(function(ind, obj) {
     $(obj).children().each(function(ind, obj) {
       $(obj).click(function() {
-        if($(this).data("page") == "0"){
+        if ($(this).data("page") == "0") {
           _book.changePage(0);
-          setTimeout(function(){
+          setTimeout(function() {
             window.location.hash = "nav";
           }, 1750);
-        }
-        else if($(this).data("page")) {
+        } else if ($(this).data("page")) {
           _book.changePage(parseInt($(this).data("page")));
         }
       })

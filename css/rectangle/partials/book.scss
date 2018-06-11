@@ -455,30 +455,32 @@ ul {
   flex-direction: column;
   justify-content: flex-start;
 
-  & > h3 {
-    @include shorttText;
-    margin: 5px;
-  }
+  &-toc {
+    & > h3 {
+      @include shorttText;
+      margin: 5px;
+    }
 
-  & > hr {
-    border-color: black;
-    background: black;
-    opacity: 1;
-    border-top: none;
-    width: 100%;
-  }
-
-  & > h4 {
-    @include shorttText;
-    text-align: left;
-    margin: 0;
-    cursor: pointer;
-    padding: 8px 5px;
-    transition: all 0.25s linear;
-
-    &:hover {
+    & > hr {
+      border-color: black;
       background: black;
-      color: white;
+      opacity: 1;
+      border-top: none;
+      width: 100%;
+    }
+
+    & > h4 {
+      @include shorttText;
+      text-align: left;
+      margin: 0;
+      cursor: pointer;
+      padding: 8px 5px;
+      transition: all 0.25s linear;
+
+      &:hover {
+        background: black;
+        color: white;
+      }
     }
   }
 
@@ -487,6 +489,7 @@ ul {
     display: flex;
     flex-direction: column;
     z-index: 1;
+    transition: all 0.5s linear;
 
     &-cover {
       flex: 1;
@@ -523,9 +526,9 @@ ul {
       transform: translateY(23px);
       color: white !important;
       font-size: 0.8em;
-      transition: all .25s linear;
+      transition: all 0.25s linear;
       text-decoration: none !important;
-      opacity: .75;
+      opacity: 0.75;
 
       &:hover {
         opacity: 1;
@@ -534,7 +537,7 @@ ul {
 
     &-desc {
       flex: 4;
-      padding: 10px 0px;
+      padding: 10px 0;
       overflow-y: auto;
 
       & > h4 {
@@ -547,12 +550,21 @@ ul {
   }
 
   &-back {
+    @include shorttText;
+    margin: 0;
+    cursor: pointer;
     text-align: center !important;
     position: absolute;
     width: 100%;
     left: 0;
     padding: 0 !important;
     bottom: 8px;
+    transition: opacity 0.5s linear, all 0.25s linear;
+
+    &:hover {
+      background: black;
+      color: white;
+    }
   }
 
   &-toc {
