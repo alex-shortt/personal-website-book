@@ -49,12 +49,12 @@ ul {
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
+  transform: translateX(60px);
 
   &-align {
     clear: both;
     //margin: 90px auto 20px;
     width: 100%;
-    max-width: 1170px;
     text-align: center;
     //transform-style: preserve-3d;
     //transform: rotateX(-31deg) rotateY(-20deg) translateY(-61px) translateX(50%);
@@ -483,7 +483,7 @@ ul {
     display: flex;
     flex-direction: column;
     z-index: 1;
-    transition: all 0.5s linear;
+    transition: all 1s ease-in;
 
     &-cover {
       flex: 1;
@@ -495,6 +495,26 @@ ul {
 
       &:hover {
         background: rgba(0, 0, 0, .35);
+      }
+
+      &-dir {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        right: 20px;
+        height: 0;
+        display: flex;
+        transition: all 1s linear;
+      }
+
+      &-left {
+        flex: 1;
+        cursor: url('/assets/precedent.cur'), pointer;
+      }
+
+      &-right {
+        flex: 1;
+        cursor: url('/assets/suivant.cur') 530 0, pointer;
       }
     }
 
@@ -511,6 +531,8 @@ ul {
       @include shorttText;
       color: white;
       margin: 0;
+      transition: all 1s linear;
+      top: initial;
     }
 
     &-link {
@@ -529,10 +551,57 @@ ul {
       }
     }
 
+    &-images {
+      cursor: pointer;
+      position: absolute;
+      left: 25px;
+      transform: translateY(23px);
+      color: white !important;
+      font-size: 0.8em;
+      transition: all 0.25s linear;
+      text-decoration: none !important;
+      opacity: 0.75;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &-actions {
+      display: flex;
+      margin-top: 2px;
+    }
+
+    &-action {
+      @include shorttText;
+      margin: 0;
+      width: 50%;
+      color: white;
+      padding: 4px 0;
+      cursor: pointer;
+      transition: all 0.25s linear;
+      background: black;
+      flex: 1;
+
+      &:hover {
+        background: white;
+        color: black;
+      }
+
+      &:nth-child(1) {
+        margin-right: 1px;
+      }
+
+      &:nth-child(2) {
+        margin-left: 1px;
+      }
+    }
+
     &-desc {
       flex: 4;
-      padding: 10px 0;
+      margin: 10px 0;
       overflow-y: auto;
+      transition: all 1s ease-in-out;
 
       & > h4 {
         text-align: left;
@@ -540,6 +609,37 @@ ul {
         margin: 0;
         font-size: 0.875em;
       }
+    }
+  }
+
+  &-gallery {
+    &-cover {
+      background: rgba(0,0,0,0.15);
+      transition: all 1s linear;
+
+      &:hover {
+        background: rgba(0,0,0,0.15) !important;
+      }
+    }
+
+    &-text {
+      font-size: 1.2em;
+      width: calc(100% - 40px);
+      text-align: left;
+      padding: 2px 10px;
+      box-sizing: border-box;
+      background: rgba(1,1,1,0.25);
+      top: 23px;
+      display: none;
+    }
+
+    &-dir {
+      height: calc(100% - 83px);
+    }
+
+    &-desc {
+      flex: 0;
+      margin: 0;
     }
   }
 
@@ -553,7 +653,7 @@ ul {
     left: 0;
     padding: 0 !important;
     bottom: 8px;
-    transition: opacity 0.5s linear, all 0.25s linear;
+    transition: opacity 1s ease-in, all 0.25s linear;
 
     &:hover {
       background: black;
@@ -581,9 +681,17 @@ ul {
     right: -67px;
     top: 40px;
     animation: saturn-hover 5s ease-in-out infinite;
-    transition: right 1.75s ease-out, opacity .75s ease-in;
+    transition: right 1.75s ease-out, opacity 0.75s ease-in;
+    cursor: pointer;
 
-    &-hidden{
+    &:hover {
+      -webkit-animation-play-state: paused;
+      -moz-animation-play-state: paused;
+      -o-animation-play-state: paused;
+      animation-play-state: paused;
+    }
+
+    &-hidden {
       animation: none !important;
       right: -70% !important;
     }

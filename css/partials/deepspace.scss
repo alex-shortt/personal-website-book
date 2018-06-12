@@ -9,6 +9,7 @@
     animation-name: particleAnimation;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
+    pointer-events: none;
 
     &::before {
       position: absolute;
@@ -50,6 +51,7 @@
     width: 100%;
     height: 100%;
     display: block;
+    pointer-events: none;
 
     &-stars {
       background: #000 url("/assets/space/deepspace.png") repeat top center;

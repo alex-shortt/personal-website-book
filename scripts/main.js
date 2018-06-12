@@ -320,12 +320,23 @@ jQuery.fn.book = function(opts) {
   var instance = this;
   var element = jQuery(this);
 
+  var gallery: {
+    awge: [
+      '/assets/projects/awge/',
+      [
+        'awge-landing.PNG', 'awge-home.PNG', 'awge-contanct.PNG', 'awge-shop.PNG', 'awge-videos.PNG'
+      ]
+    ];
+  }
+
+
   // 0 is front cover
   var curPage = 0;
   // not including back cover
   const numPages = $(".book-page > li").length;
 
   this.changePage = function(newPage) {
+    this.closeGallery();
     curPage = newPage;
     this.updatePage();
   }
@@ -335,6 +346,7 @@ jQuery.fn.book = function(opts) {
       curPage = numPage + 1;
     this.hideAllPages();
     this.showPage(curPage);
+    this.closeGallery();
 
     var randomInterval = .125;
 
@@ -357,6 +369,7 @@ jQuery.fn.book = function(opts) {
       this.openPage(i, angle, time);
     }
 
+    // change distribution to max - diff, not min + diff
     // pages that flip towards back cover
     var numBack = numPages - curPage + 1;
     var backAngles = [-16, -35];
@@ -410,7 +423,7 @@ jQuery.fn.book = function(opts) {
     setTimeout(function() {
       $(".book-page li:nth-child(" + numPage + ")").find(".page-content").removeClass("hidden");
       $(".book-page li:nth-child(" + numPage + ")").find(".page-back").removeClass("hidden");
-    }, 750);
+    }, 500);
     if (numPage == numPages + 1) {
       setTimeout(function() {
         $("#backcover-saturn").removeClass("backcover-saturn-hidden");
@@ -427,6 +440,45 @@ jQuery.fn.book = function(opts) {
       : ".book-page li:nth-child(" + numPage + ")";
     $(selector).removeAttr("style");
   }
+
+  this.toggleGallery = function(override) {
+    const parent = $(".book-page li:nth-child(" + curPage + ")");
+    if (parent.data("gallery") != "dicks") {
+      this.closeGallery();
+    } else {
+      this.openGallery();
+    }
+  }
+
+  this.openGallery = function() {
+    const parent = $(".book-page li:nth-child(" + curPage + ")");
+    parent.data("gallery", 0)
+    parent.find(".action-gallery").html("close");
+    parent.find(".page-content-cover").addClass("page-gallery-cover");
+    parent.find(".page-content-text").addClass("page-gallery-text");
+    parent.find(".page-content-desc").addClass("page-gallery-desc");
+    parent.find(".page-content-cover-dir").addClass("page-gallery-dir");
+  }
+
+  this.closeGallery = function() {
+    const parent = $(".book-page li:nth-child(" + curPage + ")");
+    parent.data("gallery", "dicks")
+    parent.find(".action-gallery").html("gallery");
+    parent.find(".page-content-cover").removeClass("page-gallery-cover");
+    parent.find(".page-content-text").removeClass("page-gallery-text");
+    parent.find(".page-content-desc").removeClass("page-gallery-desc");
+    parent.find(".page-content-desc").removeClass("page-gallery-desc");
+    parent.find(".page-content-cover-dir").removeClass("page-gallery-dir");
+  }
+
+  this.changeGallery = function(diff) {
+    const parent = $(".book-page li:nth-child(" + curPage + ")");
+    var num = parent.data("gallery");
+    if (num == "dicks")
+      return;
+    num += diff;
+    if (num < 0) num =
+    }
 
   return this.initialize();
 }
@@ -569,7 +621,27 @@ function initProjects() {
         }
       })
     });
-  })
+  });
+
+  $(".action-visit").each(function() {
+    if ($(this).data("link")) {
+      $(this).click(function() {
+        window.open($(this).data("link"));
+      });
+    }
+  });
+
+  $(".action-prev").click(function() {
+    _book.changeGallery(-1);
+  });
+
+  $(".action-next").click(function() {
+    _book.changeGallery(1);
+  });
+
+  $(".action-gallery").click(function() {
+    _book.toggleGallery();
+  });
 }
 
 function initMessage() {
