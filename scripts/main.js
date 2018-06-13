@@ -320,15 +320,14 @@ jQuery.fn.book = function(opts) {
   var instance = this;
   var element = jQuery(this);
 
-  var gallery: {
+  var gallery = {
     awge: [
       '/assets/projects/awge/',
       [
         'awge-landing.PNG', 'awge-home.PNG', 'awge-contanct.PNG', 'awge-shop.PNG', 'awge-videos.PNG'
       ]
-    ];
+    ]
   }
-
 
   // 0 is front cover
   var curPage = 0;
@@ -454,21 +453,14 @@ jQuery.fn.book = function(opts) {
     const parent = $(".book-page li:nth-child(" + curPage + ")");
     parent.data("gallery", 0)
     parent.find(".action-gallery").html("close");
-    parent.find(".page-content-cover").addClass("page-gallery-cover");
-    parent.find(".page-content-text").addClass("page-gallery-text");
-    parent.find(".page-content-desc").addClass("page-gallery-desc");
-    parent.find(".page-content-cover-dir").addClass("page-gallery-dir");
+    parent.addClass("page-gallery-open");
   }
 
   this.closeGallery = function() {
     const parent = $(".book-page li:nth-child(" + curPage + ")");
     parent.data("gallery", "dicks")
     parent.find(".action-gallery").html("gallery");
-    parent.find(".page-content-cover").removeClass("page-gallery-cover");
-    parent.find(".page-content-text").removeClass("page-gallery-text");
-    parent.find(".page-content-desc").removeClass("page-gallery-desc");
-    parent.find(".page-content-desc").removeClass("page-gallery-desc");
-    parent.find(".page-content-cover-dir").removeClass("page-gallery-dir");
+    parent.removeClass("page-gallery-open");
   }
 
   this.changeGallery = function(diff) {
@@ -477,8 +469,7 @@ jQuery.fn.book = function(opts) {
     if (num == "dicks")
       return;
     num += diff;
-    if (num < 0) num =
-    }
+  }
 
   return this.initialize();
 }
