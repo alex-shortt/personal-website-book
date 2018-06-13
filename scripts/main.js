@@ -320,15 +320,6 @@ jQuery.fn.book = function(opts) {
   var instance = this;
   var element = jQuery(this);
 
-  var gallery = {
-    awge: [
-      '/assets/projects/awge/',
-      [
-        'awge-landing.PNG', 'awge-home.PNG', 'awge-contanct.PNG', 'awge-shop.PNG', 'awge-videos.PNG'
-      ]
-    ]
-  }
-
   // 0 is front cover
   var curPage = 0;
   // not including back cover
@@ -501,7 +492,6 @@ jQuery.fn.book = function(opts) {
     if (num >= items)
       num = 0;
     parent.data("gallery", num);
-    console.log(num);
     parent.find("#gallery").css("left", "calc(" + num + " * (-100% - 4px))");
   }
 
@@ -630,7 +620,6 @@ function initNavMain() {
 
 function initProjects() {
   _book = $(".book").book({});
-
   _book.updatePage();
 
   $(".page").each(function(ind, obj) {
