@@ -442,7 +442,9 @@ jQuery.fn.book = function(opts) {
 
   this.toggleGallery = function(override) {
     const parent = $(".book-page li:nth-child(" + curPage + ")");
-    if (parent.data("gallery") != "dicks") {
+    if (parent.data("gallery") == "moving")
+      return;
+    if (parent.data("gallery") != "moved") {
       this.closeGallery();
     } else {
       this.openGallery();
@@ -451,24 +453,56 @@ jQuery.fn.book = function(opts) {
 
   this.openGallery = function() {
     const parent = $(".book-page li:nth-child(" + curPage + ")");
-    parent.data("gallery", 0)
+    parent.data("gallery", "moving");
     parent.find(".action-gallery").html("close");
+    parent.find("#gallery").css("left", "0");
+
+    // move down
     parent.addClass("page-gallery-open");
+    setTimeout(function() {
+      // fade text out
+      //parent.addClass("page-gallery-opening");
+      parent.find(".page-content-text").css("color", "transparent");
+      setTimeout(function() {
+        // fade image in
+        parent.addClass("page-gallery-opened");
+        parent.data("gallery", 0);
+      }, 750);
+    }, 750);
   }
 
   this.closeGallery = function() {
     const parent = $(".book-page li:nth-child(" + curPage + ")");
-    parent.data("gallery", "dicks")
+    parent.data("gallery", "moving");
     parent.find(".action-gallery").html("gallery");
-    parent.removeClass("page-gallery-open");
+
+    //fade image out
+    parent.removeClass("page-gallery-opened");
+    setTimeout(function() {
+      //fade text in
+      parent.find(".page-content-text").css("color", "white");
+      setTimeout(function() {
+        // close gallery
+        parent.removeClass("page-gallery-open");
+        parent.data("gallery", "moved")
+      }, 750);
+    }, 750)
   }
 
   this.changeGallery = function(diff) {
     const parent = $(".book-page li:nth-child(" + curPage + ")");
+    var items = parent.find("#gallery").children().length;
     var num = parent.data("gallery");
     if (num == "dicks")
       return;
     num += diff;
+    if (num < 0)
+      num = items - 1;
+    if (num >= items)
+      num = 0;
+    parent.data("gallery", num);
+    console.log(num);
+    parent.find("#gallery").css("left", "calc(" + num + " * (-100% - 4px))");
   }
 
   return this.initialize();
